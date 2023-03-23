@@ -3,32 +3,29 @@ import DJISDK
 @main
 struct AppController: App {
     
-    @ObservedObject var globalData : GlobalData
-    var djiService : ProductCommunicationService
+    @ObservedObject var viewHelper = ViewHelper.shared
+    @ObservedObject var djiService = ProductCommunicationService.shared
+    @ObservedObject var rcNodeService = RCNodeCommunicationService.shared
     
-    init() {
-        let gData = GlobalData()
-        self.djiService = ProductCommunicationService(globalData: gData)
+    init(){
         self.djiService.registerWithSDK()
-        self.globalData = gData
     }
     
     var body: some Scene {
         WindowGroup {
-            if(self.globalData.fpvMode){
-                DroneFPVView(globalData: self.globalData)
+            if(self.viewHelper.fpvMode){
+                DroneFPVView()
             }
-            else if(self.globalData.libMode){
-                if(self.globalData.mediaLibPicked == nil){
-                    LibraryView(globalData: self.globalData, djiService: self.djiService)
+            else if(self.viewHelper.libMode){
+                if(self.djiService.libController.mediaLibPicked == nil){
+                    LibraryView()
                 }
-                else {
-                    LibraryPreviewView(globalData: globalData, djiService: self.djiService)
-                }
+                else { LibraryPreviewView() }
             }
-            else{
-                MainView(globalData: self.globalData, djiService: self.djiService)
+            else if(self.viewHelper.rcContMode){
+                RCNodeView()
             }
+            else{ MainView() }
         }
     }
 }

@@ -2,13 +2,21 @@ import Foundation
 import SwiftUI
 import DJISDK
 
-class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
+class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, ObservableObject {
     
-    private var globalData : GlobalData
+    @Published var mediaFilter = 0 //0 - All, 1 - Photos, 2 - Videos
+    @Published var mediaList : [DJIMediaFile] = []
+    @Published var mediaSections : [[DJIMediaFile]] = []
+    @Published var mediaFetched = false
+    @Published var mediaLibPicked : DJIMediaFile? = nil
+    @Published var mediaPreviewReady = false
+    @Published var mediaPreviewVideoPlaying = false
+    @Published var mediaPreviewVideoCTime : Int = 0
+    @Published var mediaPreviewVideoChanging : Bool = false
+    
     private var drone : DJIBaseProduct? = nil
     private var camera : DJICamera? = nil
     private var changingVideoTime : Bool = false
-    init(globalData: GlobalData) { self.globalData = globalData }
     
     private func refreshDroneAndCamera() -> String? {
         self.drone = DJISDKManager.product()
@@ -58,25 +66,25 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
             
             let files : [DJIMediaFile] = manager.sdCardFileListSnapshot() ?? []
                         
-            if(!self.globalData.mediaList.elementsEqual(files)){
-                self.globalData.mediaList.removeAll()
-                self.globalData.mediaSections.removeAll()
-                self.globalData.mediaPreviewReady = false
+            if(!self.mediaList.elementsEqual(files)){
+                self.mediaList.removeAll()
+                self.mediaSections.removeAll()
+                self.mediaPreviewReady = false
                             
                 var sections = 0
                 for i in 0..<files.count{
-                    if(self.globalData.mediaList.last?.timeCreated.prefix(10) != files[i].timeCreated.prefix(10)){
+                    if(self.mediaList.last?.timeCreated.prefix(10) != files[i].timeCreated.prefix(10)){
                         var newSection : [DJIMediaFile] = []
                         newSection.append(files[i])
                                     
-                        self.globalData.mediaSections.append(newSection)
+                        self.mediaSections.append(newSection)
                         sections += 1
                     }
-                    self.globalData.mediaList.append(files[i])
-                    self.globalData.mediaSections[sections-1].append(files[i])
+                    self.mediaList.append(files[i])
+                    self.mediaSections[sections-1].append(files[i])
                 }
                             
-                if(self.globalData.mediaList.count > 0 && downloadPreview){
+                if(self.mediaList.count > 0 && downloadPreview){
                     self.downloadThumbnail(index: 0, retries: 0)
                 }
             }
@@ -105,25 +113,25 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
     }
     
     private func downloadThumbnail(index: Int, retries: Int){
-        if(index >= self.globalData.mediaList.count){
-            self.globalData.mediaFetched = true
+        if(index >= self.mediaList.count){
+            self.mediaFetched = true
         }
         else{
-            self.globalData.mediaList[index].fetchThumbnail(completion: { (error) in
+            self.mediaList[index].fetchThumbnail(completion: { (error) in
                 if(error != nil ) {
                     print("dwnld error: \(error!)")
                     if(retries < 5){
                         sleep(2)
                         self.downloadThumbnail(index: index, retries: retries+1)
                     } else {
-                        createAlert(globalData: self.globalData, title: "Downloading thumbnail image error", msg: "Error message: \(error!.localizedDescription).")
-                        self.globalData.mediaFetched = false
-                        self.globalData.mediaList = []
+                        GlobalAlertHelper.shared.createAlert(title: "Downloading thumbnail image error", msg: "Error message: \(error!.localizedDescription).")
+                        self.mediaFetched = false
+                        self.mediaList = []
                     }
                     return
                 }
-                if(self.globalData.libMode) {
-                    self.downloadThumbnail(index: self.globalData.mediaList.index(after: index), retries: retries)
+                if(ViewHelper.shared.libMode) {
+                    self.downloadThumbnail(index: self.mediaList.index(after: index), retries: retries)
                 }
             })
         }
@@ -160,12 +168,12 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
             return
         }
         
-        if(self.globalData.mediaLibPicked == nil) {
+        if(self.mediaLibPicked == nil) {
             completionHandler("Trying to remove preview file, while not previewing any")
             return
         }
         
-        files.insert(self.globalData.mediaLibPicked!)
+        files.insert(self.mediaLibPicked!)
         
         self.removeFiles(files: files, completionHandler: {(error) in
             completionHandler(error!)
@@ -227,7 +235,7 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
             self.camera!.mediaManager!.move(toPosition: time, withCompletion: {(error) in
                 if(error != nil){ completionHandler(error!.localizedDescription) }
                 else {
-                    if(!self.globalData.mediaPreviewVideoPlaying){
+                    if(!self.mediaPreviewVideoPlaying){
                         self.pauseVideo(){(error) in
                             if(error != nil) { completionHandler(error!) }
                             else {
@@ -252,18 +260,18 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
     func prepareVideoPreview(file : DJIMediaFile){
         self.playVideo(videoMedia: file){ (error) in
             if(error != nil){
-                createAlert(globalData: self.globalData, title: "Error", msg: "Error preparing video:  \(error!)")
+                GlobalAlertHelper.shared.createAlert(title: "Error", msg: "Error preparing video:  \(error!)")
                 return
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.pauseVideo(){ (error) in
                     if(error != nil){
-                        createAlert(globalData: self.globalData, title: "Error", msg: "Error preparing video:  \(error!)")
+                        GlobalAlertHelper.shared.createAlert(title: "Error", msg: "Error preparing video:  \(error!)")
                         return
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                        self.globalData.mediaPreviewReady = true
+                        self.mediaPreviewReady = true
                     }
                 }
             }
@@ -273,19 +281,19 @@ class LibraryCommunicationService : NSObject,DJIMediaManagerDelegate {
     func fetchPreviewFor(file: DJIMediaFile){
         file.fetchPreview(completion: {(error) in
             if(error != nil){
-                self.globalData.mediaLibPicked = nil
-                createAlert(globalData: self.globalData, title: "Error", msg: "Error opening preview: \(error!)")
+                self.mediaLibPicked = nil
+                GlobalAlertHelper.shared.createAlert(title: "Error", msg: "Error opening preview: \(error!)")
                 return
             }
-            self.globalData.mediaPreviewReady = true
+            self.mediaPreviewReady = true
         })
     }
     
     func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
         //Update time of preview
-        if(self.globalData.mediaLibPicked != nil && !self.changingVideoTime){
-            if(self.globalData.mediaPreviewVideoCTime != Int(state.playingPosition) && !self.globalData.mediaPreviewVideoChanging){
-                self.globalData.mediaPreviewVideoCTime = Int(state.playingPosition)
+        if(self.mediaLibPicked != nil && !self.changingVideoTime){
+            if(self.mediaPreviewVideoCTime != Int(state.playingPosition) && !self.mediaPreviewVideoChanging){
+                self.mediaPreviewVideoCTime = Int(state.playingPosition)
             }
             
             //FIXED ?

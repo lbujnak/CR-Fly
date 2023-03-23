@@ -1,46 +1,51 @@
 import DJISDK
+import SwiftUI
 
-class ProductCommunicationService: NSObject {
+class ProductCommunicationService: NSObject, ObservableObject {
     
-    private var globalData : GlobalData
-    var libController : LibraryCommunicationService
+    @ObservedObject static var shared = ProductCommunicationService()
     
-    typealias CompletionHandler = (_ error : String?) -> Void
+    @Published var sdkRegistered = false
+    @Published var connected = false
+    @Published var enableBridgeMode = false //false
+    @Published var bridgeAppIP = "192.168.10.42"
     
-    init(globalData: GlobalData) {
-        self.globalData = globalData
-        self.libController = LibraryCommunicationService(globalData: globalData)
-    }
+    var libController : LibraryCommunicationService = LibraryCommunicationService()
     
     func registerWithSDK() {
         let appKey = Bundle.main.object(forInfoDictionaryKey: SDK_APP_KEY_INFO_PLIST_KEY) as? String
         
         guard appKey != nil && appKey!.isEmpty == false else {
-            createAlert(globalData: self.globalData, title: "AppKey error", msg: "Please enter your app key in the info.plist")
+            GlobalAlertHelper.shared.createAlert(title: "AppKey error", msg: "Please enter your app key in the info.plist")
             return
         }
         DJISDKManager.registerApp(with: self)
+        
     }
     
     func connectToProduct(){
         DJISDKManager.stopConnectionToProduct()
-        if (self.globalData.enableBridgeMode) {
-            DJISDKManager.enableBridgeMode(withBridgeAppIP: self.globalData.bridgeAppIP)
-            print("Bridge connection to " + self.globalData.bridgeAppIP + " has been started.")
+        if (self.enableBridgeMode) {
+            DJISDKManager.enableBridgeMode(withBridgeAppIP: self.bridgeAppIP)
+            print("Bridge connection to " + self.bridgeAppIP + " has been started.")
         } else {
             if (DJISDKManager.startConnectionToProduct()) {
                 print("Connection has been started.")
             } else {
-                createAlert(globalData: self.globalData, title: "Connection error", msg: "There was a problem starting the connection.")
+                GlobalAlertHelper.shared.createAlert(title: "Connection error", msg: "There was a problem starting the connection.")
             }
         }
     }
     
+    func disconnect(){
+        DJISDKManager.stopConnectionToProduct()
+    }
+    
     func stopBridgeMode(){
-        self.globalData.droneConnected = false
-        self.globalData.enableBridgeMode = false
+        self.connected = false
+        self.enableBridgeMode = false
         DJISDKManager.disableBridgeMode()
-        print("Bridge connection to " + self.globalData.bridgeAppIP + " has been disabled.")
+        print("Bridge connection to " + self.bridgeAppIP + " has been disabled.")
     }
 }
 
@@ -52,11 +57,11 @@ extension ProductCommunicationService : DJISDKManagerDelegate {
     
     func appRegisteredWithError(_ error: Error?) {
         if (error != nil) {
-            createAlert(globalData: self.globalData, title: "SDK Registered with error", msg: error!.localizedDescription)
+            GlobalAlertHelper.shared.createAlert(title: "SDK Registered with error", msg: error!.localizedDescription)
             return
         }
         
-        self.globalData.sdkRegistered = true
+        self.sdkRegistered = true
         self.connectToProduct()
     }
     
@@ -64,37 +69,37 @@ extension ProductCommunicationService : DJISDKManagerDelegate {
         print("Entered productConnected")
         guard let _ = product else {
             print("Product connected but was nil")
-            createAlert(globalData: self.globalData, title: "Connection error", msg: "There was a problem connectiong to device.")
+            GlobalAlertHelper.shared.createAlert(title: "Connection error", msg: "There was a problem connectiong to device.")
             return
         }
-        self.globalData.droneConnected = true
+        self.connected = true
     }
     
     func productDisconnected() {
         print("Entered productDisconnected")
-        self.globalData.droneConnected = false
-        self.globalData.mediaFetched = false
-        self.globalData.mediaLibPicked = nil
-        self.globalData.mediaSections = []
-        self.globalData.mediaList = []
-        self.globalData.mediaPreviewReady = false
-        self.globalData.mediaPreviewVideoCTime = 0
-        self.globalData.mediaPreviewVideoPlaying = false
+        self.connected = false
+        self.libController.mediaFetched = false
+        self.libController.mediaLibPicked = nil
+        self.libController.mediaSections = []
+        self.libController.mediaList = []
+        self.libController.mediaPreviewReady = false
+        self.libController.mediaPreviewVideoCTime = 0
+        self.libController.mediaPreviewVideoPlaying = false
         
-        if(self.globalData.libMode) { self.globalData.libMode = false }
-        if(self.globalData.fpvMode) { self.globalData.fpvMode = false }
+        if(ViewHelper.shared.libMode) { ViewHelper.shared.libMode = false }
+        if(ViewHelper.shared.fpvMode) { ViewHelper.shared.fpvMode = false }
     }
     
     func componentConnected(withKey key: String?, andIndex index: Int) {
         print("Entered componentConnected")
-        if(!self.globalData.droneConnected && DJISDKManager.product() != nil && DJISDKManager.product()!.model != "Only RemoteController"){
+        if(!self.connected && DJISDKManager.product() != nil && DJISDKManager.product()!.model != "Only RemoteController"){
             self.productConnected(DJISDKManager.product())
         }
     }
     
     func componentDisconnected(withKey key: String?, andIndex index: Int) {
         print("Entered componentDisonnected")
-        if(self.globalData.droneConnected && (DJISDKManager.product() == nil || DJISDKManager.product()!.model == "Only RemoteController")){
+        if(self.connected && (DJISDKManager.product() == nil || DJISDKManager.product()!.model == "Only RemoteController")){
             self.productDisconnected()
         }
     }

@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct DroneFPVView: View {
-    @ObservedObject var globalData : GlobalData
-    
     var body: some View {
         ZStack{
             DefaultFPVLayoutStoryboard().edgesIgnoringSafeArea(.all)
@@ -10,19 +8,19 @@ struct DroneFPVView: View {
             VStack{
                 HStack{
                     Button("←"){
-                        self.globalData.fpvMode = false
+                        ViewHelper.shared.fpvMode = false
                     }.foregroundColor(.white).padding([.horizontal],-40).padding([.top],40).font(.largeTitle)
                     Spacer()
                 }
                 Spacer()
             }
-        }.alert(isPresented: self.$globalData.globalAlert){ Alert(title: self.globalData.alertTitle, message: self.globalData.alertMsg, dismissButton: .cancel())}
+        }.alert(isPresented: GlobalAlertHelper.$shared.active){ Alert(title: GlobalAlertHelper.shared.title, message: GlobalAlertHelper.shared.msg, dismissButton: .cancel()) }
     }
 }
 
 struct DroneFPVView_Previews: PreviewProvider {
     static var previews: some View {
-        DroneFPVView(globalData: GlobalData())
+        DroneFPVView()
     }
 }
 

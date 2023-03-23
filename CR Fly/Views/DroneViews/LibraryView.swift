@@ -3,29 +3,29 @@ import DJISDK
 
 struct LibraryView: View {
     
-    @ObservedObject var globalData : GlobalData
-    let djiService : ProductCommunicationService
+    @ObservedObject var djiService = ProductCommunicationService.shared
+    @ObservedObject var libController = ProductCommunicationService.shared.libController
     
     @State var selectMode = false
     @State var selectedItems : Set<DJIMediaFile> = []
     let columns = [GridItem(.adaptive(minimum: 140),alignment: .center)]
     
     var body: some View {
-        if(self.globalData.mediaList.count == 0 || !self.globalData.mediaFetched){
+        if(self.libController.mediaList.count == 0 || !self.libController.mediaFetched){
             VStack{
                 self.createTopBar()
-                if(self.globalData.mediaList.count == 0){
+                if(self.libController.mediaList.count == 0){
                     Spacer()
                     Image(systemName: "photo.fill").foregroundColor(.gray).font(.custom("Photo icon", fixedSize: 80))
                     Text("No video cache").foregroundColor(.gray).padding([.top],20)
                     Spacer()
                 }
-                else if(!self.globalData.mediaFetched){
+                else if(!self.libController.mediaFetched){
                     Spacer()
                     ProgressView().scaleEffect(x: 4, y: 4, anchor: .center).progressViewStyle(CircularProgressViewStyle(tint: .white))
                     Spacer()
                 }
-            }.background(Color.black.ignoresSafeArea())
+            }.background(Color.black.ignoresSafeArea()).alert(isPresented: GlobalAlertHelper.$shared.active){ Alert(title: GlobalAlertHelper.shared.title, message: GlobalAlertHelper.shared.msg, dismissButton: .cancel()) }
         }
         else{
             HideableTopView(){
@@ -34,7 +34,7 @@ struct LibraryView: View {
                 VStack{
                     self.createPreviewList()
                 }.background(Color.black.ignoresSafeArea())
-            }.background(Color.black.ignoresSafeArea()).alert(isPresented: self.$globalData.globalAlert){ Alert(title: self.globalData.alertTitle, message: self.globalData.alertMsg, dismissButton: .cancel()) }
+            }.background(Color.black.ignoresSafeArea()).alert(isPresented: GlobalAlertHelper.$shared.active){ Alert(title: GlobalAlertHelper.shared.title, message: GlobalAlertHelper.shared.msg, dismissButton: .cancel()) }
             if(self.selectMode){ self.createBottomBar() }
         }
     }
@@ -44,12 +44,12 @@ struct LibraryView: View {
             HStack(spacing: 30){
                 if(!self.selectMode){
                     Button("←"){
-                        self.globalData.libMode = false
-                        self.globalData.mediaFilter = 0
+                        ViewHelper.shared.libMode = false
+                        self.libController.mediaFilter = 0
                     }.foregroundColor(.gray).font(.largeTitle)
                     
                     Spacer()
-                    if(!self.globalData.droneConnected || DJISDKManager.product()!.model == nil) { Text("Aircraft Album").foregroundColor(.white) }
+                    if(!self.djiService.connected || DJISDKManager.product()!.model == nil) { Text("Aircraft Album").foregroundColor(.white) }
                     else { Text(DJISDKManager.product()!.model!).foregroundColor(.white) }
                     Spacer()
                     
@@ -80,21 +80,21 @@ struct LibraryView: View {
             
             HStack(alignment: .center){
                 HStack(alignment: .center,spacing: 100){
-                    Button{ self.globalData.mediaFilter = 0 }
+                    Button{ self.libController.mediaFilter = 0 }
                 label: {
-                    if(self.globalData.mediaFilter == 0) { Text("All").foregroundColor(.white) }
+                    if(self.libController.mediaFilter == 0) { Text("All").foregroundColor(.white) }
                     else { Text("All").foregroundColor(.gray) }
                 }
                     
-                    Button{ self.globalData.mediaFilter = 1 }
+                    Button{ self.libController.mediaFilter = 1 }
                 label: {
-                    if(self.globalData.mediaFilter == 1) { Text("Photos").foregroundColor(.white) }
+                    if(self.libController.mediaFilter == 1) { Text("Photos").foregroundColor(.white) }
                     else { Text("Photos").foregroundColor(.gray) }
                 }
                     
-                    Button{ self.globalData.mediaFilter = 2 }
+                    Button{ self.libController.mediaFilter = 2 }
                 label: {
-                    if(self.globalData.mediaFilter == 2) { Text("Videos").foregroundColor(.white) }
+                    if(self.libController.mediaFilter == 2) { Text("Videos").foregroundColor(.white) }
                     else { Text("Videos").foregroundColor(.gray) }
                 }
                 }.padding([.horizontal],100)
@@ -105,9 +105,9 @@ struct LibraryView: View {
     private func createBottomBar() -> some View{
         HStack(spacing: 50){
             Image(systemName: "trash").foregroundColor(.white).onTapGesture {
-                self.djiService.libController.removeFiles(files: self.selectedItems, completionHandler: {(error) in
+                self.libController.removeFiles(files: self.selectedItems, completionHandler: {(error) in
                     if(error != nil) {
-                        createAlert(globalData: self.globalData, title: "Error", msg: "There was an error during removing selected files: \(error!)")
+                        GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was an error during removing selected files: \(error!)")
                     }
                     else{
                         self.selectMode = false
@@ -121,21 +121,21 @@ struct LibraryView: View {
             Spacer()
             
             Button("Select All"){
-                for obj in self.globalData.mediaList{
+                for obj in self.libController.mediaList{
                     self.selectedItems.insert(obj)
                 }
             }.foregroundColor(.white)
             Spacer()
             
             Image(systemName: "square.and.arrow.up").foregroundColor(.white).onTapGesture {
-                createAlert(globalData: self.globalData, title: "In Develompent", msg: "This feature will be available in next version")
+                GlobalAlertHelper.shared.createAlert(title: "In De", msg: "This feature will be available in next version")
             }
         }.frame(height: 40).background(Color(red: 0.168, green: 0.168, blue: 0.168).ignoresSafeArea()).foregroundColor(.gray)
     }
     
     private func createPreviewList() -> some View{
         LazyVGrid(columns: columns, spacing: 5) {
-            ForEach(self.globalData.mediaSections.reversed(), id: \.self){ (subArray) in
+            ForEach(self.libController.mediaSections.reversed(), id: \.self){ (subArray) in
                 if(self.subArrayNotEmptyWithFilter(subArray: subArray)){
                     Section(){
                         ForEach(subArray.reversed(), id: \.self){ (file) in
@@ -166,12 +166,12 @@ struct LibraryView: View {
                     .onTapGesture {
                     if(self.selectMode) { self.selectedItems.insert(file) }
                     else {
-                        self.globalData.mediaLibPicked = file
+                        self.libController.mediaLibPicked = file
                         if(self.isVideo(file: file)){
-                            self.djiService.libController.prepareVideoPreview(file: file)
+                            self.libController.prepareVideoPreview(file: file)
                         }
                         else if(self.isPano(file: file) || self.isPhoto(file: file)){
-                            self.djiService.libController.fetchPreviewFor(file: file)
+                            self.libController.fetchPreviewFor(file: file)
                         }
                     }
                 }
@@ -205,7 +205,7 @@ struct LibraryView: View {
     }
     
     private func fileAcceptFilter(file: DJIMediaFile) ->Bool{
-        if(self.globalData.mediaFilter == 0 || (self.globalData.mediaFilter == 1 && (self.isPano(file: file) || self.isPhoto(file: file)) ) || (self.globalData.mediaFilter == 2 && self.isVideo(file: file))){
+        if(self.libController.mediaFilter == 0 || (self.libController.mediaFilter == 1 && (self.isPano(file: file) || self.isPhoto(file: file)) ) || (self.libController.mediaFilter == 2 && self.isVideo(file: file))){
             return true
         } else { return false}
     }
@@ -245,10 +245,7 @@ struct LibraryView: View {
 }
 
 struct LibraryView_Previews: PreviewProvider {
-    
-    static var previewData = GlobalData()
-    
     static var previews: some View {
-        LibraryView(globalData: previewData, djiService: ProductCommunicationService(globalData: previewData))
+        LibraryView()
     }
 }
