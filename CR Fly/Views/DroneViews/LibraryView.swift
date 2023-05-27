@@ -4,7 +4,7 @@ import DJISDK
 struct LibraryView: View {
     
     @ObservedObject var djiService = ProductCommunicationService.shared
-    @ObservedObject var rcNodeService = RCNodeCommunicationService.shared
+    @ObservedObject var rcProjectManagement = RCNodeCommunicationService.shared.projectManagement
     @ObservedObject var libController = ProductCommunicationService.shared.libController
     @ObservedObject var alertHelper = GlobalAlertHelper.shared
     
@@ -89,7 +89,7 @@ struct LibraryView: View {
             }.frame(height: 50).background(Color(red: 0.168, green: 0.168, blue: 0.168).ignoresSafeArea()).foregroundColor(.gray)
             
             if(self.libController.mediaDownloading){ createDownloadInfo() }
-            if(self.libController.mediaUploading) { createUploadInfo() }
+            if(self.rcProjectManagement.mediaUploading) { createUploadInfo() }
                 
             HStack(alignment: .center){
                 HStack(alignment: .center, spacing: 100){
@@ -134,12 +134,12 @@ struct LibraryView: View {
             HStack(spacing: 10){
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaledToFit().padding([.horizontal],10)
                 
-                Text("Uploading to CR, Project name: \(self.rcNodeService.currentProject.name)").foregroundColor(.white).font(.caption)
+                Text("Uploading files to CR, Project name: \(self.rcProjectManagement.currentProject.name)").foregroundColor(.white).font(.caption)
                 
                 Spacer()
                 
                 Image(systemName: "xmark").onTapGesture {
-                    self.libController.mediaUploading = false
+                    self.rcProjectManagement.mediaUploading = false
                 }.padding([.horizontal],-40).foregroundColor(.white)
             }.frame(height: 30).ignoresSafeArea().background(Color(red: 0.100, green: 0.100, blue: 0.100))
         }.padding([.vertical],-5)
@@ -178,7 +178,7 @@ struct LibraryView: View {
                     self.selectedItems.removeAll()
                 }.disabled(disab)
             
-                let rcDisab = disab || self.libController.mediaUploading || !self.rcNodeService.currentProject.loaded
+                let rcDisab = disab || self.rcProjectManagement.mediaUploading || !self.rcProjectManagement.currentProject.loaded
                 Image(systemName: "square.and.arrow.up").foregroundColor(rcDisab ? Color.gray : Color.white).onTapGesture {
                     libController.prepareFilesToUpload(selected: self.selectedItems)
                     self.selectMode = false
@@ -233,6 +233,14 @@ struct LibraryView: View {
                             Image(systemName: "tray.and.arrow.down.fill").foregroundColor(.white).padding([.trailing, .top],4).font(.custom("dwnld", size: 15))
                         } else {
                             Image(systemName: "tray.and.arrow.down.fill").foregroundColor(.blue).padding([.trailing, .top],4).font(.custom("dwnld", size: 15))
+                        }
+                    }
+                    
+                    if(!self.rcProjectManagement.currentProject.fileList.contains(file.fileName)){
+                        if(self.libController.isPhoto(file: file) || self.libController.isPano(file: file)){
+                            Image(systemName: "square.and.arrow.up.fill").foregroundColor(.white).padding([.trailing, .top],4).font(.custom("dwnld", size: 15))
+                        } else {
+                            Image(systemName: "square.and.arrow.up.fill").foregroundColor(.red).padding([.trailing, .top],4).font(.custom("dwnld", size: 15))
                         }
                     }
                     Spacer()

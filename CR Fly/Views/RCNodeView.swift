@@ -5,6 +5,7 @@ struct RCNodeView: View {
     @ObservedObject private var viewHelper = ViewHelper.shared
     @ObservedObject private var alertHelper = GlobalAlertHelper.shared
     @ObservedObject private var rcNodeComm = RCNodeCommunicationService.shared
+    @ObservedObject private var rcPM = RCNodeCommunicationService.shared.projectManagement
     
     @State private var infoBar = false
     @State private var newProjectAlert = false
@@ -14,9 +15,9 @@ struct RCNodeView: View {
     
     private var sPName: Binding<String> {
             Binding<String>(
-                get: { self.rcNodeComm.currentProject.name },
+                get: { self.rcPM.currentProject.name },
                 set: { self.projectCmds = true
-                    self.rcNodeComm.changeProject(name: $0){ error in
+                    self.rcPM.changeProject(name: $0){ error in
                         if(error != nil){
                             GlobalAlertHelper.shared.createAlert(title: "Error Selecting Project", msg: "\(error!)")
                         }
@@ -38,14 +39,25 @@ struct RCNodeView: View {
                     Spacer()
                     if(self.rcNodeComm.connectionLost){
                         Text("Missing connection - not connected to RC node.").font(.caption).foregroundColor(Color.red);
-                    }
-                    else if(!self.rcNodeComm.currentProject.loaded){
+                    } else if(!self.rcPM.currentProject.loaded){
                         Text("Missing project - create or open a new project by clicking on project name.").font(.caption).foregroundColor(Color.red);
+                    } else if(self.rcPM.mediaUploading) {
+                        HStack(spacing: 10){
+                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaledToFit().padding([.horizontal],10)
+                            
+                            Text("Uploading files to CR, Project name: \(self.rcPM.currentProject.name)").foregroundColor(.white).font(.caption)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "xmark").onTapGesture {
+                                self.rcPM.mediaUploading = false
+                            }.padding([.horizontal],-40).foregroundColor(.white)
+                        }
                     }
                     Spacer()
                     
                     Image(systemName: "info.circle").foregroundColor(self.infoBar ? Color.gray : Color.white).font(.title2).padding([.horizontal],-40).onTapGesture {
-                        self.rcNodeComm.refreshProjectList(){ error in
+                        self.rcPM.refreshProjectList(){ error in
                             if(error != nil){
                                 GlobalAlertHelper.shared.createAlert(title: "Error Refreshing Project List", msg: "\(error!)")
                                 return
@@ -77,8 +89,8 @@ struct RCNodeView: View {
                         Text("Project Name:").bold()
                         Menu(){
                             Picker(selection: self.sPName, label: Text("")){
-                                ForEach(0..<self.rcNodeComm.projectList.count, id: \.self){ index in
-                                    Text(self.rcNodeComm.projectList[index]).tag(self.rcNodeComm.projectList[index])
+                                ForEach(0..<self.rcPM.projectList.count, id: \.self){ index in
+                                    Text(self.rcPM.projectList[index]).tag(self.rcPM.projectList[index])
                                 }
                             }
                         } label: {
@@ -88,7 +100,7 @@ struct RCNodeView: View {
                         }.frame(width: 150)
                         
                         Image(systemName: "arrow.clockwise").foregroundColor(self.rcNodeComm.connectionLost ? Color.gray : Color.white).onTapGesture {
-                            self.rcNodeComm.refreshProjectList(){ error in
+                            self.rcPM.refreshProjectList(){ error in
                                 if(error != nil){
                                     self.alertHelper.createAlert(title: "Project Refresh Error", msg: "\(error!)")
                                 }
@@ -96,16 +108,16 @@ struct RCNodeView: View {
                         }.disabled(self.rcNodeComm.connectionLost)
                     }
                     
-                    Text("ImageCount: \(self.rcNodeComm.currentProject.imageCnt)")
-                    Text("ComponentCount: \(self.rcNodeComm.currentProject.componentCnt)")
-                    Text("SessionID: \((self.rcNodeComm.currentProject.sessionID as NSString).substring(to: min(self.rcNodeComm.currentProject.sessionID.count, 16)))...")
+                    Text("ImageCount: \(self.rcPM.currentProject.imageCnt)")
+                    Text("ComponentCount: \(self.rcPM.currentProject.componentCnt)")
+                    Text("SessionID: \((self.rcPM.currentProject.sessionID as NSString).substring(to: min(self.rcPM.currentProject.sessionID.count, 16)))...")
                     
                     HStack{
                         //Create Project Btn
                         Button(){
                             self.newProjectAlert = true
                         } label: {
-                            Text("New").foregroundColor(self.rcNodeComm.currentProject.loaded ? Color.gray : Color.white).padding([.vertical],5).padding([.horizontal],8)
+                            Text("New").foregroundColor(self.rcPM.currentProject.loaded ? Color.gray : Color.white).padding([.vertical],5).padding([.horizontal],8)
                         }.alert("Connect", isPresented: self.$newProjectAlert, actions: {
                             TextField("Project Name", text: self.$newProjectName).foregroundColor(.black)
                             Button("Create") {
@@ -113,12 +125,12 @@ struct RCNodeView: View {
                                 self.newProjectName = ""
                             }
                             Button("Cancel"){ self.newProjectName = "" }
-                        },message: { Text("Please enter new project's name.") }).background(Color.gray.opacity(self.rcNodeComm.currentProject.loaded ? 0.5 : 1)).cornerRadius(10).disabled(self.rcNodeComm.currentProject.loaded)
+                        },message: { Text("Please enter new project's name.") }).background(Color.gray.opacity(self.rcPM.currentProject.loaded ? 0.5 : 1)).cornerRadius(10).disabled(self.rcPM.currentProject.loaded)
                         
                         //Save Project Btn
                         Button(){
                             self.projectCmds = true
-                            self.rcNodeComm.saveProject(){ error in
+                            self.rcPM.saveProject(){ error in
                                 if(error != nil){
                                     GlobalAlertHelper.shared.createAlert(title: "Error Saving Project", msg: "\(error!)")
                                     return
@@ -126,30 +138,28 @@ struct RCNodeView: View {
                                 self.projectCmds = false
                             }
                         } label: {
-                            Text("Save").foregroundColor(self.rcNodeComm.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
-                        }.background(Color.gray.opacity(self.rcNodeComm.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcNodeComm.currentProject.loaded)
+                            Text("Save").foregroundColor(self.rcPM.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
+                        }.background(Color.gray.opacity(self.rcPM.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcPM.currentProject.loaded)
                         
                         //Close project Btn
                         Button(){
                             self.projectCmds = true
-                            self.rcNodeComm.closeProject(){ error in
+                            self.rcPM.closeProject(){ error in
                                 if(error != nil){
                                     GlobalAlertHelper.shared.createAlert(title: "Error Closing Project", msg: "\(error!)")
                                 }
                                 self.projectCmds = false
                             }
                         } label: {
-                            Text("Close").foregroundColor(self.rcNodeComm.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
-                        }.background(Color.gray.opacity(self.rcNodeComm.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcNodeComm.currentProject.loaded)
+                            Text("Close").foregroundColor(self.rcPM.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
+                        }.background(Color.gray.opacity(self.rcPM.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcPM.currentProject.loaded)
                         
                         //Status project Btn
-                        /*Button(){
-                            //self.projectCmds = true
-                            //self.rcNodeComm.getProjectStatus()
-                            //self.rcNodeComm.createTemplateFile()
+                        Button(){
+                            //self.rcNodeComm.taskObserver.checkTasks()
                         } label: {
-                            Text("Status").foregroundColor(self.rcNodeComm.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
-                        }.background(Color.gray.opacity(self.rcNodeComm.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcNodeComm.currentProject.loaded)*/
+                            Text("Status").foregroundColor(self.rcPM.currentProject.loaded ? Color.white : Color.gray).padding([.vertical],5).padding([.horizontal],8)
+                        }.background(Color.gray.opacity(self.rcPM.currentProject.loaded ? 1 : 0.5)).cornerRadius(10).disabled(!self.rcPM.currentProject.loaded)
                     }
                 }.padding([.vertical,.horizontal],10).foregroundColor(.white)
             }.background(Color.gray.opacity(0.3))

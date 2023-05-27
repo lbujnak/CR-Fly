@@ -15,6 +15,8 @@
 		804622C3297A98A100EE041A /* VideoPreviewerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804622C2297A98A100EE041A /* VideoPreviewerAdapter.swift */; };
 		804622C5297A990000EE041A /* DecodeImageCalibrateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804622C4297A990000EE041A /* DecodeImageCalibrateLogic.swift */; };
 		805AC6FE2A17DD02008061FE /* RCNodeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AC6FD2A17DD02008061FE /* RCNodeScene.swift */; };
+		805AC7022A224153008061FE /* ProjectManagementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AC7012A224153008061FE /* ProjectManagementService.swift */; };
+		805AC7082A2243FD008061FE /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AC7072A2243FD008061FE /* HTTPHelper.swift */; };
 		808A30FC295E1D8F00B17677 /* DJIDefaultFPV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 808A30FB295E1D8F00B17677 /* DJIDefaultFPV.storyboard */; };
 		808A30FE295E1D9D00B17677 /* DefaultFPVLayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A30FD295E1D9D00B17677 /* DefaultFPVLayoutController.swift */; };
 		808A3100295E1E0500B17677 /* DroneFPVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A30FF295E1E0500B17677 /* DroneFPVView.swift */; };
@@ -44,6 +46,8 @@
 		804622C4297A990000EE041A /* DecodeImageCalibrateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageCalibrateLogic.swift; sourceTree = "<group>"; };
 		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
 		805AC6FD2A17DD02008061FE /* RCNodeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeScene.swift; sourceTree = "<group>"; };
+		805AC7012A224153008061FE /* ProjectManagementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManagementService.swift; sourceTree = "<group>"; };
+		805AC7072A2243FD008061FE /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
 		808A30FB295E1D8F00B17677 /* DJIDefaultFPV.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DJIDefaultFPV.storyboard; sourceTree = "<group>"; };
 		808A30FD295E1D9D00B17677 /* DefaultFPVLayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFPVLayoutController.swift; sourceTree = "<group>"; };
 		808A30FF295E1E0500B17677 /* DroneFPVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneFPVView.swift; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				80E2C83129BFA87400C3FD36 /* RCNodeCommunicationService.swift */,
+				805AC7012A224153008061FE /* ProjectManagementService.swift */,
+				805AC7072A2243FD008061FE /* HTTPHelper.swift */,
 			);
 			path = RCNodeServices;
 			sourceTree = "<group>";
@@ -329,10 +335,12 @@
 				808A30FE295E1D9D00B17677 /* DefaultFPVLayoutController.swift in Sources */,
 				80E2C83229BFA87400C3FD36 /* RCNodeCommunicationService.swift in Sources */,
 				804622C3297A98A100EE041A /* VideoPreviewerAdapter.swift in Sources */,
+				805AC7022A224153008061FE /* ProjectManagementService.swift in Sources */,
 				808F8E7A2979701B00615628 /* LibraryPreviewView.swift in Sources */,
 				803D79B5294E053300DC0D3E /* MainView.swift in Sources */,
 				803D79DA2950732800DC0D3E /* LibraryView.swift in Sources */,
 				808A3100295E1E0500B17677 /* DroneFPVView.swift in Sources */,
+				805AC7082A2243FD008061FE /* HTTPHelper.swift in Sources */,
 				804622C5297A990000EE041A /* DecodeImageCalibrateLogic.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
 				805AC6FE2A17DD02008061FE /* RCNodeScene.swift in Sources */,

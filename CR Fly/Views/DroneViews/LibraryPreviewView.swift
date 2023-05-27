@@ -4,7 +4,7 @@ import DJISDK
 struct LibraryPreviewView: View {
     
     @ObservedObject var djiService = ProductCommunicationService.shared
-    @ObservedObject var rcNodeService = RCNodeCommunicationService.shared
+    @ObservedObject var rcProjectManagement = RCNodeCommunicationService.shared.projectManagement
     @ObservedObject var libController = ProductCommunicationService.shared.libController
     @ObservedObject var alertHelper = GlobalAlertHelper.shared
     
@@ -96,7 +96,7 @@ struct LibraryPreviewView: View {
                 }
                 Spacer()
                 
-                let disab : Bool = self.libController.mediaDownloading || self.libController.mediaUploading || !self.rcNodeService.currentProject.loaded
+                let disab : Bool = self.libController.mediaDownloading || self.rcProjectManagement.mediaUploading || !self.rcProjectManagement.currentProject.loaded
                 Image(systemName: "square.and.arrow.up").font(.title2).padding([.top],10).foregroundColor(disab ? Color.gray : Color.white).onTapGesture {
                     self.libController.prepareFilesToUpload(selected: [self.libController.mediaLibPicked!])
                 }.disabled(disab)

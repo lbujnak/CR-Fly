@@ -5,14 +5,16 @@ import Photos
 
 class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, ObservableObject {
     
+    @ObservedObject private var rcProjectManager = RCNodeCommunicationService.shared.projectManagement
+    
     //Global for downloading btn
     @Published var savable : Bool = false
     
     //Library View
     @Published var mediaFilter = 0 //0 - All, 1 - Photos, 2 - Videos
     @Published var mediaFetched = false
-    @Published var mediaList : [DJIMediaFile] = []
-    @Published var mediaSections : [[DJIMediaFile]] = []
+    @Published var mediaList = [DJIMediaFile]()
+    @Published var mediaSections = [[DJIMediaFile]]()
     @Published var interruptThumbnailDwnld = false
     
     //Library Preview View
@@ -23,13 +25,13 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
     @Published var mediaPreviewVideoChanging : Bool = false
 
     //Downloading vars and stats
-    @Published var mediaDownloadList : [DJIMediaFile] = []
+    @Published var mediaDownloadList = [DJIMediaFile]()
     @Published var mediaDownloading : Bool = false {
         didSet {
-            if(self.mediaUploading && !self.mediaDownloading){
+            if(self.rcProjectManager.mediaUploading && !self.mediaDownloading){
                 if(self.mediaDownloaded != self.mediaDownloadList.count){
                     GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload from\(self.mediaDownloaded)")
-                    self.mediaUploading = false
+                    self.rcProjectManager.mediaUploading = false
                 }
             }
         }
@@ -37,18 +39,16 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
     @Published var mediaDownloaded : Int = 0 {
         didSet{
             if(self.mediaDownloaded > 0){
-                if(self.mediaUploading) {
+                if(self.rcProjectManager.mediaUploading) {
                     let url = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent(self.mediaDownloadList[self.mediaDownloaded-1].fileName)
-                    RCNodeCommunicationService.shared.sendSingleImage(path: url){ error in
+                    self.rcProjectManager.sendSingleImage(path: url){ error in
                         if(error != nil){
                             GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload from\(self.mediaDownloaded-1), error: \(error!)")
-                            self.mediaUploading = false
                             self.mediaDownloading = false
                         }
                         
                         try! FileManager.default.removeItem(atPath: url.relativePath)
                     }
-                    self.mediaUploading = (self.mediaDownloaded == self.mediaDownloadList.count) ? false:true
                 }
             }
         }
@@ -56,9 +56,6 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
     @Published var stat_dwnBytes : Int64 = 0
     @Published var stat_totalBytes : Int64 = 0
     @Published var stat_speed : Float = 0
-    
-    //Uploading to RC
-    @Published var mediaUploading : Bool = false
     
     private var drone : DJIBaseProduct? = nil
     private var camera : DJICamera? = nil
@@ -318,14 +315,11 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
         for file in selected {
             self.stat_totalBytes += file.fileSizeInBytes
             if(self.mediaSaved(file: file)){
-                if(self.mediaUploading){
+                if(self.rcProjectManager.mediaUploading){
                     let url = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent(file.fileName)
-                    RCNodeCommunicationService.shared.sendSingleImage(path: url){ error in
+                    self.rcProjectManager.sendSingleImage(path: url){ error in
                         if(error != nil){
                             GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload, error: \(error!)")
-                            DispatchQueue.main.async {
-                                self.mediaUploading = false
-                            }
                         }
                     }
                 }
@@ -342,8 +336,6 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
                 self.updateTransSpeed(lastBytes: 0)
             }
-        } else {
-            self.mediaUploading = false
         }
     }
     
@@ -445,7 +437,7 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
         }
         
         if(uploadList.count > 0){
-            self.mediaUploading = true
+            self.rcProjectManager.mediaUploading = true
             self.prepareAndDownload(selected: uploadList)
         }
     }

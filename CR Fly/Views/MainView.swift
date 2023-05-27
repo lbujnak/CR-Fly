@@ -7,6 +7,9 @@ struct MainView: View {
     @State private var rcNodeAuthAlert = false
     @State private var rcNodeIsConnecting = false;
     
+    @State var rcIPAddr = "192.168.10.15" //"192.168.11.100"
+    @State var rcAuthToken = "674746F1-C361-413B-B427-BD769E7BE96E" //"383F0345-9E6E-461F-907F-534337987967"
+    
     @ObservedObject var viewHelper = ViewHelper.shared
     @ObservedObject var djiService = ProductCommunicationService.shared
     @ObservedObject var rcNodeService = RCNodeCommunicationService.shared
@@ -65,11 +68,11 @@ struct MainView: View {
                             Button("Connect"){
                                 self.rcNodeConnAlert = true;
                             }.alert("Connect", isPresented: self.$rcNodeConnAlert, actions: {
-                                TextField("IP Address", text: self.$rcNodeService.ip)
-                                TextField("Auth Token", text: self.$rcNodeService.authToken)
+                                TextField("IP Address", text: self.$rcIPAddr)
+                                TextField("Auth Token", text: self.$rcAuthToken)
                                 Button("Connect") {
                                     self.rcNodeIsConnecting = true
-                                    self.rcNodeService.connectUserToRc(){ (error) in
+                                    self.rcNodeService.connectUserToRc(ip: self.rcIPAddr, authToken: self.rcAuthToken){ (error) in
                                         DispatchQueue.main.async {
                                             if(error != nil){
                                                 GlobalAlertHelper.shared.createAlert(title: "RCNode Connection Error", msg: error!)
