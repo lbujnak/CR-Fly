@@ -10,6 +10,7 @@ struct MainView: View {
     @ObservedObject var viewHelper = ViewHelper.shared
     @ObservedObject var djiService = ProductCommunicationService.shared
     @ObservedObject var rcNodeService = RCNodeCommunicationService.shared
+    @ObservedObject var alertHelper = GlobalAlertHelper.shared
     
     var body: some View {
         ZStack{
@@ -23,17 +24,16 @@ struct MainView: View {
                         HStack(){
                             if(self.djiService.connected){
                                 Button("Lets FLY!"){
-                                    self.djiService.libController.stopPlaybackMode(completionHandler: {(error) in
+                                    self.djiService.libController.prepareFPV(){ (error) in
                                         if(error != nil){
                                             GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening fpv view: \(String(describing: error)).")
-                                        } else {
-                                            self.viewHelper.fpvMode = true
                                         }
-                                    })
+                                        else { self.viewHelper.fpvMode = true }
+                                    }
                                 }.buttonStyle(.bordered).font(.title2)
                                 
                                 Button("Photo Library"){
-                                    self.djiService.libController.startPlaybackMode(downloadPreview: true, completionHandler: {(error) in
+                                    self.djiService.libController.startPlaybackMode(completionHandler: {(error) in
                                         if(error != nil) {
                                             GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening library: \(String(describing: error)).")
                                         } else{ self.viewHelper.libMode = true }
@@ -66,12 +66,11 @@ struct MainView: View {
                                 self.rcNodeConnAlert = true;
                             }.alert("Connect", isPresented: self.$rcNodeConnAlert, actions: {
                                 TextField("IP Address", text: self.$rcNodeService.ip)
+                                TextField("Auth Token", text: self.$rcNodeService.authToken)
                                 Button("Connect") {
-                                    self.rcNodeIsConnecting = true;
-                                    self.rcNodeService.connectToRC(){ (error) in
-                                        if (error != nil && error! == "AuthRequired"){
-                                            self.rcNodeAuthAlert = true
-                                        } else{
+                                    self.rcNodeIsConnecting = true
+                                    self.rcNodeService.connectUserToRc(){ (error) in
+                                        DispatchQueue.main.async {
                                             if(error != nil){
                                                 GlobalAlertHelper.shared.createAlert(title: "RCNode Connection Error", msg: error!)
                                             }
@@ -80,23 +79,11 @@ struct MainView: View {
                                     }
                                 }
                             },message: {
-                                Text("Please enter IP Address of local WINDOWS computer running RCNode.")
+                                Text("Please enter (local) ip address of computer runing RCNode and access token, located in RealityCapture Second-Screen to authorize this device.")
                             }).buttonStyle(.bordered).font(.title3)
-                            
-                                .alert("Autorize", isPresented: self.$rcNodeAuthAlert, actions: {
-                                    TextField("Auth token", text: self.$rcNodeService.authToken)
-                                    Button("Authorize") {
-                                        self.rcNodeService.connectToRC(){ (error) in
-                                            if(error != nil){
-                                                GlobalAlertHelper.shared.createAlert(title: "RCNode Connection Error", msg: error!)
-                                            }
-                                            self.rcNodeIsConnecting = false;
-                                        }
-                                    }
-                                })
                         } else {
                             Button("Disconnect"){
-                                self.rcNodeService.autorized = false;
+                                self.rcNodeService.closeConnection()
                             }.buttonStyle(.bordered).font(.title3)
                         }
                         
@@ -122,7 +109,7 @@ struct MainView: View {
                     }
                 }.padding([.top],50).padding([.horizontal],20)
                 Spacer()
-            }.padding([.top, .horizontal], 60).alert(isPresented: GlobalAlertHelper.$shared.active){ Alert(title: GlobalAlertHelper.shared.title, message: GlobalAlertHelper.shared.msg, dismissButton: .cancel()) }
+            }.padding([.top, .horizontal], 60).alert(isPresented: self.$alertHelper.active){ Alert(title: self.alertHelper.title, message: self.alertHelper.msg, dismissButton: .cancel()) }
             
             if(self.rcNodeIsConnecting){
                 Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
@@ -132,10 +119,3 @@ struct MainView: View {
         }
     }
 }
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(djiService: ProductCommunicationService(), rcNodeService: RCNodeCommunicationService())
-    }
-}
-

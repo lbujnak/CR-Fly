@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct DroneFPVView: View {
+    
+    @ObservedObject var alertHelper = GlobalAlertHelper.shared
+    
     var body: some View {
         ZStack{
             DefaultFPVLayoutStoryboard().edgesIgnoringSafeArea(.all)
@@ -14,7 +17,7 @@ struct DroneFPVView: View {
                 }
                 Spacer()
             }
-        }.alert(isPresented: GlobalAlertHelper.$shared.active){ Alert(title: GlobalAlertHelper.shared.title, message: GlobalAlertHelper.shared.msg, dismissButton: .cancel()) }
+        }.alert(isPresented: self.$alertHelper.active){ Alert(title: self.alertHelper.title, message: self.alertHelper.msg, dismissButton: .cancel()) }
     }
 }
 

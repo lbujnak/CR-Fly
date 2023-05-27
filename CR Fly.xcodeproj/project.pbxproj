@@ -14,6 +14,7 @@
 		803D79DA2950732800DC0D3E /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79D92950732800DC0D3E /* LibraryView.swift */; };
 		804622C3297A98A100EE041A /* VideoPreviewerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804622C2297A98A100EE041A /* VideoPreviewerAdapter.swift */; };
 		804622C5297A990000EE041A /* DecodeImageCalibrateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804622C4297A990000EE041A /* DecodeImageCalibrateLogic.swift */; };
+		805AC6FE2A17DD02008061FE /* RCNodeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AC6FD2A17DD02008061FE /* RCNodeScene.swift */; };
 		808A30FC295E1D8F00B17677 /* DJIDefaultFPV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 808A30FB295E1D8F00B17677 /* DJIDefaultFPV.storyboard */; };
 		808A30FE295E1D9D00B17677 /* DefaultFPVLayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A30FD295E1D9D00B17677 /* DefaultFPVLayoutController.swift */; };
 		808A3100295E1E0500B17677 /* DroneFPVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A30FF295E1E0500B17677 /* DroneFPVView.swift */; };
@@ -41,6 +42,8 @@
 		803D79D92950732800DC0D3E /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		804622C2297A98A100EE041A /* VideoPreviewerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewerAdapter.swift; sourceTree = "<group>"; };
 		804622C4297A990000EE041A /* DecodeImageCalibrateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageCalibrateLogic.swift; sourceTree = "<group>"; };
+		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
+		805AC6FD2A17DD02008061FE /* RCNodeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeScene.swift; sourceTree = "<group>"; };
 		808A30FB295E1D8F00B17677 /* DJIDefaultFPV.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DJIDefaultFPV.storyboard; sourceTree = "<group>"; };
 		808A30FD295E1D9D00B17677 /* DefaultFPVLayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFPVLayoutController.swift; sourceTree = "<group>"; };
 		808A30FF295E1E0500B17677 /* DroneFPVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneFPVView.swift; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 		803D79B1294E053300DC0D3E /* CR Fly */ = {
 			isa = PBXGroup;
 			children = (
+				805AC6FC2A1510B9008061FE /* CR Fly.entitlements */,
 				8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */,
 				803D79B6294E053500DC0D3E /* Assets.xcassets */,
 				80BA96F529CCC10500E3B032 /* ViewHelper.swift */,
@@ -121,6 +125,7 @@
 		803D79D629506F8D00DC0D3E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				805AC6F92A1500A8008061FE /* ViewHelpers */,
 				80BA96F029CCBC1E00E3B032 /* DroneViews */,
 				803D79B4294E053300DC0D3E /* MainView.swift */,
 				80BA96F329CCBC7100E3B032 /* RCNodeView.swift */,
@@ -135,6 +140,14 @@
 				804622C4297A990000EE041A /* DecodeImageCalibrateLogic.swift */,
 			);
 			path = PlaybackHelper;
+			sourceTree = "<group>";
+		};
+		805AC6F92A1500A8008061FE /* ViewHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				805AC6FD2A17DD02008061FE /* RCNodeScene.swift */,
+			);
+			path = ViewHelpers;
 			sourceTree = "<group>";
 		};
 		808A30FA295E1D7900B17677 /* FPV */ = {
@@ -322,6 +335,7 @@
 				808A3100295E1E0500B17677 /* DroneFPVView.swift in Sources */,
 				804622C5297A990000EE041A /* DecodeImageCalibrateLogic.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
+				805AC6FE2A17DD02008061FE /* RCNodeScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +466,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "CR Fly/CR Fly.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -460,12 +475,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CR-Fly-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access position on map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To allow saving photos to phone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -487,6 +506,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "CR Fly/CR Fly.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -495,12 +515,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CR-Fly-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access position on map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To allow saving photos to phone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -10,11 +10,12 @@ class GlobalAlertHelper : ObservableObject{
     
     //TODO:: Implementovat zasobnik alertov
     
-    
     func createAlert(title : String, msg : String){
-        self.title = Text(title)
-        self.msg = Text(msg)
-        self.active = true
+        DispatchQueue.main.async {
+            self.title = Text(title)
+            self.msg = Text(msg)
+            self.active = true
+        }
     }
 }
 

@@ -17,10 +17,10 @@ struct AppController: App {
                 DroneFPVView()
             }
             else if(self.viewHelper.libMode){
-                if(self.djiService.libController.mediaLibPicked == nil){
-                    LibraryView()
+                if(self.viewHelper.libModePicked){
+                    LibraryPreviewView()
                 }
-                else { LibraryPreviewView() }
+                else { LibraryView() }
             }
             else if(self.viewHelper.rcContMode){
                 RCNodeView()
