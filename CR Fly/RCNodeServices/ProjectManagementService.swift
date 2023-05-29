@@ -132,27 +132,15 @@ class ProjectManagementService : ObservableObject {
             
             case "updateProjectInfo": do { self.updateProjectInfo() }
             
-            case "updateScene": do {
-                DispatchQueue.main.async {
-                    self.aligningImages = false
-                    self.evaluatingPoints = true
-                    self.evaluatingCameras = true
-                }
-                self.evalSceneTemplate()
-            }
-            
+            case "updateScene": do { self.evalSceneTemplate() }
             case "updateScenePoints": do { self.addPointsToScene() }
             case "updateSceneCams": do { self.addCamerasToScene()  }
-            case "calculateModel": do { self.calculateModel() }
-            case "exportModel": do {
-                DispatchQueue.main.async {
-                    self.calculatingModel = false
-                    self.exportingModel = true
-                }
-                self.exportModel()
-            }
-            
-            case "loadModel": do { self.downloadAndLoadModel() }
+            case "calculateModelPreview": do { self.calculateModel(previewModel: true) }
+            case "calculateModelNormal": do { self.calculateModel(previewModel: false) }
+            case "exportModelPreview": do { self.exportModel(previewModel: true) }
+            case "exportModelNormal": do { self.exportModel(previewModel: false) }
+            case "loadModelPreview": do { self.downloadAndLoadModel(previewModel: true) }
+            case "loadModelNormal": do { self.downloadAndLoadModel(previewModel: false) }
             default: do { return }
         }
         
@@ -380,10 +368,15 @@ class ProjectManagementService : ObservableObject {
                     if(!self.projectFirstLoad){
                         self.doTask(task: "", myCmd: "updateScene")
                         
-                        let fileUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model.obj")
-                        if(FileManager.default.fileExists(atPath: fileUrl.relativePath)){
+                        let preview = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("preview-model.obj")
+                        let normal = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model.obj")
+                        if(FileManager.default.fileExists(atPath: preview.relativePath)){
+                            self.hasLoadedPModel = true
+                            RCNodeScene.sharedPreviewModel.addModel(path: preview)
+                        }
+                        if(FileManager.default.fileExists(atPath: normal.relativePath)){
                             self.hasLoadedNModel = true
-                            RCNodeScene.sharedModel.addModel(path: fileUrl)
+                            RCNodeScene.sharedModel.addModel(path: normal)
                         }
                             
                         self.projectFirstLoad = true
@@ -399,6 +392,7 @@ class ProjectManagementService : ObservableObject {
     
     func evalSceneTemplate(){
         DispatchQueue.main.async {
+            self.aligningImages = false
             self.evaluatingPoints = true
             self.evaluatingCameras = true
         }
@@ -524,54 +518,93 @@ class ProjectManagementService : ObservableObject {
         }
     }
     
-    func prepareModelToExport() {
+    func prepareModelToExport(previewModel: Bool) {
         self.calculatingModel = true
+        if(previewModel) { RCNodeScene.sharedPreviewModel.clearScene() }
+        else { RCNodeScene.sharedModel.clearScene() }
         self.httpHelper.httpPattern(url: "/project/command?name=selectTrianglesInsideReconReg", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "calculateModel") }
+                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "calculateModelPreview":"calculateModelNormal") }
             }
         }
     }
     
-    func calculateModel() {
-        self.httpHelper.httpPattern(url: "/project/command?name=calculateNormalModel", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+    func calculateModel(previewModel: Bool) {
+        let url = (previewModel) ? "/project/command?name=calculatePreviewModel" : "/project/command?name=calculateNormalModel"
+        self.httpHelper.httpPattern(url: url, tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "exportModel") }
+                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "exportModelPreview":"exportModelNormal") }
             }
         }
     }
     
-    func exportModel() {
-        self.httpHelper.httpPattern(url: "/project/command?name=exportSelectedModel&param1=normal-model.obj", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+    func exportModel(previewModel: Bool) {
+        DispatchQueue.main.async {
+            self.calculatingModel = false
+            self.exportingModel = true
+        }
+        let filename = (previewModel) ? "preview-model.obj":"normal-model.obj"
+        self.httpHelper.httpPattern(url: "/project/command?name=exportSelectedModel&param1=\(filename)", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "loadModel") }
+                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "loadModelPreview" : "loadModelNormal") }
             }
         }
     }
     
-    func downloadAndLoadModel() {
-        let request = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=normal-model.obj&folder=output", sessionID: self.currentProject.sessionID)
+    func downloadAndLoadModel(previewModel: Bool) {
+        let filename = (previewModel) ? "preview-model":"normal-model"
         
-        URLSession.shared.downloadTask(with: request) { (tempLocalUrl, response, error) in
+        //toto robi z 3D modelu nepeknu blbost -> nic neni vidno ;(
+        /*let mtlRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).mtl&folder=output", sessionID: self.currentProject.sessionID)
+        URLSession.shared.downloadTask(with: mtlRequest) { (mtlTempUrl, mtlResponse, mtlError) in
             DispatchQueue.main.async {
-                if(error != nil || tempLocalUrl == nil || ((response as! HTTPURLResponse).statusCode / 100) != 2){
-                    GlobalAlertHelper.shared.showError(msg: "Cannot download model to device!")
-                }
-                
-                let fileUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model.obj")
-                do {
-                    if(FileManager.default.fileExists(atPath: fileUrl.relativePath)){
-                        try FileManager.default.removeItem(at: fileUrl)
+                if(mtlError != nil || mtlTempUrl == nil || ((mtlResponse as! HTTPURLResponse).statusCode / 100) != 2){
+                    self.exportingModel = false
+                    GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
+                } else {
+                    let mtlUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("\(filename).mtl")
+                    do {
+                        if(FileManager.default.fileExists(atPath: mtlUrl.relativePath)){ try FileManager.default.removeItem(at: mtlUrl) }
+                        try FileManager.default.copyItem(at: mtlTempUrl!, to: mtlUrl)
+                    } catch {
+                        self.exportingModel = false;
+                        GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
+                        return
                     }
-                    try FileManager.default.copyItem(at: tempLocalUrl!, to: fileUrl)
-                } catch { GlobalAlertHelper.shared.showError(msg: "Cannot download model to device!") }
-                self.hasLoadedNModel = true
-                RCNodeScene.sharedModel.addModel(path: fileUrl)
-                self.exportingModel = false
+                }
             }
+        }.resume()*/
+        
+        let objRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).obj&folder=output", sessionID: self.currentProject.sessionID)
+        URLSession.shared.downloadTask(with: objRequest) { (objTempUrl, objResponse, objError) in
+            if(objError != nil || objTempUrl == nil || ((objResponse as! HTTPURLResponse).statusCode / 100) != 2){
+                GlobalAlertHelper.shared.showError(msg: "Cannot download model's .obj file to device!")
+            } else {
+                let objUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("\(filename).obj")
+                do {
+                    if(FileManager.default.fileExists(atPath: objUrl.relativePath)){ try FileManager.default.removeItem(at: objUrl) }
+                    try FileManager.default.copyItem(at: objTempUrl!, to: objUrl)
+                } catch {
+                    DispatchQueue.main.async { self.exportingModel = false }
+                    GlobalAlertHelper.shared.showError(msg: "Cannot download model's .obj file to device!")
+                    return
+                }
+                if(previewModel){
+                    DispatchQueue.main.async {
+                        self.hasLoadedPModel = true
+                        RCNodeScene.sharedPreviewModel.addModel(path: objUrl)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.hasLoadedNModel = true
+                        RCNodeScene.sharedModel.addModel(path: objUrl)
+                    }
+                }
+            }
+            DispatchQueue.main.async { self.exportingModel = false }
         }.resume()
     }
 }

@@ -175,18 +175,28 @@ struct RCNodeView: View {
                 
                 Button(){
                     self.rcPM.currentScene = 1
+                    if(!self.rcPM.hasLoadedPModel && !disab){
+                        self.rcPM.prepareModelToExport(previewModel: true)
+                    }
                 } label: {
                     Text("Preview Model").foregroundColor(self.rcPM.currentScene == 1 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
-                }.background(bclr.opacity(self.rcPM.currentScene == 1 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 1 || disab || true)
+                }.background(bclr.opacity(self.rcPM.currentScene == 1 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 1 || disab)
                 
                 Button(){
                     self.rcPM.currentScene = 2
                     if(!self.rcPM.hasLoadedNModel && !disab){
-                        self.rcPM.prepareModelToExport()
+                        self.rcPM.prepareModelToExport(previewModel: false)
                     }
                 } label: {
                     Text("Normal Model").foregroundColor(self.rcPM.currentScene == 2 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
                 }.background(bclr.opacity(self.rcPM.currentScene == 2 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 2 || disab)
+                
+                if(self.rcPM.currentScene != 0){
+                    Spacer()
+                    Image(systemName: "arrow.clockwise").onTapGesture {
+                        self.rcPM.prepareModelToExport(previewModel: (self.rcPM.currentScene == 1))
+                    }.padding([.horizontal],-40).foregroundColor(.white).disabled(self.rcPM.calculatingModel || self.rcPM.exportingModel)
+                }
             }.background(bclr.opacity(0.5)).ignoresSafeArea()
             HStack{
                 Spacer()

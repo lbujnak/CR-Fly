@@ -72,11 +72,8 @@ struct MainView: View {
                                 TextField("Auth Token", text: self.$rcAuthToken)
                                 Button("Connect") {
                                     self.rcNodeIsConnecting = true
-                                    self.rcNodeService.connectUserToRc(ip: self.rcIPAddr, authToken: self.rcAuthToken){ (error) in
+                                    self.rcNodeService.connectUserToRc(ip: self.rcIPAddr, authToken: self.rcAuthToken){ (valid) in
                                         DispatchQueue.main.async {
-                                            if(error != nil){
-                                                GlobalAlertHelper.shared.createAlert(title: "RCNode Connection Error", msg: error!)
-                                            }
                                             self.rcNodeIsConnecting = false
                                         }
                                     }

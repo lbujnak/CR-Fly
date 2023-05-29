@@ -16,7 +16,7 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
     private var httpHelper = HTTPHelper.shared
     @Published var projectManagement = ProjectManagementService()
     
-    func connectUserToRc(ip : String, authToken : String, completionHandler: @escaping (String?) -> Void){
+    func connectUserToRc(ip : String, authToken : String, completionHandler: @escaping (Bool) -> Void){
         self.httpHelper.changeParams(ip: ip, authToken: authToken)
         self.httpHelper.httpPattern(url: "/node/connectuser", tol: 2, sessionID: nil) { (httpData, data, response, valid) in
             if(valid) {
@@ -28,8 +28,8 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
                         }
                     }
                 }
-                completionHandler(nil)
             }
+            completionHandler(valid)
         }
     }
     
