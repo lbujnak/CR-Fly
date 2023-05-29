@@ -131,10 +131,12 @@ struct LibraryView: View {
     
     private func createUploadInfo() -> some View {
         VStack(spacing: 0){
+            ProgressView(value: Double(self.rcProjectManagement.stat_uploaded), total: Double(self.rcProjectManagement.stat_total)).progressViewStyle(.linear).background(Color(red: 0.100, green: 0.100, blue: 0.100)).ignoresSafeArea()
+            
             HStack(spacing: 10){
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaledToFit().padding([.horizontal],10)
                 
-                Text("Uploading files to CR, Project name: \(self.rcProjectManagement.currentProject.name)").foregroundColor(.white).font(.caption)
+                Text("Uploading files to CR \(self.rcProjectManagement.stat_uploaded)/\(self.rcProjectManagement.stat_total), Project name: \(self.rcProjectManagement.currentProject.name)").foregroundColor(.white).font(.caption)
                 
                 Spacer()
                 

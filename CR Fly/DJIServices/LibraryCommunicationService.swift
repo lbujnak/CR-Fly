@@ -437,6 +437,8 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
         }
         
         if(uploadList.count > 0){
+            self.rcProjectManager.stat_uploaded = 0
+            self.rcProjectManager.stat_total = uploadList.count
             self.rcProjectManager.mediaUploading = true
             self.prepareAndDownload(selected: uploadList)
         }

@@ -1,9 +1,12 @@
 import SwiftUI
 import SceneKit
+import SceneKit.ModelIO
 
 struct RCNodeScene: View {
     
-    static let shared = RCNodeScene()
+    static let sharedAlignment = RCNodeScene()
+    static let sharedPreviewModel = RCNodeScene()
+    static let sharedModel = RCNodeScene()
     
     private let scene : SCNScene
     private let cameraNode : SCNNode
@@ -23,71 +26,84 @@ struct RCNodeScene: View {
         self.cameraNode.camera!.zFar = 200
         
         self.cameraOrbit = SCNNode()
-        self.cameraOrbit.addChildNode(cameraNode)
-        self.scene.rootNode.addChildNode(cameraOrbit)
+        self.cameraOrbit.addChildNode(self.cameraNode)
         self.cameraOrbit.eulerAngles.x -= .pi/4
         self.cameraOrbit.eulerAngles.y -= (.pi/4)*3
         
-        
         self.sceneView = SceneView(scene: self.scene, options: [.autoenablesDefaultLighting,.allowsCameraControl])
-        self.addModelsToScene()
+        self.clearScene()
     }
     
-    var body: some View {
-        self.sceneView
+    var body: some View { self.sceneView }
+
+    func addModel(path: URL){
+        self.clearScene()
+        
+        let asset = MDLAsset(url: path)
+        let object = asset.object(at: 0) as! MDLMesh
+        let modelNode = SCNNode(mdlObject: object)
+        modelNode.eulerAngles = SCNVector3(x: -.pi/2, y: 0, z: 0)
+        self.scene.rootNode.addChildNode(modelNode)
     }
     
-    
-    func addModelsToScene() {
-        let sphereNode1 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode11 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode2 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode22 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode3 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode33 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode4 = SCNNode(geometry: SCNSphere(radius: 1))
-        let sphereNode44 = SCNNode(geometry: SCNSphere(radius: 1))
-        
-        sphereNode1.position = SCNVector3(x: -10, y: -10, z: 10)
-        sphereNode11.position = SCNVector3(x: 10, y: -10, z: 10)
-        sphereNode2.position = SCNVector3(x: -10, y: 10, z: 10)
-        sphereNode22.position = SCNVector3(x: 10, y: 10, z: 10)
-        sphereNode3.position = SCNVector3(x: -10, y: -10, z: -10)
-        sphereNode33.position = SCNVector3(x: 10, y: -10, z: -10)
-        sphereNode4.position = SCNVector3(x: -10, y: 10, z: -10)
-        sphereNode44.position = SCNVector3(x: 10, y: 10, z: -10)
-        
-        //scene.rootNode.addChildNode(lightNode)
-        self.scene.rootNode.addChildNode(sphereNode1)
-        self.scene.rootNode.addChildNode(sphereNode11)
-        self.scene.rootNode.addChildNode(sphereNode2)
-        self.scene.rootNode.addChildNode(sphereNode22)
-        self.scene.rootNode.addChildNode(sphereNode3)
-        self.scene.rootNode.addChildNode(sphereNode33)
-        self.scene.rootNode.addChildNode(sphereNode4)
-        self.scene.rootNode.addChildNode(sphereNode44)
+    func clearScene(){
+        scene.rootNode.childNodes.forEach { node in node.removeFromParentNode() }
+        self.scene.rootNode.addChildNode(self.cameraOrbit)
         self.scene.rootNode.addChildNode(self.createGrid())
+    }
+    
+    func addPointToScene(x: Float, y: Float, z: Float, r: String, g: String, b: String, scale: Float) {
+        let sphere = SCNSphere(radius: (0.25*CGFloat(scale)))
+        
+        let red = CGFloat(Float(r)!) / 255.0
+        let green = CGFloat(Float(g)!) / 255.0
+        let blue = CGFloat(Float(b)!) / 255.0
+        
+        sphere.firstMaterial?.diffuse.contents = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+            
+        let sphereNode = SCNNode(geometry: sphere)
+        sphereNode.position = SCNVector3(x: y*scale, y: z*scale, z: x*scale)
+        self.scene.rootNode.addChildNode(sphereNode)
+    }
+    
+    func addCameraToScene(yaw: Float, pitch: Float, roll: Float, x: Float, y: Float, z: Float, scale: Float){
+        let rectangle = SCNBox(width: CGFloat(scale), height: CGFloat(scale), length: 0.1, chamferRadius: 0)
+        
+        rectangle.firstMaterial?.diffuse.contents = UIColor(Color.green)
+            
+        let rectangleNode = SCNNode(geometry: rectangle)
+        rectangleNode.position = SCNVector3(x: y*scale, y: z*scale, z: x*scale)
+        rectangleNode.eulerAngles.y = -(yaw * .pi / 180.0)
+        rectangleNode.eulerAngles.z = (pitch * .pi / 180.0)
+        rectangleNode.eulerAngles.x = (roll * .pi / 180.0) + .pi/2
+        self.scene.rootNode.addChildNode(rectangleNode)
     }
     
     func createGrid() -> SCNNode {
         let grid = SCNNode()
-        let gridSize: CGFloat = 100.0
+        let gridSize: CGFloat = 150.0
         let gridSpacing: CGFloat = 0.5
-        let gridLineWidth: CGFloat = 0.5
+        let gridLineWidth: CGFloat = 0.25
         
         // Create the X-axis line
-        let xAxisLine = SCNNode(geometry: SCNCylinder(radius: gridLineWidth, height: gridSize))
-        xAxisLine.position = SCNVector3(0.0, -gridSpacing/2, 0.0)
+        let xLine = SCNCylinder(radius: gridLineWidth, height: gridSize/10)
+        xLine.firstMaterial?.diffuse.contents = UIColor(Color.green)
+        let xAxisLine = SCNNode(geometry: xLine)
+        xAxisLine.eulerAngles = SCNVector3(0.0, 0.0, .pi/2)
+        xAxisLine.position = SCNVector3(-gridSpacing/2, 0.0, 0.0)
         grid.addChildNode(xAxisLine)
         
         // Create the Y-axis line
-        let yAxisLine = SCNNode(geometry: SCNCylinder(radius: gridLineWidth, height: gridSize))
-        yAxisLine.eulerAngles = SCNVector3(0.0, 0.0, .pi/2)
-        yAxisLine.position = SCNVector3(-gridSpacing/2, 0.0, 0.0)
+        let yLine = SCNCylinder(radius: gridLineWidth, height: gridSize/10)
+        yLine.firstMaterial?.diffuse.contents = UIColor(Color.red)
+        let yAxisLine = SCNNode(geometry: yLine)
+        yAxisLine.position = SCNVector3(0.0, -gridSpacing/2, 0.0)
         grid.addChildNode(yAxisLine)
         
         // Create the Z-axis line
-        let zAxisLine = SCNNode(geometry: SCNCylinder(radius: gridLineWidth, height: gridSize))
+        let zLine = SCNCylinder(radius: gridLineWidth, height: gridSize/10)
+        zLine.firstMaterial?.diffuse.contents = UIColor(Color.blue)
+        let zAxisLine = SCNNode(geometry: zLine)
         zAxisLine.eulerAngles = SCNVector3(.pi/2, 0.0, .pi/2)
         zAxisLine.position = SCNVector3(0.0, 0.0, -gridSpacing / 2.0)
         grid.addChildNode(zAxisLine)

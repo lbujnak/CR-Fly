@@ -18,24 +18,18 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
     
     func connectUserToRc(ip : String, authToken : String, completionHandler: @escaping (String?) -> Void){
         self.httpHelper.changeParams(ip: ip, authToken: authToken)
-        self.httpHelper.httpPattern(url: "/node/connectuser", tol: 2, sessionID: nil) { (httpData, data, response, error, scErr) in
-            if(error != nil) {
-                completionHandler(String(describing: error));
-                return
-            } else if(scErr) {
-                completionHandler("Wrong http status: \(data!["message"]!)")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.autorized = true
-                if(!self.checkerOn){
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        self.checkNodeStatus()
+        self.httpHelper.httpPattern(url: "/node/connectuser", tol: 2, sessionID: nil) { (httpData, data, response, valid) in
+            if(valid) {
+                DispatchQueue.main.async {
+                    self.autorized = true
+                    if(!self.checkerOn){
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                            self.checkNodeStatus()
+                        }
                     }
                 }
+                completionHandler(nil)
             }
-            completionHandler(nil)
         }
     }
     
@@ -44,21 +38,28 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
             self.checkerOn = false
             return
         }
-        self.httpHelper.httpPattern(url: "/node/status", tol: 10, sessionID: nil){ (httpData, data, response, error, scErr) in
+        self.httpHelper.httpPattern(url: "/node/status", tol: 5, sessionID: nil){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
-                if((error != nil || scErr) && self.retries < 3){
+                if(!valid && self.retries < 3){
                     self.retries += 1;
-                    if(self.retries == 1){
-                        self.connectionLost = true
-                        GlobalAlertHelper.shared.createAlert(title: "RC Node Error", msg: "Lost connection to RC Node, will try 3 connections within 30 seconds and then disconnect. Any update of project until connection is established will be ignored.")
-                    }
-                } else if((error != nil || scErr) && self.retries >= 3) {
+                    if(self.retries == 1){ self.connectionLost = true }
+                } else if(!valid && self.retries >= 3) {
                     self.closeConnection()
                     return
-                } else if(error == nil && !scErr){
+                } else if(valid){
                     if(self.retries > 0){
                         self.retries = 0;
                         self.connectionLost = false
+                    }
+                    if(data != nil) {
+                        if(self.projectManagement.currentProject.loaded){
+                            let sfmData = data!["sessionIds"] as! [String]
+                            if(!sfmData.contains(self.projectManagement.currentProject.sessionID)){
+                                self.projectManagement.closeConn()
+                                GlobalAlertHelper.shared.createAlert(title: "RC Node", msg: "RC Node was restarted and connection to project was closed")
+                                return
+                            }
+                        }
                     }
                 }
             }
