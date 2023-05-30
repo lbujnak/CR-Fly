@@ -18,12 +18,12 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
     
     func connectUserToRc(ip : String, authToken : String, completionHandler: @escaping (Bool) -> Void){
         self.httpHelper.changeParams(ip: ip, authToken: authToken)
-        self.httpHelper.httpPattern(url: "/node/connectuser", tol: 2, sessionID: nil) { (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/node/connectuser", tol: 10, sessionID: nil) { (httpData, data, response, valid) in
             if(valid) {
                 DispatchQueue.main.async {
                     self.autorized = true
                     if(!self.checkerOn){
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(20)) {
                             self.checkNodeStatus()
                         }
                     }
@@ -38,11 +38,22 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
             self.checkerOn = false
             return
         }
-        self.httpHelper.httpPattern(url: "/node/status", tol: 5, sessionID: nil){ (httpData, data, response, valid) in
+        
+        if(self.projectManagement.observerActive){
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                self.checkNodeStatus()
+            }
+            return
+        }
+        
+        self.httpHelper.httpPattern(url: "/node/status", tol: 10, sessionID: nil){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid && self.retries < 3){
                     self.retries += 1;
-                    if(self.retries == 1){ self.connectionLost = true }
+                    if(self.retries == 1){
+                        GlobalAlertHelper.shared.createAlert(title: "RC Node", msg: "Connection lost! App will try to reconnect in next 30 seconds.")
+                        self.connectionLost = true
+                    }
                 } else if(!valid && self.retries >= 3) {
                     self.closeConnection()
                     return
@@ -63,7 +74,7 @@ class RCNodeCommunicationService : NSObject, ObservableObject {
                     }
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
                 if(self.autorized) { self.checkNodeStatus() }
             }
         }

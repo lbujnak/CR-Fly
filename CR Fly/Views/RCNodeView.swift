@@ -62,7 +62,7 @@ struct RCNodeView: View {
                     Spacer()
                     
                     Image(systemName: "info.circle").foregroundColor(self.infoBar ? Color.gray : Color.white).font(.title2).padding([.horizontal],-40).onTapGesture {
-                        self.rcPM.refreshProjectList()
+                        if(!self.infoBar) { self.rcPM.refreshProjectList() }
                         self.infoBar.toggle()
                     }
                 }
@@ -106,12 +106,15 @@ struct RCNodeView: View {
                         }.disabled(self.rcNodeComm.connectionLost)
                     }
                     
-                    Text("ImageCount: \(self.rcPM.evaluatingProjectInfo ? "..." : String(self.rcPM.currentProject.imageCnt))")
-                    Text("ComponentCount: \(self.rcPM.evaluatingProjectInfo ? "..." : String(self.rcPM.currentProject.componentCnt))")
-                    Text("PointCount: \(self.rcPM.evaluatingProjectInfo ? "..." : String(self.rcPM.currentProject.pointCnt))")
-                    Text("CameraCount: \(self.rcPM.evaluatingProjectInfo ? "..." : String(self.rcPM.currentProject.cameraCnt))")
+                    let loadingInfo = !self.rcPM.currentProject.loaded || self.rcPM.evaluatingProjectInfo
+                    
+                    Text("ImageCount: \(loadingInfo ? "..." : String(self.rcPM.currentProject.imageCnt))")
+                    Text("ComponentCount: \(loadingInfo ? "..." : String(self.rcPM.currentProject.componentCnt))")
+                    Text("PointCount: \(loadingInfo ? "..." : String(self.rcPM.currentProject.pointCnt))")
+                    Text("CameraCount: \(loadingInfo ? "..." : String(self.rcPM.currentProject.cameraCnt))")
                     
                     Text("SessionID: \((self.rcPM.currentProject.sessionID as NSString).substring(to: min(self.rcPM.currentProject.sessionID.count, 16)))...")
+                    Text("ProjectID: \((self.rcPM.currentProject.projectID as NSString).substring(to: min(self.rcPM.currentProject.sessionID.count, 16)))...")
                     
                     let disb = !self.rcPM.currentProject.loaded || self.rcPM.observerActive || self.rcPM.evaluatingProjectInfo || self.rcPM.evaluatingPoints || self.rcPM.evaluatingCameras || self.rcPM.aligningImages
                     HStack{
@@ -121,7 +124,7 @@ struct RCNodeView: View {
                         } label: {
                             Text("New").foregroundColor(self.rcPM.currentProject.loaded ? Color.gray : Color.white).padding([.vertical],5).padding([.horizontal],8)
                         }.alert("Connect", isPresented: self.$newProjectAlert, actions: {
-                            TextField("Project Name", text: self.$newProjectName).foregroundColor(.black)
+                            TextField("Project Name", text: self.$newProjectName)
                             Button("Create") {
                                 self.sPName.wrappedValue = self.newProjectName
                                 self.newProjectName = ""
@@ -165,7 +168,8 @@ struct RCNodeView: View {
     private func createBottomBar() -> some View {
         VStack(alignment: .leading,spacing: 0){
             let bclr = Color(red: 0.100, green: 0.100, blue: 0.100)
-            let disab = (self.rcPM.currentProject.pointCnt == 0) || !self.rcPM.savable || self.rcPM.calculatingModel || self.rcPM.exportingModel
+            let btnDisab = (self.rcPM.currentProject.pointCnt == 0) || !self.rcPM.savable
+            let disab = btnDisab || self.rcPM.calculatingModel || self.rcPM.exportingModel
             HStack(spacing: 0){
                 Button(){
                     self.rcPM.currentScene = 0
@@ -180,7 +184,7 @@ struct RCNodeView: View {
                     }
                 } label: {
                     Text("Preview Model").foregroundColor(self.rcPM.currentScene == 1 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
-                }.background(bclr.opacity(self.rcPM.currentScene == 1 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 1 || disab)
+                }.background(bclr.opacity(self.rcPM.currentScene == 1 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 1 || btnDisab)
                 
                 Button(){
                     self.rcPM.currentScene = 2
@@ -189,14 +193,13 @@ struct RCNodeView: View {
                     }
                 } label: {
                     Text("Normal Model").foregroundColor(self.rcPM.currentScene == 2 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
-                }.background(bclr.opacity(self.rcPM.currentScene == 2 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 2 || disab)
+                }.background(bclr.opacity(self.rcPM.currentScene == 2 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 2 || btnDisab)
                 
-                if(self.rcPM.currentScene != 0){
-                    Spacer()
-                    Image(systemName: "arrow.clockwise").onTapGesture {
-                        self.rcPM.prepareModelToExport(previewModel: (self.rcPM.currentScene == 1))
-                    }.padding([.horizontal],-40).foregroundColor(.white).disabled(self.rcPM.calculatingModel || self.rcPM.exportingModel)
-                }
+                Spacer()
+                Image(systemName: "arrow.clockwise").onTapGesture {
+                    if(self.rcPM.currentScene == 0){ self.rcPM.alignImages() }
+                    else { self.rcPM.prepareModelToExport(previewModel: (self.rcPM.currentScene == 1)) }
+                }.padding([.horizontal],-40).foregroundColor((self.rcPM.evaluatingProjectInfo || self.rcPM.calculatingModel || self.rcPM.exportingModel || (self.rcPM.currentScene == 0 && self.rcPM.aligningImages)) ? Color.gray : Color.white).disabled(self.rcPM.evaluatingProjectInfo || self.rcPM.calculatingModel || self.rcPM.exportingModel || (self.rcPM.currentScene == 0 && self.rcPM.aligningImages))
             }.background(bclr.opacity(0.5)).ignoresSafeArea()
             HStack{
                 Spacer()

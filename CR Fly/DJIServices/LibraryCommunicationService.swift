@@ -26,16 +26,7 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
 
     //Downloading vars and stats
     @Published var mediaDownloadList = [DJIMediaFile]()
-    @Published var mediaDownloading : Bool = false {
-        didSet {
-            if(self.rcProjectManager.mediaUploading && !self.mediaDownloading){
-                if(self.mediaDownloaded != self.mediaDownloadList.count){
-                    GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload from\(self.mediaDownloaded)")
-                    self.rcProjectManager.mediaUploading = false
-                }
-            }
-        }
-    }
+    @Published var mediaDownloading : Bool = false
     @Published var mediaDownloaded : Int = 0 {
         didSet{
             if(self.mediaDownloaded > 0){
@@ -43,8 +34,8 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
                     let url = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent(self.mediaDownloadList[self.mediaDownloaded-1].fileName)
                     self.rcProjectManager.sendSingleImage(path: url){ error in
                         if(error != nil){
-                            GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload from\(self.mediaDownloaded-1), error: \(error!)")
-                            self.mediaDownloading = false
+                            GlobalAlertHelper.shared.createAlert(title: "Upload Error", msg: "Couldn't continue in upload from \(self.mediaDownloaded-1), error: \(error!)")
+                            DispatchQueue.main.async { self.mediaDownloading = false }
                         }
                         
                         try! FileManager.default.removeItem(atPath: url.relativePath)

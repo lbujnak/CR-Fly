@@ -7,8 +7,8 @@ struct MainView: View {
     @State private var rcNodeAuthAlert = false
     @State private var rcNodeIsConnecting = false;
     
-    @State var rcIPAddr = "192.168.10.15" //"192.168.11.100"
-    @State var rcAuthToken = "674746F1-C361-413B-B427-BD769E7BE96E" //"383F0345-9E6E-461F-907F-534337987967"
+    @State var rcIPAddr = "192.168.10.15"//"192.168.11.100"
+    @State var rcAuthToken = "674746F1-C361-413B-B427-BD769E7BE96E"//"383F0345-9E6E-461F-907F-534337987967"
     
     @ObservedObject var viewHelper = ViewHelper.shared
     @ObservedObject var djiService = ProductCommunicationService.shared
@@ -29,7 +29,7 @@ struct MainView: View {
                                 Button("Lets FLY!"){
                                     self.djiService.libController.prepareFPV(){ (error) in
                                         if(error != nil){
-                                            GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening fpv view: \(String(describing: error)).")
+                                            GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening fpv view: \(String(describing: error!)).")
                                         }
                                         else { self.viewHelper.fpvMode = true }
                                     }
@@ -38,7 +38,7 @@ struct MainView: View {
                                 Button("Photo Library"){
                                     self.djiService.libController.startPlaybackMode(completionHandler: {(error) in
                                         if(error != nil) {
-                                            GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening library: \(String(describing: error)).")
+                                            GlobalAlertHelper.shared.createAlert(title: "Error", msg: "There was a problem opening library: \(String(describing: error!)).")
                                         } else{ self.viewHelper.libMode = true }
                                     })
                                 }.buttonStyle(.bordered).font(.title2)

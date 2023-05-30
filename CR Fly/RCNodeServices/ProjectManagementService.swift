@@ -47,6 +47,7 @@ class ProjectManagementService : ObservableObject {
         var loaded : Bool = false
         var name : String = "<none>"
         var sessionID : String = ""
+        var projectID: String = ""
         var imageCnt : Int = 0
         var componentCnt : Int = 0
         var cameraCnt : Int = 0
@@ -60,7 +61,7 @@ class ProjectManagementService : ObservableObject {
     @Published var observerActive = false {
         didSet{
             if(self.observerActive) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)){
                     self.checkTasks()
                 }
             }
@@ -70,8 +71,8 @@ class ProjectManagementService : ObservableObject {
     private var tasks = Set<String>() {
         didSet{
             if(!self.observerActive) {
-                if(tasks.count > 0) { DispatchQueue.main.async { self.observerActive = true }}
-            } else if(tasks.count == 0) { DispatchQueue.main.async { self.observerActive = false }}
+                if(tasks.count > 0) { DispatchQueue.main.async { if(!self.observerActive ) { self.observerActive = true } }}
+            }
         }
     }
     
@@ -87,7 +88,12 @@ class ProjectManagementService : ObservableObject {
 
         let joinedString = urlEncodedArray.joined(separator: ",")
         
-        self.httpHelper.httpPattern(url: "/project/tasks?taskIDs=\(joinedString)", tol: 5, sessionID: self.currentProject.sessionID) {
+        if(self.tasks.count == 0) {
+            DispatchQueue.main.async { self.observerActive = false }
+            return
+        }
+        
+        self.httpHelper.httpPattern(url: "/project/tasks?taskIDs=\(joinedString)", tol: 60, sessionID: self.currentProject.sessionID) {
             (httpData, data, response, valid) in
             if(!valid) { self.observerActive = false }
             else{
@@ -96,20 +102,19 @@ class ProjectManagementService : ObservableObject {
                 let jsonArray = self.httpHelper.parseJsonData3D(data: httpData)
                 if(jsonArray != nil && !jsonArray!.isEmpty){
                     for jsonData in jsonArray! {
+                        //print("\(jsonData["state"]) - \(jsonData["taskID"]) (\(self.taskCmd[jsonData["taskID"] as! String]) ")
                         if(jsonData["state"] as! String == "finished" && self.tasks.contains(jsonData["taskID"] as! String)){
                             self.doTask(task: jsonData["taskID"] as! String, myCmd: nil)
                         } else if(jsonData["state"] as! String == "failed"){
+                            //TODO:: pri refraktorizacii -> povypinat premenne, kt. informuju o vykon. akcii
                             GlobalAlertHelper.shared.createAlert(title: "Task Error", msg: "Error executing task: \(String(describing: jsonData["taskID"]!)), error: \(String(describing: jsonData["errorMessage"]!))")
                             self.tasks.remove((jsonData["taskID"] as! String))
                             self.taskCmd.removeValue(forKey: (jsonData["taskID"] as! String))
                         }
                     }
                 }
-                if(self.observerActive){
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
-                        self.checkTasks()
-                    }
-                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)){ self.checkTasks() }
             }
         }
     }
@@ -117,21 +122,24 @@ class ProjectManagementService : ObservableObject {
     func doTask(task: String, myCmd : String?){
         var cmd : String
         if(myCmd == nil){
+            if(self.taskCmd[task] == nil) { return }
             cmd = self.taskCmd[task]!
         } else { cmd = myCmd! }
         switch cmd {
-            case "addImage": do {
-                var commandCnt = 0
-                for (_, val) in self.taskCmd {
-                    if(val == cmd){ commandCnt += 1 }
+            case "imageAdded": do {
+                DispatchQueue.main.async {
+                    self.stat_uploaded += 1
+                    if(self.stat_uploaded == self.stat_total) {
+                        self.mediaUploading = false
+                        self.alignImages()
+                    }
                 }
-                
-                DispatchQueue.main.async { self.stat_uploaded += 1 }
-                if(commandCnt == 1){ self.evalInfoTemplate() }
             }
             
+            case "selectReconRegPreview": do { self.selectReconReg(previewModel: true) }
+            case "selectReconRegNormal": do { self.selectReconReg(previewModel: false) }
+            case "evalInfoTemplate": do { self.evalInfoTemplate() }
             case "updateProjectInfo": do { self.updateProjectInfo() }
-            
             case "updateScene": do { self.evalSceneTemplate() }
             case "updateScenePoints": do { self.addPointsToScene() }
             case "updateSceneCams": do { self.addCamerasToScene()  }
@@ -154,6 +162,7 @@ class ProjectManagementService : ObservableObject {
         DispatchQueue.main.async {
             self.refreshProjectList()
             self.currentProject = project_info()
+            self.httpHelper.setConnected(c: false)
             self.evaluatingProjectInfo = false
             self.evaluatingPoints = false
             self.evaluatingCameras = false
@@ -179,7 +188,7 @@ class ProjectManagementService : ObservableObject {
     }
     
     func refreshProjectList(){
-        self.httpHelper.httpPattern(url: "/node/projects", tol: 5, sessionID: nil) { (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/node/projects", tol: 60, sessionID: nil) { (httpData, data, response, valid) in
             if(valid) {
                 let jsonArray = self.httpHelper.parseJsonData3D(data: httpData)
                 DispatchQueue.main.async {
@@ -207,9 +216,11 @@ class ProjectManagementService : ObservableObject {
         //Close project
         if(self.currentProject.loaded){
             self.closeProject(){ valid in
-                if(valid){
-                    self.projectCmds = true
-                    self.openOrCreate(name: name)
+                DispatchQueue.main.async {
+                    if(valid){
+                        self.projectCmds = true
+                        self.openOrCreate(name: name)
+                    }
                 }
             }
         } else { self.openOrCreate(name: name) }
@@ -218,23 +229,27 @@ class ProjectManagementService : ObservableObject {
     func openOrCreate(name: String){
         //Create project
         if(!self.projectList.contains(name)){
-            self.httpHelper.httpPattern(url: "/project/create", tol: 10, sessionID: nil) { (httpData, data, response, valid) in
+            self.httpHelper.httpPattern(url: "/project/create", tol: 60, sessionID: nil) { (httpData, data, response, valid) in
                 DispatchQueue.main.async {
                     if(!valid) { self.projectCmds = false }
                     else {
                         var encName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                         if(encName == ""){
-                            encName = "cr_fly_\(String(describing: (DateFormatter().string(from: Date()))))"
-                        }
+                            encName = "cr_fly_\(String(describing: Date().timeIntervalSince1970))"
+                            self.currentProject.name = encName!
+                        } else { self.currentProject.name = name }
+                        
                         self.currentProject.loaded = true
-                        self.currentProject.name = encName!
+                        self.httpHelper.setConnected(c: true)
                         self.currentProject.sessionID = response!.value(forHTTPHeaderField: "Session")!
+                        self.currentProject.projectID = response!.value(forHTTPHeaderField: "Session")!
                         self.saveProject(){ valid in
                             DispatchQueue.main.async {
                                 if(valid){
                                     self.projectList.removeFirst()
                                     self.evaluatingProjectInfo = true
                                     self.createTemplateFiles()
+                                    self.refreshProjectList()
                                 }
                                 self.projectCmds = false
                             }
@@ -247,18 +262,20 @@ class ProjectManagementService : ObservableObject {
                 GlobalAlertHelper.shared.showError(msg: "No guid for project \(name)")
             } else {
                 //Open project
-                self.httpHelper.httpPattern(url: "/project/open?guid=\(self.projectGUIDs[name]!)", tol: 10, sessionID: nil) { (httpData, data, response, valid) in
-                    if(valid) {
-                        DispatchQueue.main.async {
+                self.httpHelper.httpPattern(url: "/project/open?guid=\(self.projectGUIDs[name]!)", tol: 60, sessionID: nil) { (httpData, data, response, valid) in
+                    DispatchQueue.main.async {
+                        if(valid) {
                             self.projectList.removeFirst()
                             self.currentProject.loaded = true
+                            self.httpHelper.setConnected(c: true)
                             self.currentProject.name = name
-                            self.currentProject.sessionID = self.projectGUIDs[name]!
+                            self.currentProject.sessionID = response?.allHeaderFields["Session"] as! String
+                            self.currentProject.projectID = response!.value(forHTTPHeaderField: "Session")!
                             
                             self.evaluatingProjectInfo = true
                             self.createTemplateFiles()
-                            self.projectCmds = false
                         }
+                        self.projectCmds = false
                     }
                 }
             }
@@ -267,21 +284,21 @@ class ProjectManagementService : ObservableObject {
     
     func saveProject(completionHandler: @escaping (Bool) -> Void){
         DispatchQueue.main.async { self.projectCmds = true }
-        self.httpHelper.httpPattern(url: "/project/save?name=\(self.currentProject.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)", tol: 10, sessionID: self.currentProject.sessionID) { (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/save?name=\(self.currentProject.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)", tol: 60, sessionID: self.currentProject.sessionID) { (httpData, data, response, valid) in
             completionHandler(valid)
             DispatchQueue.main.async { self.projectCmds = false }
         }
     }
     
     func closeProject(completionHandler: @escaping (Bool) -> Void){
-        RCNodeScene.sharedAlignment.clearScene()
-        RCNodeScene.sharedPreviewModel.clearScene()
-        RCNodeScene.sharedModel.clearScene()
         DispatchQueue.main.async {
             self.currentScene = 0
             self.projectCmds = true
         }
-        self.httpHelper.httpPattern(url: "/project/close", tol: 10, sessionID: self.currentProject.sessionID) { (httpData, data, response, valid) in
+        RCNodeScene.sharedAlignment.clearScene()
+        RCNodeScene.sharedPreviewModel.clearScene()
+        RCNodeScene.sharedModel.clearScene()
+        self.httpHelper.httpPattern(url: "/project/close", tol: 60, sessionID: self.currentProject.sessionID) { (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(valid) { self.closeConn() }
                 completionHandler(valid)
@@ -292,14 +309,13 @@ class ProjectManagementService : ObservableObject {
     
     func deleteProject(){
         DispatchQueue.main.async { self.projectCmds = true }
-        
         let guid = self.currentProject.sessionID
         self.closeProject(){ valid in
             DispatchQueue.main.async {
                 if(!valid){ self.projectCmds = false }
                 else {
                     self.projectCmds = true
-                    self.httpHelper.httpPattern(url: "/project/delete?guid=\(guid)", tol: 10, sessionID: nil){
+                    self.httpHelper.httpPattern(url: "/project/delete?guid=\(guid)", tol: 60, sessionID: nil){
                         (httpData, data, response, valid) in
                         DispatchQueue.main.async {
                             if(valid) { self.refreshProjectList() }
@@ -351,7 +367,7 @@ class ProjectManagementService : ObservableObject {
     }
     
     func createCameraTemplateFile(completionHandler: @escaping (String?) -> Void){
-        let stringData = "$Using(\"CapturingReality.Report.SfmExportFunctionSet\")$ExportCameras($(aYaw:.4),$(aPitch:.4),$(aRoll:.4),$(aX:.4),$(aY:.4),$(aZ:.4),)$Strip(1)"
+        let stringData = "$Using(\"CapturingReality.Report.SfmExportFunctionSet\")$ExportCameras($(invYaw:.4),$(invPitch:.4),$(invRoll:.4),$(aX:.4),$(aY:.4),$(aZ:.4),)$Strip(1)"
         
         self.httpHelper.createProjectTemplateFile(name: "crfly-cams", data: stringData, sessionID: self.currentProject.sessionID){ error in
             completionHandler(error)
@@ -360,30 +376,27 @@ class ProjectManagementService : ObservableObject {
     
     func evalInfoTemplate(){
         DispatchQueue.main.async { self.evaluatingProjectInfo = true }
-        self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-info-out.json&param2=crfly-info.tpl", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-info(\(self.currentProject.sessionID)).json&param2=crfly-info.tpl", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.evaluatingProjectInfo = false }
                 else {
-                    self.mediaUploading = false
                     if(!self.projectFirstLoad){
-                        self.doTask(task: "", myCmd: "updateScene")
+                        let preview = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("preview-model(\(self.currentProject.sessionID)).obj")
+                        let normal = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model(\(self.currentProject.sessionID)).obj")
                         
-                        let preview = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("preview-model.obj")
-                        let normal = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model.obj")
                         if(FileManager.default.fileExists(atPath: preview.relativePath)){
                             self.hasLoadedPModel = true
                             RCNodeScene.sharedPreviewModel.addModel(path: preview)
                         }
+                        
                         if(FileManager.default.fileExists(atPath: normal.relativePath)){
                             self.hasLoadedNModel = true
                             RCNodeScene.sharedModel.addModel(path: normal)
                         }
-                            
+
                         self.projectFirstLoad = true
-                    } else {
-                        self.aligningImages = true
-                        self.alignImages()
                     }
+                    
                     self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "updateProjectInfo")
                 }
             }
@@ -396,13 +409,13 @@ class ProjectManagementService : ObservableObject {
             self.evaluatingPoints = true
             self.evaluatingCameras = true
         }
-        self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-pts-out.json&param2=crfly-pts.tpl", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-pts(\(self.currentProject.sessionID)).json&param2=crfly-pts.tpl", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.evaluatingPoints = false; self.evaluatingCameras = false; }
                 else {
                     self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "updateScenePoints")
                     
-                    self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-cams-out.json&param2=crfly-cams.tpl", tol: 10, sessionID: self.currentProject.sessionID){ (httpData2, data2, response2, valid2) in
+                    self.httpHelper.httpPattern(url: "/project/command?name=exportReport&param1=crfly-cams(\(self.currentProject.sessionID)).json&param2=crfly-cams.tpl", tol: 60, sessionID: self.currentProject.sessionID){ (httpData2, data2, response2, valid2) in
                         if(!valid) { self.evaluatingCameras = false }
                         else {
                             self.addTaskObserver(taskUUID: data2!["taskID"] as! String, command: "updateSceneCams")
@@ -414,7 +427,7 @@ class ProjectManagementService : ObservableObject {
     }
     
     func updateProjectInfo(){
-        self.httpHelper.httpPattern(url: "/project/download?name=crfly-info-out.json&folder=output", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/download?name=crfly-info(\(self.currentProject.sessionID)).json&folder=output", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.evaluatingProjectInfo = false }
                 else {
@@ -429,7 +442,8 @@ class ProjectManagementService : ObservableObject {
                         self.currentProject.measurementCnt = sfmData["measurementCount"] as! Int
                         self.currentProject.displayScale = sfmData["displayScale"] as! Int
                     }
-                    self.httpHelper.httpPattern(url: "/project/list?folder=data", tol: 10, sessionID: self.currentProject.sessionID){ (httpData2, data2, response2, valid2) in
+                    
+                    self.httpHelper.httpPattern(url: "/project/list?folder=data", tol: 60, sessionID: self.currentProject.sessionID){ (httpData2, data2, response2, valid2) in
                         DispatchQueue.main.async {
                             if(valid) {
                                 self.currentProject.fileList.removeAll()
@@ -450,16 +464,19 @@ class ProjectManagementService : ObservableObject {
     }
     
     func addPointsToScene(){
-        self.httpHelper.httpPattern(url: "/project/download?name=crfly-pts-out.json&folder=output", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/download?name=crfly-pts(\(self.currentProject.sessionID)).json&folder=output", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(valid) {
                     if(self.currentProject.pointCnt > 0){
                         let pts_data = String(data: httpData!, encoding: .utf8)!
                         let components = pts_data.components(separatedBy: ",")
+                        let dS = (RCNodeScene.sharedAlignment.userDisplayScale ? Float(self.currentProject.displayScale) : 1.0)
+                        
+                        var point_cloud = [PointCloudVertex]()
                         for i in stride(from: 0, through: components.count-1, by: 6) {
-                            let dS = Float(self.currentProject.displayScale)
-                            RCNodeScene.sharedAlignment.addPointToScene(x: Float(components[i])!, y: Float(components[i+1])!, z: Float(components[i+2])!, r: components[i+3], g: components[i+4], b: components[i+5], scale: dS)
+                            point_cloud.append(PointCloudVertex(x: Float(components[i+1])!*dS, y: Float(components[i+2])!*dS, z: Float(components[i])!*dS, r: (Float(components[i+3])!/255.0), g: (Float(components[i+4])!/255.0), b: (Float(components[i+5])!/255.0)))
                         }
+                        RCNodeScene.sharedAlignment.addPointsToScene(cloud: &point_cloud, scale: Float(self.currentProject.displayScale))
                     }
                 }
                 self.evaluatingPoints = false
@@ -468,15 +485,16 @@ class ProjectManagementService : ObservableObject {
     }
     
     func addCamerasToScene(){
-        self.httpHelper.httpPattern(url: "/project/download?name=crfly-cams-out.json&folder=output", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/download?name=crfly-cams(\(self.currentProject.sessionID)).json&folder=output", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(valid) {
                     if(self.currentProject.cameraCnt > 0){
                         let pts_data = String(data: httpData!, encoding: .utf8)!
                         let components = pts_data.components(separatedBy: ",")
+                        let dS = (RCNodeScene.sharedAlignment.userDisplayScale ? Float(self.currentProject.displayScale) : 1.0)
+                        
                         for i in stride(from: 0, through: components.count-1, by: 6) {
-                            let dS = Float(self.currentProject.displayScale)
-                            RCNodeScene.sharedAlignment.addCameraToScene(yaw: Float(components[i])!, pitch: Float(components[i+1])!, roll: Float(components[i+2])!, x: Float(components[i+3])!, y: Float(components[i+4])!, z: Float(components[i+5])!, scale: dS)
+                            RCNodeScene.sharedAlignment.addCameraToScene(yaw: Float(components[i])!, pitch: Float(components[i+1])!, roll: Float(components[i+2])!, x: Float(components[i+3])!*dS, y: Float(components[i+4])!*dS, z: Float(components[i+5])!*dS, scale: dS)
                         }
                     }
                 }
@@ -500,29 +518,40 @@ class ProjectManagementService : ObservableObject {
                 if(jsonData != nil && jsonData!["message"] != nil) { completionHandler(jsonData!["message"] as? String) }
                 else { completionHandler("Unknown error, wrong status code: \((response as! HTTPURLResponse).statusCode)") }
             } else {
-                self.addTaskObserver(taskUUID: jsonData!["taskID"] as! String, command: "addImage")
+                self.addTaskObserver(taskUUID: jsonData!["taskID"] as! String, command: "imageAdded")
                 completionHandler(nil)
             }
-            
         }.resume()
     }
     
     func alignImages() {
         DispatchQueue.main.async { self.aligningImages = true }
         RCNodeScene.sharedAlignment.clearScene()
-        self.httpHelper.httpPattern(url: "/project/command?name=align", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/command?name=align", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.aligningImages = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "updateScene") }
+                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "evalInfoTemplate") }
             }
         }
     }
     
-    func prepareModelToExport(previewModel: Bool) {
+    func prepareModelToExport(previewModel: Bool){
         self.calculatingModel = true
+        self.httpHelper.httpPattern(url: "/project/command?name=setReconstructionRegionAuto", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+            DispatchQueue.main.async {
+                if(!valid) { self.calculatingModel = false }
+                else {
+                    self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "selectReconRegPreview":"selectReconRegNormal")
+                }
+            }
+        }
+    }
+    
+    func selectReconReg(previewModel: Bool) {
+        DispatchQueue.main.async { self.calculatingModel = true }
         if(previewModel) { RCNodeScene.sharedPreviewModel.clearScene() }
         else { RCNodeScene.sharedModel.clearScene() }
-        self.httpHelper.httpPattern(url: "/project/command?name=selectTrianglesInsideReconReg", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: "/project/command?name=selectTrianglesInsideReconReg", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.calculatingModel = false }
                 else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "calculateModelPreview":"calculateModelNormal") }
@@ -532,7 +561,7 @@ class ProjectManagementService : ObservableObject {
     
     func calculateModel(previewModel: Bool) {
         let url = (previewModel) ? "/project/command?name=calculatePreviewModel" : "/project/command?name=calculateNormalModel"
-        self.httpHelper.httpPattern(url: url, tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        self.httpHelper.httpPattern(url: url, tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
                 else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "exportModelPreview":"exportModelNormal") }
@@ -545,8 +574,8 @@ class ProjectManagementService : ObservableObject {
             self.calculatingModel = false
             self.exportingModel = true
         }
-        let filename = (previewModel) ? "preview-model.obj":"normal-model.obj"
-        self.httpHelper.httpPattern(url: "/project/command?name=exportSelectedModel&param1=\(filename)", tol: 10, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
+        let filename = "\((previewModel) ? "preview-model":"normal-model")(\(self.currentProject.sessionID))"
+        self.httpHelper.httpPattern(url: "/project/command?name=exportSelectedModel&param1=\(filename).obj", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
                 else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "loadModelPreview" : "loadModelNormal") }
@@ -555,7 +584,7 @@ class ProjectManagementService : ObservableObject {
     }
     
     func downloadAndLoadModel(previewModel: Bool) {
-        let filename = (previewModel) ? "preview-model":"normal-model"
+        let filename = "\((previewModel) ? "preview-model":"normal-model")(\(self.currentProject.sessionID))"
         
         //toto robi z 3D modelu nepeknu blbost -> nic neni vidno ;(
         /*let mtlRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).mtl&folder=output", sessionID: self.currentProject.sessionID)
