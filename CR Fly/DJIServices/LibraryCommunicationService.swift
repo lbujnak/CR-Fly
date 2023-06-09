@@ -15,7 +15,6 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
     @Published var mediaFetched = false
     @Published var mediaList = [DJIMediaFile]()
     @Published var mediaSections = [[DJIMediaFile]]()
-    @Published var interruptThumbnailDwnld = false
     
     //Library Preview View
     @Published var mediaLibPicked : DJIMediaFile? = nil
@@ -111,7 +110,7 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
                 }
             })
         }
-            
+        
         self.refreshMediaList(){ (error) in
             completionHandler(error)
         }
@@ -142,11 +141,11 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
                 self.mediaList.append(files[i])
                 self.mediaSections[sections-1].append(files[i])
             }
+            completionHandler(nil)
                             
             if(self.mediaList.count > 0){
                 self.downloadThumbnail(index: 0, retries: 0)
             }
-            completionHandler(nil)
         })
     }
     
@@ -170,10 +169,8 @@ class LibraryCommunicationService : NSObject, DJIMediaManagerDelegate, Observabl
     }
     
     private func downloadThumbnail(index: Int, retries: Int){
-        if(self.interruptThumbnailDwnld){
-            self.interruptThumbnailDwnld = false
-            return
-        }
+        if(!ViewHelper.shared.libMode){ return }
+        
         if(index >= self.mediaList.count){
             self.mediaFetched = true
             return

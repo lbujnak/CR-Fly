@@ -15,19 +15,20 @@ class ProjectManagementService : ObservableObject {
     @Published var projectCmds = false
     @Published var projectFirstLoad = false
     
-    @Published var currentScene = 0
+    @Published var currentScene = 0  //1-preview,2-normal,3-colorized
     @Published var mediaUploading = false
     @Published var stat_uploaded = 0
     @Published var stat_total = 0
     
-    @Published var hasLoadedNModel = false
-    @Published var hasLoadedPModel = false
+    @Published var hasLoadedModel = [modelType]()
     
     @Published var savable = false
     private var projectGUIDs = [String : String]()
     private var httpHelper = HTTPHelper.shared
     private var taskCmd = [String : String]()
     private var libraryURL : URL = URL(filePath: NSHomeDirectory())
+    
+    enum modelType { case preview, normal, colorized }
     
     init() {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -71,7 +72,7 @@ class ProjectManagementService : ObservableObject {
     private var tasks = Set<String>() {
         didSet{
             if(!self.observerActive) {
-                if(tasks.count > 0) { DispatchQueue.main.async { if(!self.observerActive ) { self.observerActive = true } }}
+                if(tasks.count > 0) { DispatchQueue.main.async { self.observerActive = true }}
             }
         }
     }
@@ -136,19 +137,27 @@ class ProjectManagementService : ObservableObject {
                 }
             }
             
-            case "selectReconRegPreview": do { self.selectReconReg(previewModel: true) }
-            case "selectReconRegNormal": do { self.selectReconReg(previewModel: false) }
+            case "selectReconRegPreview": do { self.selectReconReg(type: modelType.preview) }
+            case "selectReconRegNormal": do { self.selectReconReg(type: modelType.normal) }
+            case "selectReconRegColorized": do { self.selectReconReg(type: modelType.colorized) }
+            
             case "evalInfoTemplate": do { self.evalInfoTemplate() }
             case "updateProjectInfo": do { self.updateProjectInfo() }
             case "updateScene": do { self.evalSceneTemplate() }
             case "updateScenePoints": do { self.addPointsToScene() }
             case "updateSceneCams": do { self.addCamerasToScene()  }
-            case "calculateModelPreview": do { self.calculateModel(previewModel: true) }
-            case "calculateModelNormal": do { self.calculateModel(previewModel: false) }
-            case "exportModelPreview": do { self.exportModel(previewModel: true) }
-            case "exportModelNormal": do { self.exportModel(previewModel: false) }
-            case "loadModelPreview": do { self.downloadAndLoadModel(previewModel: true) }
-            case "loadModelNormal": do { self.downloadAndLoadModel(previewModel: false) }
+            
+            case "calculateModelPreview": do { self.calculateModel(type: modelType.preview) }
+            case "calculateModelNormal": do { self.calculateModel(type: modelType.normal) }
+            case "calculateModelColorized": do { self.calculateModel(type: modelType.colorized) }
+            
+            case "exportModelPreview": do { self.exportModel(type: modelType.preview) }
+            case "exportModelNormal": do { self.exportModel(type: modelType.normal) }
+            case "exportModelColorized": do { self.exportModel(type: modelType.colorized) }
+            
+            case "loadModelPreview": do { self.downloadAndLoadModel(type: modelType.preview) }
+            case "loadModelNormal": do { self.downloadAndLoadModel(type: modelType.normal) }
+            case "loadModelColorized": do { self.downloadAndLoadModel(type: modelType.colorized) }
             default: do { return }
         }
         
@@ -178,12 +187,12 @@ class ProjectManagementService : ObservableObject {
             self.httpHelper = HTTPHelper.shared
             self.taskCmd = [String : String]()
             self.observerActive = false
-            self.hasLoadedNModel = false
-            self.hasLoadedPModel = false
+            self.hasLoadedModel.removeAll()
             
             RCNodeScene.sharedAlignment.clearScene()
-            RCNodeScene.sharedPreviewModel.clearScene()
-            RCNodeScene.sharedModel.clearScene()
+            RCNodeScene.sharedModels[modelType.preview]!.clearScene()
+            RCNodeScene.sharedModels[modelType.normal]!.clearScene()
+            RCNodeScene.sharedModels[modelType.colorized]!.clearScene()
         }
     }
     
@@ -295,9 +304,9 @@ class ProjectManagementService : ObservableObject {
             self.currentScene = 0
             self.projectCmds = true
         }
-        RCNodeScene.sharedAlignment.clearScene()
-        RCNodeScene.sharedPreviewModel.clearScene()
-        RCNodeScene.sharedModel.clearScene()
+        RCNodeScene.sharedModels[modelType.preview]!.clearScene()
+        RCNodeScene.sharedModels[modelType.normal]!.clearScene()
+        RCNodeScene.sharedModels[modelType.colorized]!.clearScene()
         self.httpHelper.httpPattern(url: "/project/close", tol: 60, sessionID: self.currentProject.sessionID) { (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(valid) { self.closeConn() }
@@ -383,15 +392,21 @@ class ProjectManagementService : ObservableObject {
                     if(!self.projectFirstLoad){
                         let preview = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("preview-model(\(self.currentProject.sessionID)).obj")
                         let normal = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("normal-model(\(self.currentProject.sessionID)).obj")
+                        let colorized = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("colorized-model(\(self.currentProject.sessionID)).obj")
                         
                         if(FileManager.default.fileExists(atPath: preview.relativePath)){
-                            self.hasLoadedPModel = true
-                            RCNodeScene.sharedPreviewModel.addModel(path: preview)
+                            self.hasLoadedModel.append(modelType.preview)
+                            RCNodeScene.sharedModels[modelType.preview]!.addModel(path: preview)
                         }
                         
                         if(FileManager.default.fileExists(atPath: normal.relativePath)){
-                            self.hasLoadedNModel = true
-                            RCNodeScene.sharedModel.addModel(path: normal)
+                            self.hasLoadedModel.append(modelType.normal)
+                            RCNodeScene.sharedModels[modelType.normal]!.addModel(path: normal)
+                        }
+                        
+                        if(FileManager.default.fileExists(atPath: colorized.relativePath)){
+                            self.hasLoadedModel.append(modelType.colorized)
+                            RCNodeScene.sharedModels[modelType.colorized]!.addModel(path: colorized)
                         }
 
                         self.projectFirstLoad = true
@@ -505,6 +520,11 @@ class ProjectManagementService : ObservableObject {
     
     func sendSingleImage(path : URL, completionHandler: @escaping (String?) -> Void) {
         if(self.currentProject.fileList.contains(path.lastPathComponent)){
+            self.stat_uploaded += 1
+            if(self.stat_uploaded == self.stat_total){
+                self.mediaUploading = false
+                self.alignImages()
+            }
             completionHandler(nil)
             return
         }
@@ -535,78 +555,141 @@ class ProjectManagementService : ObservableObject {
         }
     }
     
-    func prepareModelToExport(previewModel: Bool){
+    func getModelFilename(type: modelType, ssid: String) -> String{
+        var filename = ""
+        switch type {
+            case modelType.preview: filename = "preview-model"
+            case modelType.normal: filename = "normal-model"
+            case modelType.colorized: filename = "colorized-model"
+        }
+        filename += "(\(ssid))"
+        return filename
+    }
+    
+    func prepareModelToExport(type: modelType){
         self.calculatingModel = true
         self.httpHelper.httpPattern(url: "/project/command?name=setReconstructionRegionAuto", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.calculatingModel = false }
                 else {
-                    self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "selectReconRegPreview":"selectReconRegNormal")
+                    switch type {
+                        case modelType.preview: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "selectReconRegPreview")
+                        case modelType.normal: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "selectReconRegNormal")
+                        case modelType.colorized: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "selectReconRegColorized")
+                    }
                 }
             }
         }
     }
     
-    func selectReconReg(previewModel: Bool) {
+    func selectReconReg(type: modelType) {
         DispatchQueue.main.async { self.calculatingModel = true }
-        if(previewModel) { RCNodeScene.sharedPreviewModel.clearScene() }
-        else { RCNodeScene.sharedModel.clearScene() }
+        RCNodeScene.sharedModels[type]!.clearScene()
+        
         self.httpHelper.httpPattern(url: "/project/command?name=selectTrianglesInsideReconReg", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid) { self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "calculateModelPreview":"calculateModelNormal") }
+                else {
+                    switch type {
+                        case modelType.preview: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "calculateModelPreview")
+                        case modelType.normal: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "calculateModelNormal")
+                        case modelType.colorized: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "calculateModelColorized")
+                    }
+                }
             }
         }
     }
     
-    func calculateModel(previewModel: Bool) {
-        let url = (previewModel) ? "/project/command?name=calculatePreviewModel" : "/project/command?name=calculateNormalModel"
+    func calculateModel(type: modelType) {
+        var url = ""
+        switch type {
+            case modelType.preview: url = "calculatePreviewModel"
+            case modelType.normal: url = "calculateNormalModel"
+            case modelType.colorized: url = "calculateTexture"
+        }
+        url = "/project/command?name=\(url)"
+        
         self.httpHelper.httpPattern(url: url, tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "exportModelPreview":"exportModelNormal") }
+                else {
+                    switch type {
+                        case modelType.preview: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "exportModelPreview")
+                        case modelType.normal: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "exportModelNormal")
+                        case modelType.colorized: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "exportModelColorized")
+                    }
+                }
             }
         }
     }
     
-    func exportModel(previewModel: Bool) {
+    func exportModel(type: modelType) {
         DispatchQueue.main.async {
             self.calculatingModel = false
             self.exportingModel = true
         }
-        let filename = "\((previewModel) ? "preview-model":"normal-model")(\(self.currentProject.sessionID))"
+        
+        let filename = self.getModelFilename(type: type, ssid: self.currentProject.sessionID)
         self.httpHelper.httpPattern(url: "/project/command?name=exportSelectedModel&param1=\(filename).obj", tol: 60, sessionID: self.currentProject.sessionID){ (httpData, data, response, valid) in
             DispatchQueue.main.async {
                 if(!valid){ self.calculatingModel = false }
-                else { self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: (previewModel) ? "loadModelPreview" : "loadModelNormal") }
+                else {
+                    switch type {
+                        case modelType.preview: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "loadModelPreview")
+                        case modelType.normal: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "loadModelNormal")
+                        case modelType.colorized: self.addTaskObserver(taskUUID: data!["taskID"] as! String, command: "loadModelColorized")
+                    }
+                }
             }
         }
     }
     
-    func downloadAndLoadModel(previewModel: Bool) {
-        let filename = "\((previewModel) ? "preview-model":"normal-model")(\(self.currentProject.sessionID))"
+    func downloadAndLoadModel(type : modelType) {
+        let filename = self.getModelFilename(type: type, ssid: self.currentProject.sessionID)
         
         //toto robi z 3D modelu nepeknu blbost -> nic neni vidno ;(
-        /*let mtlRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).mtl&folder=output", sessionID: self.currentProject.sessionID)
-        URLSession.shared.downloadTask(with: mtlRequest) { (mtlTempUrl, mtlResponse, mtlError) in
-            DispatchQueue.main.async {
-                if(mtlError != nil || mtlTempUrl == nil || ((mtlResponse as! HTTPURLResponse).statusCode / 100) != 2){
-                    self.exportingModel = false
-                    GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
-                } else {
-                    let mtlUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("\(filename).mtl")
-                    do {
-                        if(FileManager.default.fileExists(atPath: mtlUrl.relativePath)){ try FileManager.default.removeItem(at: mtlUrl) }
-                        try FileManager.default.copyItem(at: mtlTempUrl!, to: mtlUrl)
-                    } catch {
-                        self.exportingModel = false;
+        if(type == modelType.colorized){
+            let mtlRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).mtl&folder=output", sessionID: self.currentProject.sessionID)
+            URLSession.shared.downloadTask(with: mtlRequest) { (mtlTempUrl, mtlResponse, mtlError) in
+                DispatchQueue.main.async {
+                    if(mtlError != nil || mtlTempUrl == nil || ((mtlResponse as! HTTPURLResponse).statusCode / 100) != 2){
+                        self.exportingModel = false
                         GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
-                        return
+                    } else {
+                        let mtlUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("\(filename).mtl")
+                        do {
+                            if(FileManager.default.fileExists(atPath: mtlUrl.relativePath)){ try FileManager.default.removeItem(at: mtlUrl) }
+                            try FileManager.default.copyItem(at: mtlTempUrl!, to: mtlUrl)
+                        } catch {
+                            self.exportingModel = false;
+                            GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
+                            return
+                        }
                     }
                 }
-            }
-        }.resume()*/
-        
+            }.resume()
+            
+            let pngRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename)_u1_v1_diffuse.png&folder=output", sessionID: self.currentProject.sessionID)
+            URLSession.shared.downloadTask(with: pngRequest) { (tempUrl, response, error) in
+                DispatchQueue.main.async {
+                    if(error != nil || tempUrl == nil || ((response as! HTTPURLResponse).statusCode / 100) != 2){
+                        self.exportingModel = false
+                        GlobalAlertHelper.shared.showError(msg: "Cannot download model's .png file to device!")
+                    } else {
+                        let pngUrl = URL(fileURLWithPath: self.libraryURL.relativePath).appendingPathComponent("\(filename).mtl")
+                        do {
+                            if(FileManager.default.fileExists(atPath: pngUrl.relativePath)){ try FileManager.default.removeItem(at: pngUrl) }
+                            try FileManager.default.copyItem(at: tempUrl!, to: pngUrl)
+                        } catch {
+                            self.exportingModel = false;
+                            GlobalAlertHelper.shared.showError(msg: "Cannot download model's .mtl file to device!")
+                            return
+                        }
+                    }
+                }
+            }.resume()
+        }
+            
         let objRequest = self.httpHelper.prepareDownloadRequest(url: "/project/download?name=\(filename).obj&folder=output", sessionID: self.currentProject.sessionID)
         URLSession.shared.downloadTask(with: objRequest) { (objTempUrl, objResponse, objError) in
             if(objError != nil || objTempUrl == nil || ((objResponse as! HTTPURLResponse).statusCode / 100) != 2){
@@ -621,16 +704,9 @@ class ProjectManagementService : ObservableObject {
                     GlobalAlertHelper.shared.showError(msg: "Cannot download model's .obj file to device!")
                     return
                 }
-                if(previewModel){
-                    DispatchQueue.main.async {
-                        self.hasLoadedPModel = true
-                        RCNodeScene.sharedPreviewModel.addModel(path: objUrl)
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.hasLoadedNModel = true
-                        RCNodeScene.sharedModel.addModel(path: objUrl)
-                    }
+                DispatchQueue.main.async {
+                    if(!self.hasLoadedModel.contains(type)) { self.hasLoadedModel.append(type) }
+                    RCNodeScene.sharedModels[type]?.addModel(path: objUrl)
                 }
             }
             DispatchQueue.main.async { self.exportingModel = false }

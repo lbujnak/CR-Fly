@@ -7,8 +7,8 @@ struct MainView: View {
     @State private var rcNodeAuthAlert = false
     @State private var rcNodeIsConnecting = false;
     
-    @State var rcIPAddr = "192.168.10.15"//"192.168.11.100"
-    @State var rcAuthToken = "674746F1-C361-413B-B427-BD769E7BE96E"//"383F0345-9E6E-461F-907F-534337987967"
+    @State var rcIPAddr = "192.168.10.15" //"192.168.11.100"
+    @State var rcAuthToken = "674746F1-C361-413B-B427-BD769E7BE96E" // "383F0345-9E6E-461F-907F-534337987967"
     
     @ObservedObject var viewHelper = ViewHelper.shared
     @ObservedObject var djiService = ProductCommunicationService.shared
@@ -75,9 +75,13 @@ struct MainView: View {
                                     self.rcNodeService.connectUserToRc(ip: self.rcIPAddr, authToken: self.rcAuthToken){ (valid) in
                                         DispatchQueue.main.async {
                                             self.rcNodeIsConnecting = false
+                                            if(!valid){
+                                                GlobalAlertHelper.shared.createAlert(title: "Connection to RC", msg: "Error connection to RCNode, check IP and AuthToken")
+                                            }
                                         }
                                     }
                                 }
+                                Button("Cancel", role: .cancel, action: {})
                             },message: {
                                 Text("Please enter (local) ip address of computer runing RCNode and access token, located in RealityCapture Second-Screen to authorize this device.")
                             }).buttonStyle(.bordered).font(.title3)
@@ -104,7 +108,7 @@ struct MainView: View {
                                 Button("Cancel", role: .cancel, action: {})
                             }, message: {
                                 Text("Please enter IP Address of device running SDK Bridge App.")
-                            }).buttonStyle(.bordered).font(.title3)
+                            }).buttonStyle(.bordered).font(.title3).disabled(self.djiService.connected)
                         }
                     }
                 }.padding([.top],50).padding([.horizontal],20)

@@ -11,8 +11,11 @@ struct PointCloudVertex {
 struct RCNodeScene: View {
     
     static var sharedAlignment = RCNodeScene()
-    static var sharedPreviewModel = RCNodeScene()
-    static var sharedModel = RCNodeScene()
+    static var sharedModels = [
+        ProjectManagementService.modelType.preview: RCNodeScene(),
+        ProjectManagementService.modelType.normal: RCNodeScene(),
+        ProjectManagementService.modelType.colorized: RCNodeScene()
+    ]
     
     let userDisplayScale = true
     

@@ -47,7 +47,6 @@ struct LibraryView: View {
             HStack(spacing: 30){
                 if(!self.selectMode){
                     Button("←"){
-                        if(!self.libController.mediaFetched){ self.libController.interruptThumbnailDwnld = true }
                         self.libController.stopPlaybackMode(completionHandler: {(error) in
                             if(error != nil){
                                 GlobalAlertHelper.shared.createAlert(title: "Error", msg: "Problem exiting libmode: \(String(describing: error)).")

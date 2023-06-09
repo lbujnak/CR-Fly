@@ -23,8 +23,9 @@ struct RCNodeView: View {
     var body: some View {
         ZStack{
             if(self.rcPM.currentScene == 0){ RCNodeScene.sharedAlignment }
-            else if(self.rcPM.currentScene == 1){ RCNodeScene.sharedPreviewModel }
-            else if(self.rcPM.currentScene == 2){ RCNodeScene.sharedModel }
+            else if(self.rcPM.currentScene == 1){ RCNodeScene.sharedModels[ProjectManagementService.modelType.preview] }
+            else if(self.rcPM.currentScene == 2){ RCNodeScene.sharedModels[ProjectManagementService.modelType.normal] }
+            else if(self.rcPM.currentScene == 3){ RCNodeScene.sharedModels[ProjectManagementService.modelType.colorized] }
             VStack{
                 HStack(spacing: 30){
                     Button("←"){
@@ -179,8 +180,8 @@ struct RCNodeView: View {
                 
                 Button(){
                     self.rcPM.currentScene = 1
-                    if(!self.rcPM.hasLoadedPModel && !disab){
-                        self.rcPM.prepareModelToExport(previewModel: true)
+                    if(!self.rcPM.hasLoadedModel.contains(ProjectManagementService.modelType.preview) && !disab){
+                        self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.preview)
                     }
                 } label: {
                     Text("Preview Model").foregroundColor(self.rcPM.currentScene == 1 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
@@ -188,17 +189,30 @@ struct RCNodeView: View {
                 
                 Button(){
                     self.rcPM.currentScene = 2
-                    if(!self.rcPM.hasLoadedNModel && !disab){
-                        self.rcPM.prepareModelToExport(previewModel: false)
+                    if(!self.rcPM.hasLoadedModel.contains(ProjectManagementService.modelType.normal) && !disab){
+                        self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.normal)
                     }
                 } label: {
                     Text("Normal Model").foregroundColor(self.rcPM.currentScene == 2 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
                 }.background(bclr.opacity(self.rcPM.currentScene == 2 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 2 || btnDisab)
                 
+                Button(){
+                    self.rcPM.currentScene = 3
+                    if(!self.rcPM.hasLoadedModel.contains(ProjectManagementService.modelType.colorized) && !disab){
+                        self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.colorized)
+                    }
+                } label: {
+                    Text("Colorized Texture").foregroundColor(self.rcPM.currentScene == 3 ? Color.white : Color.gray).padding([.vertical],8).padding([.horizontal],15)
+                }.background(bclr.opacity(self.rcPM.currentScene == 3 ? 1 : 0.5)).disabled(self.rcPM.currentScene == 3 || btnDisab)
+                
+                
+                
                 Spacer()
                 Image(systemName: "arrow.clockwise").onTapGesture {
                     if(self.rcPM.currentScene == 0){ self.rcPM.alignImages() }
-                    else { self.rcPM.prepareModelToExport(previewModel: (self.rcPM.currentScene == 1)) }
+                    else if(self.rcPM.currentScene == 1) { self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.preview)}
+                    else if(self.rcPM.currentScene == 2) { self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.normal)}
+                    else if(self.rcPM.currentScene == 3) { self.rcPM.prepareModelToExport(type: ProjectManagementService.modelType.colorized)}
                 }.padding([.horizontal],-40).foregroundColor((self.rcPM.evaluatingProjectInfo || self.rcPM.calculatingModel || self.rcPM.exportingModel || (self.rcPM.currentScene == 0 && self.rcPM.aligningImages)) ? Color.gray : Color.white).disabled(self.rcPM.evaluatingProjectInfo || self.rcPM.calculatingModel || self.rcPM.exportingModel || (self.rcPM.currentScene == 0 && self.rcPM.aligningImages))
             }.background(bclr.opacity(0.5)).ignoresSafeArea()
             HStack{
