@@ -54,7 +54,7 @@ class ProjectManagementService : ObservableObject {
         var cameraCnt : Int = 0
         var pointCnt : Int = 0
         var measurementCnt : Int = 0
-        var displayScale : Int = 1
+        var displayScale : Float = 1
         var sfmID : String = ""
         var fileList : Set<String> = []
     }
@@ -455,7 +455,7 @@ class ProjectManagementService : ObservableObject {
                         self.currentProject.cameraCnt = sfmData["cameraCount"] as! Int
                         self.currentProject.pointCnt = sfmData["pointCount"] as! Int
                         self.currentProject.measurementCnt = sfmData["measurementCount"] as! Int
-                        self.currentProject.displayScale = sfmData["displayScale"] as! Int
+                        self.currentProject.displayScale = Float(String(describing: sfmData["displayScale"]!))!
                     }
                     
                     self.httpHelper.httpPattern(url: "/project/list?folder=data", tol: 60, sessionID: self.currentProject.sessionID){ (httpData2, data2, response2, valid2) in
@@ -485,7 +485,7 @@ class ProjectManagementService : ObservableObject {
                     if(self.currentProject.pointCnt > 0){
                         let pts_data = String(data: httpData!, encoding: .utf8)!
                         let components = pts_data.components(separatedBy: ",")
-                        let dS = (RCNodeScene.sharedAlignment.userDisplayScale ? Float(self.currentProject.displayScale) : 1.0)
+                        let dS = (RCNodeScene.sharedAlignment.userDisplayScale ? self.currentProject.displayScale : 1.0)
                         
                         var point_cloud = [PointCloudVertex]()
                         for i in stride(from: 0, through: components.count-1, by: 6) {

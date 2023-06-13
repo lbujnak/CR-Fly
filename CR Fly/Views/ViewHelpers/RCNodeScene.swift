@@ -85,7 +85,7 @@ struct RCNodeScene: View {
             self.hasXYZ = true
         }
         
-        let cam = SCNSphere(radius: (0.2/CGFloat(scale)))
+        let cam = SCNSphere(radius: (0.2*CGFloat(scale)))
         cam.firstMaterial?.diffuse.contents = UIColor(Color.green)
             
         let camNode = SCNNode(geometry: cam)
@@ -108,7 +108,7 @@ struct RCNodeScene: View {
     func createXYZ(scale: Float) -> SCNNode {
         let grid = SCNNode()
         let gridSize: CGFloat = 100.0
-        let gridLineWidth: CGFloat = self.userDisplayScale ? CGFloat(0.15/scale) : CGFloat(0.15)
+        let gridLineWidth: CGFloat = self.userDisplayScale ? CGFloat(0.15*scale) : CGFloat(0.15)
         
         // Create the X-axis line
         let xLine = SCNCylinder(radius: gridLineWidth, height: gridSize/20)
