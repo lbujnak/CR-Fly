@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		205D45FA42C7BFEC45EBE50E /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */; };
 		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
 		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
 		805E70602AA5D680008220FC /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805E705F2AA5D680008220FC /* Command.swift */; };
-		E71595345F59656F0ED2FF57 /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7337CD2CF3A5DEFE5D7CFA49 /* Pods_CR_Fly.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A15FCDCF0C0BED56FC0791A /* Pods-CR Fly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.debug.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.debug.xcconfig"; sourceTree = "<group>"; };
-		7337CD2CF3A5DEFE5D7CFA49 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.release.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.release.xcconfig"; sourceTree = "<group>"; };
+		72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.debug.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.debug.xcconfig"; sourceTree = "<group>"; };
 		8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CR-Fly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		803D79B6294E053500DC0D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
 		805E705F2AA5D680008220FC /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
-		A67DEC7499F7039E07771A2A /* Pods-CR Fly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.release.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.release.xcconfig"; sourceTree = "<group>"; };
+		F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,28 +30,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E71595345F59656F0ED2FF57 /* Pods_CR_Fly.framework in Frameworks */,
+				205D45FA42C7BFEC45EBE50E /* Pods_CR_Fly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		60BDB24B40D6F5701F6C6A36 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7337CD2CF3A5DEFE5D7CFA49 /* Pods_CR_Fly.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		803D79A6294E053300DC0D3E = {
 			isa = PBXGroup;
 			children = (
 				803D79B1294E053300DC0D3E /* CR Fly */,
 				803D79B0294E053300DC0D3E /* Products */,
 				836FA188223B8FA54F9D6D05 /* Pods */,
-				60BDB24B40D6F5701F6C6A36 /* Frameworks */,
+				E1D85C1300F0FC8A326D14A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,10 +78,18 @@
 		836FA188223B8FA54F9D6D05 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3A15FCDCF0C0BED56FC0791A /* Pods-CR Fly.debug.xcconfig */,
-				A67DEC7499F7039E07771A2A /* Pods-CR Fly.release.xcconfig */,
+				72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */,
+				51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E1D85C1300F0FC8A326D14A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,19 +99,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 803D79BD294E053500DC0D3E /* Build configuration list for PBXNativeTarget "CR Fly" */;
 			buildPhases = (
-				86DF38C2973F8E8AB1E062C0 /* [CP] Check Pods Manifest.lock */,
+				CA4B166234CF4A9567D6150D /* [CP] Check Pods Manifest.lock */,
 				803D79AB294E053300DC0D3E /* Sources */,
 				803D79AC294E053300DC0D3E /* Frameworks */,
 				803D79AD294E053300DC0D3E /* Resources */,
-				22B1C67D88DC8B327EEC95AD /* [CP] Embed Pods Frameworks */,
+				58F6390A7E934FE66A77DD5F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "CR Fly";
-			packageProductDependencies = (
-			);
 			productName = "CR Fly";
 			productReference = 803D79AF294E053300DC0D3E /* CR Fly.app */;
 			productType = "com.apple.product-type.application";
@@ -141,8 +139,6 @@
 				Base,
 			);
 			mainGroup = 803D79A6294E053300DC0D3E;
-			packageReferences = (
-			);
 			productRefGroup = 803D79B0294E053300DC0D3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -164,7 +160,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		22B1C67D88DC8B327EEC95AD /* [CP] Embed Pods Frameworks */ = {
+		58F6390A7E934FE66A77DD5F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -181,7 +177,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CR Fly/Pods-CR Fly-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		86DF38C2973F8E8AB1E062C0 /* [CP] Check Pods Manifest.lock */ = {
+		CA4B166234CF4A9567D6150D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -337,7 +333,7 @@
 		};
 		803D79BE294E053500DC0D3E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A15FCDCF0C0BED56FC0791A /* Pods-CR Fly.debug.xcconfig */;
+			baseConfigurationReference = 72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -378,7 +374,7 @@
 		};
 		803D79BF294E053500DC0D3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A67DEC7499F7039E07771A2A /* Pods-CR Fly.release.xcconfig */;
+			baseConfigurationReference = 51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

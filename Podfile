@@ -1,4 +1,4 @@
-platform :ios, '14.0'
+platform :ios, '16.0'
 
 target 'CR Fly' do
   use_frameworks!
