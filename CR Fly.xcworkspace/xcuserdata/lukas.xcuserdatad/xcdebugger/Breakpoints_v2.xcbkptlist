@@ -3,4 +3,174 @@
    uuid = "BCDA566D-363B-4011-92C3-2B48313E5848"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CR Fly/ApplicationData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "9"
+            endingLineNumber = "9"
+            landmarkName = "ApplicationData"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - 771f73cde00f2988"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of CR_Fly.ApplicationData.rcNodeIP : Swift.String"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - d89b6623687507b2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.rcNodeIP.getter : Swift.String"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - e377266212e27746"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.rcNodeIP.setter : Swift.String"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - 4e28ea51123a6bb1"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.rcNodeIP.modify : Swift.String"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - f7657166288bed46"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.rcNodeIP.modify : Swift.String with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - 8651c996ee3e925f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.$rcNodeIP.getter : Combine.Published&lt;Swift.String&gt;.Publisher"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - e7d15634d7bc6e63"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.$rcNodeIP.setter : Combine.Published&lt;Swift.String&gt;.Publisher"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "216">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - e399578f7e6998d9"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.$rcNodeIP.modify : Combine.Published&lt;Swift.String&gt;.Publisher"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - 7f6f53cb0cd643f4"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.$rcNodeIP.modify : Combine.Published&lt;Swift.String&gt;.Publisher with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "718A5A98-EEE1-4B82-996C-87A9D5347AF0 - a9a27859716b684e"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CR_Fly.ApplicationData.init() -&gt; CR_Fly.ApplicationData"
+                  moduleName = "CR Fly"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lukas/Desktop/Skola%20&amp;%20Prog/CR%20Fly/CR%20Fly/ApplicationData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "5"
+                  endingLineNumber = "5"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

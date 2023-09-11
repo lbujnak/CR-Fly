@@ -4,18 +4,11 @@ import DJISDK
 @main
 struct AppController: App {
     
-    
-    init(){
-        
-    }
+    @ObservedObject var viewController = ViewController.shared
     
     var body: some Scene {
-        WindowGroup {
-            ZStack{
-                VStack{
-                    Text("Hello")
-                }
-            }
+        WindowGroup{
+            viewController.getView()
         }
     }
 }

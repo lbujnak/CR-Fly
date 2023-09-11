@@ -10,7 +10,15 @@
 		205D45FA42C7BFEC45EBE50E /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */; };
 		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
 		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
+		805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A758B2AAB121C00EB53D2 /* ViewController.swift */; };
+		805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */; };
+		805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75982AAB323A00EB53D2 /* ScannerView.swift */; };
+		805A759D2AAB3F3B00EB53D2 /* CommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */; };
+		805A75A42AAC5A1000EB53D2 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A32AAC5A1000EB53D2 /* Permission.swift */; };
+		805A75A62AAC5A3800EB53D2 /* QRScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */; };
+		805A75A92AAC5A8D00EB53D2 /* DeviceCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */; };
 		805E70602AA5D680008220FC /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805E705F2AA5D680008220FC /* Command.swift */; };
+		80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AFDF562AA9E6FB00D26F88 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,8 +28,16 @@
 		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		803D79B6294E053500DC0D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		805A758B2AAB121C00EB53D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
+		805A75982AAB323A00EB53D2 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandQueue.swift; sourceTree = "<group>"; };
+		805A75A32AAC5A1000EB53D2 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
+		805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerDelegate.swift; sourceTree = "<group>"; };
+		805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCameraView.swift; sourceTree = "<group>"; };
 		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
 		805E705F2AA5D680008220FC /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		80AFDF562AA9E6FB00D26F88 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -62,9 +78,55 @@
 				8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */,
 				803D79B6294E053500DC0D3E /* Assets.xcassets */,
 				803D79B2294E053300DC0D3E /* AppController.swift */,
+				805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */,
+				805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */,
+				805A75AE2AAF143900EB53D2 /* Utilities */,
+				805A75A22AAC5A0600EB53D2 /* Model */,
+				80AFDF392AA9E0D900D26F88 /* Views */,
+				805A75AA2AAC5B1900EB53D2 /* Delegates */,
 				805E705E2AA5D672008220FC /* Commands */,
 			);
 			path = "CR Fly";
+			sourceTree = "<group>";
+		};
+		805A75A22AAC5A0600EB53D2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				805A75A32AAC5A1000EB53D2 /* Permission.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		805A75A72AAC5A6F00EB53D2 /* QRScanner */ = {
+			isa = PBXGroup;
+			children = (
+				805A75982AAB323A00EB53D2 /* ScannerView.swift */,
+				805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */,
+			);
+			path = QRScanner;
+			sourceTree = "<group>";
+		};
+		805A75AA2AAC5B1900EB53D2 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		805A75AE2AAF143900EB53D2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				805A75AF2AAF144200EB53D2 /* Helpers */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		805A75AF2AAF144200EB53D2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		805E705E2AA5D672008220FC /* Commands */ = {
@@ -73,6 +135,16 @@
 				805E705F2AA5D680008220FC /* Command.swift */,
 			);
 			path = Commands;
+			sourceTree = "<group>";
+		};
+		80AFDF392AA9E0D900D26F88 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				805A75A72AAC5A6F00EB53D2 /* QRScanner */,
+				805A758B2AAB121C00EB53D2 /* ViewController.swift */,
+				80AFDF562AA9E6FB00D26F88 /* MainView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		836FA188223B8FA54F9D6D05 /* Pods */ = {
@@ -110,6 +182,8 @@
 			dependencies = (
 			);
 			name = "CR Fly";
+			packageProductDependencies = (
+			);
 			productName = "CR Fly";
 			productReference = 803D79AF294E053300DC0D3E /* CR Fly.app */;
 			productType = "com.apple.product-type.application";
@@ -139,6 +213,8 @@
 				Base,
 			);
 			mainGroup = 803D79A6294E053300DC0D3E;
+			packageReferences = (
+			);
 			productRefGroup = 803D79B0294E053300DC0D3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -206,7 +282,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */,
+				805A759D2AAB3F3B00EB53D2 /* CommandQueue.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
+				80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */,
+				805A75A42AAC5A1000EB53D2 /* Permission.swift in Sources */,
+				805A75A92AAC5A8D00EB53D2 /* DeviceCameraView.swift in Sources */,
+				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
+				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
+				805A75A62AAC5A3800EB53D2 /* QRScannerDelegate.swift in Sources */,
 				805E70602AA5D680008220FC /* Command.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +432,7 @@
 				INFOPLIST_FILE = "CR-Fly-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Second screen QR reader.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access position on map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
@@ -389,6 +474,7 @@
 				INFOPLIST_FILE = "CR-Fly-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Second screen QR reader.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access position on map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
