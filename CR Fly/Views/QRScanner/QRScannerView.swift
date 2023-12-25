@@ -31,21 +31,6 @@ struct QRScannerView: View {
                     .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                         qrScanner.updateOrientation()
                     }
-                    /*.alert(errorMessage, isPresented: $showError){
-                        if cameraPermission == .denied {
-                            Button("Settings"){
-                                let settingsString = UIApplication.openSettingsURLString
-                                if let settingsURL = URL(string: settingsString){ openURL(settingsURL) }
-                            }
-                            Button("Cancel",role: .cancel){ }
-                        }
-                    }*/
-                
-                /*//MARK: PRESENT ERROR
-                func presentError(_ message: String){
-                    errorMessage = message
-                    showError.toggle()
-                }*/
                 
                 ForEach(0...4, id: \.self){ index in
                     let rotation = Double(index) * 90
@@ -56,3 +41,11 @@ struct QRScannerView: View {
         }.padding(.horizontal, 45)
     }
 }
+
+struct QRScannerView_Previews: PreviewProvider {
+    static let qrScanner = QRCodeScanner()
+    static var previews: some View {
+        QRScannerView(qrScanner: qrScanner)
+    }
+}
+

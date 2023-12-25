@@ -7,23 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		205D45FA42C7BFEC45EBE50E /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */; };
 		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
 		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
 		805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A758B2AAB121C00EB53D2 /* ViewController.swift */; };
 		805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */; };
 		805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75982AAB323A00EB53D2 /* ScannerView.swift */; };
-		805A759D2AAB3F3B00EB53D2 /* CommandQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */; };
-		805A75A42AAC5A1000EB53D2 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A32AAC5A1000EB53D2 /* Permission.swift */; };
-		805A75A62AAC5A3800EB53D2 /* QRScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */; };
-		805A75A92AAC5A8D00EB53D2 /* DeviceCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */; };
-		805E70602AA5D680008220FC /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805E705F2AA5D680008220FC /* Command.swift */; };
+		805C1D0E2B3681D8001371C6 /* ManualInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805C1D0D2B3681D8001371C6 /* ManualInputView.swift */; };
+		805E70602AA5D680008220FC /* RCCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805E705F2AA5D680008220FC /* RCCommand.swift */; };
 		80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AFDF562AA9E6FB00D26F88 /* MainView.swift */; };
+		80B7B3092B34A3AF000D5498 /* QRCodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B3082B34A3AF000D5498 /* QRCodeScanner.swift */; };
+		80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */; };
+		80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6343D2B375F75006F3CE9 /* RCNodeController.swift */; };
+		D639DC86FBD6DB049026CEFC /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA9A52089964519B5295167 /* Pods_CR_Fly.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.release.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.release.xcconfig"; sourceTree = "<group>"; };
-		72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.debug.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.debug.xcconfig"; sourceTree = "<group>"; };
 		8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CR-Fly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
@@ -31,14 +29,16 @@
 		805A758B2AAB121C00EB53D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
 		805A75982AAB323A00EB53D2 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
-		805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandQueue.swift; sourceTree = "<group>"; };
-		805A75A32AAC5A1000EB53D2 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
-		805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerDelegate.swift; sourceTree = "<group>"; };
-		805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCameraView.swift; sourceTree = "<group>"; };
 		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
-		805E705F2AA5D680008220FC /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		805C1D0D2B3681D8001371C6 /* ManualInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualInputView.swift; sourceTree = "<group>"; };
+		805E705F2AA5D680008220FC /* RCCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCCommand.swift; sourceTree = "<group>"; };
 		80AFDF562AA9E6FB00D26F88 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80B7B3082B34A3AF000D5498 /* QRCodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanner.swift; sourceTree = "<group>"; };
+		80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		80D6343D2B375F75006F3CE9 /* RCNodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeController.swift; sourceTree = "<group>"; };
+		9FA9A52089964519B5295167 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB9DC69CEBA091B20909B062 /* Pods-CR Fly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.release.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.release.xcconfig"; sourceTree = "<group>"; };
+		D0E0A1DB9B10979FA6C6EC33 /* Pods-CR Fly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.debug.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,20 +46,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				205D45FA42C7BFEC45EBE50E /* Pods_CR_Fly.framework in Frameworks */,
+				D639DC86FBD6DB049026CEFC /* Pods_CR_Fly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		800356932B31F563008E5922 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				80D6343D2B375F75006F3CE9 /* RCNodeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		803D79A6294E053300DC0D3E = {
 			isa = PBXGroup;
 			children = (
 				803D79B1294E053300DC0D3E /* CR Fly */,
 				803D79B0294E053300DC0D3E /* Products */,
 				836FA188223B8FA54F9D6D05 /* Pods */,
-				E1D85C1300F0FC8A326D14A4 /* Frameworks */,
+				D4C21582E967F4C1A4D7376E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,62 +87,30 @@
 				803D79B6294E053500DC0D3E /* Assets.xcassets */,
 				803D79B2294E053300DC0D3E /* AppController.swift */,
 				805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */,
-				805A759C2AAB3F3B00EB53D2 /* CommandQueue.swift */,
-				805A75AE2AAF143900EB53D2 /* Utilities */,
-				805A75A22AAC5A0600EB53D2 /* Model */,
+				800356932B31F563008E5922 /* Controllers */,
 				80AFDF392AA9E0D900D26F88 /* Views */,
-				805A75AA2AAC5B1900EB53D2 /* Delegates */,
-				805E705E2AA5D672008220FC /* Commands */,
+				805E705E2AA5D672008220FC /* RCCommands */,
 			);
 			path = "CR Fly";
-			sourceTree = "<group>";
-		};
-		805A75A22AAC5A0600EB53D2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				805A75A32AAC5A1000EB53D2 /* Permission.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		805A75A72AAC5A6F00EB53D2 /* QRScanner */ = {
 			isa = PBXGroup;
 			children = (
 				805A75982AAB323A00EB53D2 /* ScannerView.swift */,
-				805A75A82AAC5A8D00EB53D2 /* DeviceCameraView.swift */,
+				805C1D0D2B3681D8001371C6 /* ManualInputView.swift */,
+				80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */,
+				80B7B3082B34A3AF000D5498 /* QRCodeScanner.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
 		};
-		805A75AA2AAC5B1900EB53D2 /* Delegates */ = {
+		805E705E2AA5D672008220FC /* RCCommands */ = {
 			isa = PBXGroup;
 			children = (
-				805A75A52AAC5A3800EB53D2 /* QRScannerDelegate.swift */,
+				805E705F2AA5D680008220FC /* RCCommand.swift */,
 			);
-			path = Delegates;
-			sourceTree = "<group>";
-		};
-		805A75AE2AAF143900EB53D2 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				805A75AF2AAF144200EB53D2 /* Helpers */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		805A75AF2AAF144200EB53D2 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		805E705E2AA5D672008220FC /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				805E705F2AA5D680008220FC /* Command.swift */,
-			);
-			path = Commands;
+			path = RCCommands;
 			sourceTree = "<group>";
 		};
 		80AFDF392AA9E0D900D26F88 /* Views */ = {
@@ -150,16 +126,16 @@
 		836FA188223B8FA54F9D6D05 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */,
-				51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */,
+				D0E0A1DB9B10979FA6C6EC33 /* Pods-CR Fly.debug.xcconfig */,
+				CB9DC69CEBA091B20909B062 /* Pods-CR Fly.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		E1D85C1300F0FC8A326D14A4 /* Frameworks */ = {
+		D4C21582E967F4C1A4D7376E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F3CF85800C56AC4FB1734596 /* Pods_CR_Fly.framework */,
+				9FA9A52089964519B5295167 /* Pods_CR_Fly.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,19 +147,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 803D79BD294E053500DC0D3E /* Build configuration list for PBXNativeTarget "CR Fly" */;
 			buildPhases = (
-				CA4B166234CF4A9567D6150D /* [CP] Check Pods Manifest.lock */,
+				2912D093FE1B4CB51872B445 /* [CP] Check Pods Manifest.lock */,
 				803D79AB294E053300DC0D3E /* Sources */,
 				803D79AC294E053300DC0D3E /* Frameworks */,
 				803D79AD294E053300DC0D3E /* Resources */,
-				58F6390A7E934FE66A77DD5F /* [CP] Embed Pods Frameworks */,
+				019B5910FA1067CC6675ADEA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "CR Fly";
-			packageProductDependencies = (
-			);
 			productName = "CR Fly";
 			productReference = 803D79AF294E053300DC0D3E /* CR Fly.app */;
 			productType = "com.apple.product-type.application";
@@ -213,8 +187,6 @@
 				Base,
 			);
 			mainGroup = 803D79A6294E053300DC0D3E;
-			packageReferences = (
-			);
 			productRefGroup = 803D79B0294E053300DC0D3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -236,7 +208,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		58F6390A7E934FE66A77DD5F /* [CP] Embed Pods Frameworks */ = {
+		019B5910FA1067CC6675ADEA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,7 +225,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CR Fly/Pods-CR Fly-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA4B166234CF4A9567D6150D /* [CP] Check Pods Manifest.lock */ = {
+		2912D093FE1B4CB51872B445 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -283,15 +255,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */,
-				805A759D2AAB3F3B00EB53D2 /* CommandQueue.swift in Sources */,
+				805C1D0E2B3681D8001371C6 /* ManualInputView.swift in Sources */,
+				80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
 				80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */,
-				805A75A42AAC5A1000EB53D2 /* Permission.swift in Sources */,
-				805A75A92AAC5A8D00EB53D2 /* DeviceCameraView.swift in Sources */,
+				80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */,
+				80B7B3092B34A3AF000D5498 /* QRCodeScanner.swift in Sources */,
 				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
 				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
-				805A75A62AAC5A3800EB53D2 /* QRScannerDelegate.swift in Sources */,
-				805E70602AA5D680008220FC /* Command.swift in Sources */,
+				805E70602AA5D680008220FC /* RCCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +389,7 @@
 		};
 		803D79BE294E053500DC0D3E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 72A698DE3FD062093658FF6C /* Pods-CR Fly.debug.xcconfig */;
+			baseConfigurationReference = D0E0A1DB9B10979FA6C6EC33 /* Pods-CR Fly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -442,7 +414,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,7 +431,7 @@
 		};
 		803D79BF294E053500DC0D3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51B144671793B62992776B30 /* Pods-CR Fly.release.xcconfig */;
+			baseConfigurationReference = CB9DC69CEBA091B20909B062 /* Pods-CR Fly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -484,7 +456,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

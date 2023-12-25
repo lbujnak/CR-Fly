@@ -1,5 +1,5 @@
 import Foundation
 
-protocol Command {
+protocol RCCommand {
     func execute() -> Bool
 }
