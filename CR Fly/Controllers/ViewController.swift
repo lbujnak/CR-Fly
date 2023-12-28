@@ -3,6 +3,7 @@ import SwiftUI
 public enum ViewType {
     case mainView
     case scannerView
+    case albumView
 }
 
 public class ViewController: NSObject, ObservableObject {
@@ -12,9 +13,12 @@ public class ViewController: NSObject, ObservableObject {
     @Published var showAlertError: Bool = false
     
     //View change, etc..
-    @Published var currSceneId = 0
-    let views: [AnyView] = [AnyView(MainView()),AnyView(ScannerView())]
-    private let viewMap: [ViewType : Int] = [.mainView: 0, .scannerView: 1]
+    @Published var currentView: AnyView = AnyView(EmptyView())
+    private var viewMap: [ViewType : AnyView] = [:]
+    
+    func addView(type: ViewType, view: AnyView) {
+        self.viewMap[type] = view
+    }
     
     func getView() -> some View {
         CurrentView(controller: self)
@@ -22,7 +26,7 @@ public class ViewController: NSObject, ObservableObject {
     
     func changeView(type: ViewType){
         DispatchQueue.main.async {
-            self.currSceneId = self.viewMap[type]!
+            self.currentView = self.viewMap[type]!
         }
     }
     
@@ -58,7 +62,7 @@ struct CurrentView: View {
 
     var body: some View {
         ZStack {
-            self.controller.views[self.controller.currSceneId]
+            self.controller.currentView
         }
         .alert(self.controller.alertErrors.first?.0 ?? "Something unexpected happened...",
             isPresented: self.$controller.showAlertError,

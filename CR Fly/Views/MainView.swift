@@ -1,87 +1,84 @@
 import SwiftUI
 
 struct MainView: View {
-    
-    @State private var bridgeConnAlert = false
-    @State private var rcNodeConnAlert = false
-    @State private var rcNodeAuthAlert = false
-    @State private var rcNodeIsConnecting = false;
+    @StateObject private var locationManager = LocationController()
     
     var body: some View {
-        HStack(alignment: .top){
-            VStack(alignment: .leading, spacing: 20) {
-                Text("CR Fly Beta").font(.title).bold()
-                Text("Connected to aircraft: " + (CRFly.shared.appData.djiDevConn ? "Yes": "No")).font(.title)
-                Text("Connected to RC: " + (CRFly.shared.appData.rcNodeConn ? "Yes": "No")).font(.title)
-                Text("Bridge Mode Status: " + (CRFly.shared.appData.djiBridgeMode ? "On" : "Off")).font(.title)
-                if(CRFly.shared.appData.djiSdkReg){
-                    HStack(){
-                        if(CRFly.shared.appData.djiDevConn){
-                            Button("Lets FLY!"){
-                                //Command start FPVmode
-                            }.buttonStyle(.bordered).font(.title2)
-                            
-                            Button("Photo Library"){
-                                //Command start libmode
-                            }.buttonStyle(.bordered).font(.title2)
-                        }
-                        
-                        if(CRFly.shared.appData.rcNodeConn){
-                            Button("RC Node"){
-                                //Command start rcnodemode
-                            }.buttonStyle(.bordered).font(.title2)
-                        }
-                    }
-                }
-                Spacer()
-            }
-            VStack(alignment: .trailing, spacing: 20){
-                if(CRFly.shared.appData.djiSdkReg){
-                    if(!CRFly.shared.appData.djiDevConn){
-                        Button("Connect"){
-                            //Command start connection DJI
-                        }.buttonStyle(.bordered).font(.title3).disabled(CRFly.shared.appData.djiDevConn)
-                    } else {
-                        Button("Disconnect"){
-                            //Command stop connection DJI
-                        }.buttonStyle(.bordered).font(.title3).disabled(CRFly.shared.appData.djiDevConn)
-                    }
-                        
-                    if(!CRFly.shared.appData.rcNodeConn){
-                        Button("Connect"){
-                            //Command connect rc
-                        }.buttonStyle(.bordered).font(.title3)
-                    } else {
-                        Button("Disconnect"){
-                            //Command connect rc
-                        }.buttonStyle(.bordered).font(.title3)
-                    }
-                        
-                    if(CRFly.shared.appData.djiBridgeMode){
-                        Button("Stop"){
-                            //Command stop bridge mode
-                        }.buttonStyle(.bordered).font(.title3)
-                    } else {
-                        Button("Start"){
-                            //Cmd start bridge mode
-                        }.buttonStyle(.bordered).font(.title3)
-                    }
-                }
-                Spacer()
-            }.padding([.top],50).padding([.horizontal],20)
+        ZStack {
+            GeometryReader { proxy in
+                Image("background").resizable().scaledToFill().frame(width: proxy.size.width, height: proxy.size.height)
+                    .clipped()
+                }.ignoresSafeArea()
             
-            VStack{
-                Button("Scan"){
-                    CRFly.shared.viewController.changeView(type: ViewType.scannerView)
+            VStack {
+                HStack {
+                    if(self.locationManager.locationAddress == "") {
+                        Image(systemName: "location.magnifyingglass").bold()
+                        Text("Locating...").bold()
+                    } else {
+                        Image(systemName: "location.fill").bold()
+                        Text(self.locationManager.locationAddress).bold()
+                    }
+                    Spacer()
+                }.padding([.top],30)
+                
+                Spacer()
+                
+                if(CRFly.shared.appData.developmentMode){
+                    HStack() {
+                        Spacer()
+                        
+                        Button {
+                            //TODO: Connection Guide
+                            return
+                        } label: {
+                            Text("Bridge Mode").font(.callout)
+                        }.padding([.top,.bottom],15).padding([.leading,.trailing],62.5)
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 2).fill(.black.opacity(0.7)))
+                    }
                 }
-            }
-            Spacer()
-                /*if(self.rcNodeIsConnecting){
-                    Color.gray.opacity(0.7).edgesIgnoringSafeArea(.all)
-                    ProgressView().scaleEffect(x: 2, y: 2, anchor: .center)
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                }*/
-        }.padding([.top, .horizontal], 60).background(Color.white).foregroundColor(Color.black)
+                
+                HStack(spacing: 40) {
+                    Button {
+                        //TODO: Album Scene
+                        return
+                    } label: {
+                        Image(systemName: "photo")
+                        Text("Photo Album")
+                    }
+                    
+                    Button {
+                        //TODO: RealityCapture scene
+                        return
+                    } label: {
+                        Image("realitycapture-logo").resizable()
+                            .frame(width: 20, height: 20)
+                        Text("3D Scene")
+                    }
+                    
+                    Spacer()
+                    
+                    @ObservedObject var appData = CRFly.shared.appData
+                    if(!appData.djiDevConn){
+                        Button {
+                            //TODO: Connection Guide
+                            return
+                        } label: {
+                            Text("Connection Guide").font(.callout)
+                        }.padding([.top,.bottom],15).padding([.leading,.trailing],45)
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 2).fill(.black.opacity(0.7)))
+                    } else {
+                        Button {
+                            //TODO: Connection Guide
+                            return
+                        } label: {
+                            Text("Let's FLY").fixedSize().font(.callout)
+                        }.padding([.top,.bottom],15).padding([.leading,.trailing],75)
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 2).fill(.blue))
+                    }
+                }.padding([.bottom],20)
+            }.foregroundColor(.white).padding([.leading,.trailing],20)
+        }
     }
 }
 

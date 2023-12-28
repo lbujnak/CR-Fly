@@ -42,7 +42,7 @@ class QRCodeScanner: NSObject, ObservableObject, AVCaptureMetadataOutputObjectsD
         //Check permissions
         if(session.inputs.isEmpty){
             Task {
-                let hasAccess = await checkAndRequestCameraAccess()
+                let hasAccess = await self.checkAndRequestCameraAccess()
                 if !hasAccess {
                     DispatchQueue.main.async {
                         self.viewController.showAlert(title: "Permissions Error",
