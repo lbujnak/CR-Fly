@@ -1,8 +1,9 @@
-//
-//  MediaDownloadState.swift
-//  CR Fly
-//
-//  Created by Lukáš Bujňák on 28/12/2023.
-//
-
 import Foundation
+
+struct MediaDownloadState {
+    let totalMedia: Int
+    let totalBytes: Int64
+    var downloadedMedia: Int
+    var downloadedBytes: Int64
+    var downloadSpeed: Float
+}

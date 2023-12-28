@@ -30,9 +30,21 @@ class DroneHelper {
         if(file.mediaType == DJIMediaType.MOV || file.mediaType == DJIMediaType.MP4) { return true }
         return false
     }
+    
+    static func isVideo(file: URL) -> Bool{
+        let ext = file.pathExtension.lowercased()
+        if(ext == "mov" || ext == "mp4") { return true }
+        return false
+    }
         
     static func isPhoto(file: DJIMediaFile) -> Bool{
         if(file.mediaType == DJIMediaType.JPEG || file.mediaType == DJIMediaType.RAWDNG){ return true }
+        return false
+    }
+    
+    static func isPhoto(file: URL) -> Bool{
+        let ext = file.pathExtension.lowercased()
+        if(ext == "jpg" || ext == "jpeg" || ext == "rawdng") { return true }
         return false
     }
         

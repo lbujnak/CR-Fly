@@ -1,8 +1,8 @@
-//
-//  MediaFilter.swift
-//  CR Fly
-//
-//  Created by Lukáš Bujňák on 28/12/2023.
-//
-
 import Foundation
+
+//MARK: Panorama is photo to, because they have same formats(.jpg/.png).
+public enum MediaFilter {
+    case all
+    case photos
+    case videos
+}

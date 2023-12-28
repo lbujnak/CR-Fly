@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var locationManager = LocationController()
+    @ObservedObject private var locationController = LocationController()
+    @ObservedObject private var appData = CRFly.shared.appData
     
     var body: some View {
         ZStack {
@@ -12,35 +13,21 @@ struct MainView: View {
             
             VStack {
                 HStack {
-                    if(self.locationManager.locationAddress == "") {
+                    if(self.locationController.locationAddress == "") {
                         Image(systemName: "location.magnifyingglass").bold()
                         Text("Locating...").bold()
                     } else {
                         Image(systemName: "location.fill").bold()
-                        Text(self.locationManager.locationAddress).bold()
+                        Text(self.locationController.locationAddress).bold()
                     }
                     Spacer()
                 }.padding([.top],30)
                 
                 Spacer()
-                
-                if(CRFly.shared.appData.developmentMode){
-                    HStack() {
-                        Spacer()
-                        
-                        Button {
-                            //TODO: Connection Guide
-                            return
-                        } label: {
-                            Text("Bridge Mode").font(.callout)
-                        }.padding([.top,.bottom],15).padding([.leading,.trailing],62.5)
-                        .background(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 2).fill(.black.opacity(0.7)))
-                    }
-                }
-                
                 HStack(spacing: 40) {
                     Button {
-                        //TODO: Album Scene
+                        CRFly.shared.droneController.pushCommand(command: EnterDroneAlbum())
+                        CRFly.shared.viewController.changeView(type: .albumView)
                         return
                     } label: {
                         Image(systemName: "photo")
@@ -49,6 +36,7 @@ struct MainView: View {
                     
                     Button {
                         //TODO: RealityCapture scene
+                        CRFly.shared.viewController.changeView(type: .scannerView)
                         return
                     } label: {
                         Image("realitycapture-logo").resizable()
@@ -57,9 +45,7 @@ struct MainView: View {
                     }
                     
                     Spacer()
-                    
-                    @ObservedObject var appData = CRFly.shared.appData
-                    if(!appData.djiDevConn){
+                    if(!CRFly.shared.appData.djiDevConn){
                         Button {
                             //TODO: Connection Guide
                             return

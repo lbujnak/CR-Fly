@@ -1,15 +1,17 @@
 import SwiftUI
 import DJISDK
 
-class DownloadDronePreview: DroneCommand {
+class FetchDroneMedia: DroneCommand {
     let downloadRetries = 3
     
     private var appData = CRFly.shared.appData
     private var mediaFetchError: Bool = false
     
     func execute(completion: @escaping () -> Void) {
+        self.appData.mediaThumbnailFetching = true
         if(self.appData.djiDevice == nil || self.appData.djiDevice!.camera == nil){
             CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Thumbnails", msg: Text("Lost connection to drone or cant detect camera"))
+            self.appData.mediaThumbnailFetching = false
             completion()
             return
         }
@@ -18,6 +20,7 @@ class DownloadDronePreview: DroneCommand {
         manager.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion: { (error) in
             if(error != nil){
                 CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Thumbnails", msg: Text(error!.localizedDescription))
+                    self.appData.mediaThumbnailFetching = false
             } else {
                 let files : [DJIMediaFile] = manager.sdCardFileListSnapshot() ?? []
                 self.appData.djiAlbumMedia.removeAll()
@@ -28,8 +31,14 @@ class DownloadDronePreview: DroneCommand {
     }
     
     private func downloadThumbnail(files: [DJIMediaFile], index: Int, retriesLeft: Int){
-        if(CRFly.shared.viewController.getViewType() != .albumView){ return }
-        if(index >= files.count) { return }
+        if(CRFly.shared.viewController.getViewType() != .albumView){
+            self.appData.mediaThumbnailFetching = false
+            return
+        }
+        if(index >= files.count) {
+            self.appData.mediaThumbnailFetching = false
+            return
+        }
         
         if(files[index].thumbnail != nil){
             self.addMediaToAppData(file: files[index])
@@ -44,6 +53,7 @@ class DownloadDronePreview: DroneCommand {
                     self.downloadThumbnail(files: files, index: index, retriesLeft: retriesLeft-1)
                 } else {
                     CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Thumbnails", msg: Text(error!.localizedDescription))
+                    self.appData.mediaThumbnailFetching = true
                 }
                 return
             }
@@ -54,12 +64,12 @@ class DownloadDronePreview: DroneCommand {
     
     private func addMediaToAppData(file: DJIMediaFile){
         let fileDateString = String(file.timeCreated.prefix(10))
-        let fileDate = SimpleDateFormatter().date(from: fileDateString)
+        let fileDate = SimpleDateFormatter().date(from: fileDateString)!
         
-        if let _ = self.appData.djiAlbumMedia[fileDate!] {
-            self.appData.djiAlbumMedia[fileDate!]!.append(file)
+        if let _ = self.appData.djiAlbumMedia[fileDate] {
+            self.appData.djiAlbumMedia[fileDate]!.append(file)
         } else {
-            self.appData.djiAlbumMedia[fileDate!] = [file]
+            self.appData.djiAlbumMedia[fileDate] = [file]
         }
     }
 }

@@ -3,13 +3,13 @@ import SwiftUI
 import AVKit
 
 struct CameraPreview: UIViewRepresentable {
-    let qrScanner: QRCodeScanner
+    let qrScanner: QRCodeScannerController
     let size: CGSize
 
     func makeUIView(context: Context) -> UIView {
-        let view = UIView(frame: CGRect(origin: .zero, size: size))
-        qrScanner.preview.frame = view.bounds
-        view.layer.addSublayer(qrScanner.preview)
+        let view = UIView(frame: CGRect(origin: .zero, size: self.size))
+        self.qrScanner.preview.frame = view.bounds
+        view.layer.addSublayer(self.qrScanner.preview)
         return view
     }
 
@@ -18,18 +18,18 @@ struct CameraPreview: UIViewRepresentable {
 
 
 struct QRScannerView: View {
-    let qrScanner: QRCodeScanner
+    let qrScanner: QRCodeScannerController
 
     var body: some View {
         GeometryReader{
             let size = $0.size
             
             ZStack{
-                CameraPreview(qrScanner: qrScanner, size: CGSize(width: size.height, height: size.height))
-                    .onAppear(perform: qrScanner.startScanning)
-                    .onDisappear(perform: qrScanner.stopScanning)
+                CameraPreview(qrScanner: self.qrScanner, size: CGSize(width: size.height, height: size.height))
+                    .onAppear(perform: self.qrScanner.startScanning)
+                    .onDisappear(perform: self.qrScanner.stopScanning)
                     .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        qrScanner.updateOrientation()
+                        self.qrScanner.updateOrientation()
                     }
                 
                 ForEach(0...4, id: \.self){ index in
@@ -43,7 +43,7 @@ struct QRScannerView: View {
 }
 
 struct QRScannerView_Previews: PreviewProvider {
-    static let qrScanner = QRCodeScanner()
+    static let qrScanner = QRCodeScannerController()
     static var previews: some View {
         QRScannerView(qrScanner: qrScanner)
     }

@@ -1,5 +1,4 @@
-import SwiftUI
-
+import Foundation
 /*
  Bude mat queue, ak sa spusti ze je aktivny -> vytvori sa connect, najprv nadviaze spojenie
  ak je uspesne, spusti sa algoritmus, ktorý každé 2 sekundy aj je queue prazdne, posle status
@@ -15,8 +14,8 @@ class RCNodeController {
     //Connection retries
     let retries = 3
     
-    @State private var connEstablished: Bool = false
-    @State private var commandQueue: [RCCommand] = []
+    private var connEstablished: Bool = false
+    private var commandQueue: [RCCommand] = []
     
     init(){
         

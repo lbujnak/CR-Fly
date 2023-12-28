@@ -8,34 +8,27 @@ struct ScannerView: View {
     @State var manualInput: Bool = false
     
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var qrScanner = QRCodeScanner()
+    @StateObject var qrScanner = QRCodeScannerController()
     
     var body: some View {
-        @State var isScanning = self.qrScanner.isRunning
         ZStack{
             VStack(spacing: 8){
                 // MARK: Header bar + info
                 HStack{
                     Button("←"){
                         CRFly.shared.viewController.changeView(type: .mainView)
-                    }.font(.largeTitle).foregroundColor(Color.blue)
+                    }.font(.largeTitle).foregroundColor(.primary)
                     
                     Spacer()
                     Text("Scan QR Code to pair with RealityCapture").font(.title3).foregroundColor(.primary.opacity(0.8)).padding(.top,20).padding(.top,-20)
                     Spacer()
-                
-                    Button{
-                        if(!isScanning) { qrScanner.startScanning() }
-                    } label: {
-                        Image(systemName: "qrcode.viewfinder").font(.largeTitle).foregroundColor(isScanning ? .secondary : .blue)
-                    }.disabled(isScanning)
                 }.ignoresSafeArea()
                 
                 HStack{
                     Text("Alternatively, you can enter it manually by ").foregroundColor(.secondary)
                     Button("clicking here"){
                         self.manualInput = true
-                        qrScanner.stopScanning()
+                        self.qrScanner.stopScanning()
                     }.padding(.leading, -6).bold()
                     
                     Text(".").padding(.leading, -6).foregroundColor(.secondary)
@@ -63,20 +56,29 @@ struct ScannerView: View {
                         Spacer()
                     }
                     Spacer()
-                }.background(colorScheme == .dark ? .black : .white).cornerRadius(10).foregroundColor(.primary).frame(width: 300, height: 70)
+                }.background(self.colorScheme == .dark ? .black : .white).cornerRadius(10).foregroundColor(.primary).frame(width: 300, height: 70)
             }
-        }.onAppear(){
-            self.verifyStatus = ""
-            self.verifyingQRCode = false
-        }.sheet(isPresented: self.$manualInput) {
+        }.onAppear(perform: self.prepareOnScan)
+        .onChange(of: self.manualInput) { _,new in
+            if(!new) { self.qrScanner.startScanning() }
+        }
+        .sheet(isPresented: self.$manualInput) {
             ManualInputView(manualInput: self.$manualInput, verifyStatus: self.$verifyStatus, verifyingQRCode: self.$verifyingQRCode)
         }
     }
     
-    private func invalidQRCode() {
-        CRFly.shared.viewController.showSimpleAlert(title: "QRCode Scanner Error", msg: Text("Found invalid QRCode for RealityCapture"))
-        self.verifyingQRCode = false
+    private func prepareOnScan(){
         self.verifyStatus = ""
+        self.verifyingQRCode = false
+    }
+    
+    private func invalidQRCode() {
+        self.prepareOnScan()
+        CRFly.shared.viewController.showAlert(
+            title: "QRCode Scanner Error",
+            msg: Text("Found invalid QRCode for RealityCapture"),
+            buttons: [(label: "Cancel", action: { qrScanner.startScanning() })
+        ])
     }
 
     private func validateAndConnect(){
@@ -114,7 +116,7 @@ struct ScannerView: View {
 }
 
 struct ScannerView_Previews: PreviewProvider {
-    static let qrScanner = QRCodeScanner()
+    static let qrScanner = QRCodeScannerController()
     static var previews: some View {
         ScannerView(qrScanner: qrScanner)
     }

@@ -17,7 +17,7 @@ struct ManualInputView: View {
                     HStack{
                         Button("←"){
                             self.manualInput = false
-                        }.font(.largeTitle).foregroundColor(Color.blue)
+                        }.font(.largeTitle).foregroundColor(.primary)
                         
                         Spacer()
                         Text("Please enter IP Address and Auth Token from RealityCapture").font(.title3).foregroundColor(.primary.opacity(0.8)).padding(.top,20).padding(.top,-20)

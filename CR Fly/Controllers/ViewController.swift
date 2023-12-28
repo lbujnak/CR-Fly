@@ -1,11 +1,5 @@
 import SwiftUI
 
-public enum ViewType {
-    case mainView
-    case scannerView
-    case albumView
-}
-
 public class ViewController: NSObject, ObservableObject {
     
     //Error handling
@@ -14,6 +8,7 @@ public class ViewController: NSObject, ObservableObject {
     
     //View change, etc..
     @Published var currentView: AnyView = AnyView(EmptyView())
+    private var currentViewType: ViewType = .empty
     private var viewMap: [ViewType : AnyView] = [:]
     
     func addView(type: ViewType, view: AnyView) {
@@ -24,16 +19,28 @@ public class ViewController: NSObject, ObservableObject {
         CurrentView(controller: self)
     }
     
+    func getViewType() -> ViewType {
+        return self.currentViewType
+    }
+    
     func changeView(type: ViewType){
         DispatchQueue.main.async {
             self.currentView = self.viewMap[type]!
+            self.currentViewType = type
+        }
+    }
+    
+    func changeView(view: AnyView, type: ViewType){
+        DispatchQueue.main.async {
+            self.currentView = view
+            self.currentViewType = type
         }
     }
     
     func showAlert(title: String, msg: Text, buttons: [(label: String, action: () -> Void)]) {
         DispatchQueue.main.async {
             self.alertErrors.append((title, msg, buttons))
-            if self.alertErrors.count == 1 {
+            if(self.alertErrors.count == 1) {
                 self.showAlertError = true
             }
         }
@@ -48,8 +55,8 @@ public class ViewController: NSObject, ObservableObject {
     }
 
     func clearAlertError() {
-        if !alertErrors.isEmpty { alertErrors.removeFirst() }
-        if !alertErrors.isEmpty {
+        if(!alertErrors.isEmpty) { alertErrors.removeFirst() }
+        if(!alertErrors.isEmpty) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.showAlertError = true
             }

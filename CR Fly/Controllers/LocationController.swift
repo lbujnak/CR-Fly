@@ -1,6 +1,6 @@
 import CoreLocation
 
-class MyLocationClass: NSObject, CLLocationManagerDelegate, ObservableObject {
+class LocationController: NSObject, CLLocationManagerDelegate, ObservableObject {
     var locationManager: CLLocationManager
     
     @Published var locationAddress: String = ""
@@ -9,6 +9,8 @@ class MyLocationClass: NSObject, CLLocationManagerDelegate, ObservableObject {
         locationManager = CLLocationManager()
         super.init()
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 50
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -21,7 +23,7 @@ class MyLocationClass: NSObject, CLLocationManagerDelegate, ObservableObject {
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                 if let placemark = placemarks?.first {
-                    let address = "\(placemark.thoroughfare ?? ""), \(placemark.locality ?? ""), \(placemark.country ?? "")"
+                    let address = "\(placemark.name ?? ""), \(placemark.locality ?? ""), \(placemark.country ?? "")"
                     self.locationAddress = address
                 }
             }

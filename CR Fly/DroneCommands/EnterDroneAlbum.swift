@@ -1,7 +1,7 @@
 import SwiftUI
 import DJISDK
 
-class LoadDroneAlbumCommand: DroneCommand {
+class EnterDroneAlbum: DroneCommand {
     private var appData = CRFly.shared.appData
     
     func execute(completion: @escaping () -> Void) {
@@ -27,52 +27,22 @@ class LoadDroneAlbumCommand: DroneCommand {
             camera.enterPlayback(completion: {(error) in
                 if (error != nil) {
                     CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text(error!.localizedDescription))
-                    completion()
-                    return
+                } else {
+                    print("***playback entered***")
+                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia())
                 }
-                print("***playback entered***")
-                //load media
                 completion()
             })
         } else{
             camera.setMode(.mediaDownload, withCompletion: {(error) in
                 if(error != nil) {
                     CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text(error!.localizedDescription))
-                    completion()
-                    return
+                } else {
+                    print("***playback entered***")
+                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia())
                 }
-                print("***playback entered***")
-                //load media
                 completion()
             })
         }
-    }
-    
-    private func refreshMediaList(camera: DJICamera, completionHandler: @escaping (String?) -> Void){
-        let manager = camera.mediaManager!
-        manager.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion: { (error) in
-            if(error != nil){
-                completionHandler("refresh error state: \(error!.localizedDescription)")
-                return
-            }
-                
-            let files : [DJIMediaFile] = manager.sdCardFileListSnapshot() ?? []
-            self.appData.djiAlbumMedia.removeAll()
-                    
-            var sections = 0
-            for i in 0..<files.count{
-                if(i == 0 || self.appData.djiAlbumMedia[sections].last?.timeCreated.prefix(10) != files[i].timeCreated.prefix(10)){
-                    self.appData.djiAlbumMedia.append([])
-                    sections += 1
-                }
-                
-                self.appData.djiAlbumMedia[sections-1].append(files[i])
-            }
-            completionHandler(nil)
-                                    
-            if(files.count > 0){
-                self.downloadThumbnail(index: 0, retries: 0)
-            }
-        })
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import AVKit
 
-class QRCodeScanner: NSObject, ObservableObject, AVCaptureMetadataOutputObjectsDelegate {
+class QRCodeScannerController: NSObject, ObservableObject, AVCaptureMetadataOutputObjectsDelegate {
     
     @Published var isRunning = false
     @Published var scannedCode = ""
