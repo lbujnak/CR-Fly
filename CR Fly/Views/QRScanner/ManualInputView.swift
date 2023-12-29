@@ -50,7 +50,7 @@ struct ManualInputView: View {
                                 .cornerRadius(10).frame(width: 250).multilineTextAlignment(.leading)
                         }.frame(minWidth: 360 ,maxWidth: 360)
                         HStack{
-                            Button("Connect") {
+                            Button {
                                 self.verifyStatus = "Connecting to RealityCapture..."
                                 self.verifyingQRCode = true
                                 self.manualInput = false
@@ -58,9 +58,9 @@ struct ManualInputView: View {
                                 //CRFly.shared.appData.rcAuthTkn = self.manualAuthTok
                                 
                                 //Command connect to RC
-                                
-                            }.frame(minWidth: 360 ,maxWidth: 360, minHeight: 40, maxHeight: 40).foregroundColor(.white)
-                                .background(Color.blue).cornerRadius(8)
+                            } label: {
+                                Text("Connect").frame(minWidth: 360 ,maxWidth: 360, minHeight: 40, maxHeight: 40).foregroundColor(.white)
+                            }.background(Color.blue).cornerRadius(8)
                         }.padding([.top],15)
                     }
                     Spacer()

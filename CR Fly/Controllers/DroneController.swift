@@ -35,7 +35,8 @@ class DroneController: NSObject {
         DJISDKManager.registerApp(with: self)
     }
     
-    private func connectToProduct(){
+    func connectToProduct(){
+        if(CRFly.shared.appData.djiDevConn) { return }
         DJISDKManager.stopConnectionToProduct()
         if(!DJISDKManager.startConnectionToProduct()) {
             CRFly.shared.viewController.showSimpleAlert(title: "Drone Connection Error", msg: Text("There was a problem starting the connection."))
@@ -69,6 +70,12 @@ extension DroneController : DJISDKManagerDelegate {
         if(!CRFly.shared.appData.djiDevConn && DJISDKManager.product() != nil && DJISDKManager.product()!.model != "Only RemoteController"){
             CRFly.shared.appData.djiDevice = DJISDKManager.product()
             CRFly.shared.appData.djiDevConn = true
+            
+            if(CRFly.shared.viewController.getViewType() == .albumView) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)){
+                    CRFly.shared.droneController.pushCommand(command: EnterDroneAlbum())
+                }
+            }
         }
     }
     

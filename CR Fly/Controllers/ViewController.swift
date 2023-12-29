@@ -70,8 +70,7 @@ struct CurrentView: View {
     var body: some View {
         ZStack {
             self.controller.currentView
-        }
-        .alert(self.controller.alertErrors.first?.0 ?? "Something unexpected happened...",
+        }.alert(self.controller.alertErrors.first?.0 ?? "Something unexpected happened...",
             isPresented: self.$controller.showAlertError,
             actions: {
                 if let firstError = controller.alertErrors.first {
@@ -90,6 +89,8 @@ struct CurrentView: View {
                     Text("Unknown error")
                 }
             }
-        )
+        ).onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            CRFly.shared.droneController.connectToProduct()
+        }
     }
 }

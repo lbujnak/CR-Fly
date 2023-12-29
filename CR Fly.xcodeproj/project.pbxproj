@@ -16,8 +16,9 @@
 		800886152B3DD23B00937A96 /* MediaUploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886142B3DD23B00937A96 /* MediaUploadState.swift */; };
 		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
 		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
-		8056F1C12B3E12B8001DC8B6 /* AlbumSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1C02B3E12B8001DC8B6 /* AlbumSource.swift */; };
-		8056F1C72B3E1418001DC8B6 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1C62B3E1418001DC8B6 /* MediaItem.swift */; };
+		8056F1CB2B3E1F8D001DC8B6 /* AlbumDroneContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */; };
+		8056F1CD2B3E1F96001DC8B6 /* AlbumSavedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1CC2B3E1F96001DC8B6 /* AlbumSavedContent.swift */; };
+		8056F1D22B3E393A001DC8B6 /* ViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1D12B3E393A001DC8B6 /* ViewOffsetKey.swift */; };
 		805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A758B2AAB121C00EB53D2 /* ViewController.swift */; };
 		805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */; };
 		805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75982AAB323A00EB53D2 /* ScannerView.swift */; };
@@ -33,9 +34,6 @@
 		80ED9CAC2B3CC00F0026082C /* DroneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CAB2B3CC00E0026082C /* DroneHelper.swift */; };
 		80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C372B3A3DA5000B4383 /* LocationController.swift */; };
 		80F55C3B2B3B4412000B4383 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C3A2B3B4412000B4383 /* AlbumView.swift */; };
-		80F55C412B3B5730000B4383 /* AlbumTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C402B3B5730000B4383 /* AlbumTopBar.swift */; };
-		80F55C432B3B5B0F000B4383 /* AlbumBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C422B3B5B0F000B4383 /* AlbumBottomBar.swift */; };
-		80F55C452B3B6ED2000B4383 /* AlbumMediaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C442B3B6ED2000B4383 /* AlbumMediaList.swift */; };
 		80F55C472B3C5100000B4383 /* DroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C462B3C5100000B4383 /* DroneController.swift */; };
 		D639DC86FBD6DB049026CEFC /* Pods_CR_Fly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA9A52089964519B5295167 /* Pods_CR_Fly.framework */; };
 /* End PBXBuildFile section */
@@ -52,8 +50,9 @@
 		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		803D79B6294E053500DC0D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8056F1C02B3E12B8001DC8B6 /* AlbumSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSource.swift; sourceTree = "<group>"; };
-		8056F1C62B3E1418001DC8B6 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDroneContent.swift; sourceTree = "<group>"; };
+		8056F1CC2B3E1F96001DC8B6 /* AlbumSavedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedContent.swift; sourceTree = "<group>"; };
+		8056F1D12B3E393A001DC8B6 /* ViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOffsetKey.swift; sourceTree = "<group>"; };
 		805A758B2AAB121C00EB53D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		805A75942AAB2FFD00EB53D2 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
 		805A75982AAB323A00EB53D2 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
@@ -70,9 +69,6 @@
 		80ED9CAB2B3CC00E0026082C /* DroneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneHelper.swift; sourceTree = "<group>"; };
 		80F55C372B3A3DA5000B4383 /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		80F55C3A2B3B4412000B4383 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
-		80F55C402B3B5730000B4383 /* AlbumTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTopBar.swift; sourceTree = "<group>"; };
-		80F55C422B3B5B0F000B4383 /* AlbumBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumBottomBar.swift; sourceTree = "<group>"; };
-		80F55C442B3B6ED2000B4383 /* AlbumMediaList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumMediaList.swift; sourceTree = "<group>"; };
 		80F55C462B3C5100000B4383 /* DroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneController.swift; sourceTree = "<group>"; };
 		9FA9A52089964519B5295167 /* Pods_CR_Fly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CR_Fly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB9DC69CEBA091B20909B062 /* Pods-CR Fly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CR Fly.release.xcconfig"; path = "Target Support Files/Pods-CR Fly/Pods-CR Fly.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,9 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				8008860A2B3DC9E300937A96 /* ViewType.swift */,
-				8056F1C02B3E12B8001DC8B6 /* AlbumSource.swift */,
 				8008860C2B3DCA3B00937A96 /* MediaFilter.swift */,
-				8056F1C62B3E1418001DC8B6 /* MediaItem.swift */,
 				800886102B3DCA6A00937A96 /* MediaDownloadState.swift */,
 				800886142B3DD23B00937A96 /* MediaUploadState.swift */,
 			);
@@ -176,7 +170,6 @@
 			children = (
 				805A75A72AAC5A6F00EB53D2 /* QRScanner */,
 				80F55C3F2B3B56E4000B4383 /* PhotoAlbum */,
-				80F55C392B3B43A5000B4383 /* DroneViews */,
 				80AFDF562AA9E6FB00D26F88 /* MainView.swift */,
 			);
 			path = Views;
@@ -202,20 +195,13 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		80F55C392B3B43A5000B4383 /* DroneViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DroneViews;
-			sourceTree = "<group>";
-		};
 		80F55C3F2B3B56E4000B4383 /* PhotoAlbum */ = {
 			isa = PBXGroup;
 			children = (
 				80F55C3A2B3B4412000B4383 /* AlbumView.swift */,
-				80F55C402B3B5730000B4383 /* AlbumTopBar.swift */,
-				80F55C422B3B5B0F000B4383 /* AlbumBottomBar.swift */,
-				80F55C442B3B6ED2000B4383 /* AlbumMediaList.swift */,
+				8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */,
+				8056F1CC2B3E1F96001DC8B6 /* AlbumSavedContent.swift */,
+				8056F1D12B3E393A001DC8B6 /* ViewOffsetKey.swift */,
 			);
 			path = PhotoAlbum;
 			sourceTree = "<group>";
@@ -356,28 +342,26 @@
 				80ED9CAC2B3CC00F0026082C /* DroneHelper.swift in Sources */,
 				805C1D0E2B3681D8001371C6 /* ManualInputView.swift in Sources */,
 				80ED9CA12B3C85940026082C /* DroneCommand.swift in Sources */,
+				8056F1CD2B3E1F96001DC8B6 /* AlbumSavedContent.swift in Sources */,
 				80F55C472B3C5100000B4383 /* DroneController.swift in Sources */,
 				80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
 				80F55C3B2B3B4412000B4383 /* AlbumView.swift in Sources */,
+				8056F1CB2B3E1F8D001DC8B6 /* AlbumDroneContent.swift in Sources */,
 				80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */,
-				8056F1C72B3E1418001DC8B6 /* MediaItem.swift in Sources */,
 				8008860D2B3DCA3B00937A96 /* MediaFilter.swift in Sources */,
 				80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */,
 				800886132B3DCF6700937A96 /* CRFly.swift in Sources */,
 				80B7B3092B34A3AF000D5498 /* QRCodeScanner.swift in Sources */,
 				800886062B3DC80A00937A96 /* DownloadDroneMedia.swift in Sources */,
-				80F55C432B3B5B0F000B4383 /* AlbumBottomBar.swift in Sources */,
-				80F55C412B3B5730000B4383 /* AlbumTopBar.swift in Sources */,
 				800886082B3DC96D00937A96 /* SimpleDateFormatter.swift in Sources */,
-				80F55C452B3B6ED2000B4383 /* AlbumMediaList.swift in Sources */,
 				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
 				80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */,
-				8056F1C12B3E12B8001DC8B6 /* AlbumSource.swift in Sources */,
 				8008860B2B3DC9E300937A96 /* ViewType.swift in Sources */,
 				800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */,
 				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
 				80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */,
+				8056F1D22B3E393A001DC8B6 /* ViewOffsetKey.swift in Sources */,
 				805E70602AA5D680008220FC /* RCCommand.swift in Sources */,
 				800886152B3DD23B00937A96 /* MediaUploadState.swift in Sources */,
 			);

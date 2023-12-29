@@ -2,15 +2,18 @@ import Foundation
 import DJISDK
 
 class DroneHelper {
-    static func filterArrayEmpty(checkFiles: [DJIMediaFile], filter: MediaFilter) -> Bool{
-        for file in checkFiles {
-            if(self.fileAcceptFilter(file: file, filter: filter)) { return false }
+
+    static func filterMapEmpty(checkFiles: [Date: [DJIMediaFile]], filter: MediaFilter) -> Bool{
+        for (_,files) in checkFiles {
+            for file in files {
+                if(self.fileAcceptFilter(file: file, filter: filter)) { return false }
+            }
         }
         return true
     }
     
-    static func filterMapEmpty(checkFiles: [Date: [DJIMediaFile]], filter: MediaFilter) -> Bool{
-        for (date,files) in checkFiles {
+    static func filterMapEmpty(checkFiles: [Date: [URL]], filter: MediaFilter) -> Bool{
+        for (_,files) in checkFiles {
             for file in files {
                 if(self.fileAcceptFilter(file: file, filter: filter)) { return false }
             }
@@ -22,6 +25,14 @@ class DroneHelper {
         switch(filter){
             case .all: return true
             case .photos: return self.isPano(file: file) || self.isPhoto(file: file)
+            case .videos: return self.isVideo(file: file)
+        }
+    }
+    
+    static func fileAcceptFilter(file: URL, filter: MediaFilter) ->Bool{
+        switch(filter){
+            case .all: return true
+            case .photos: return self.isPhoto(file: file)
             case .videos: return self.isVideo(file: file)
         }
     }

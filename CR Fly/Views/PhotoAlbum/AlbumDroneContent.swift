@@ -1,27 +1,63 @@
 import SwiftUI
 import DJISDK
 
-struct AlbumMediaList: View {
+struct AlbumDroneContent: View {
     @Binding var filter: MediaFilter
     @Binding var selectMode: Bool
-    @Binding var selectedItems: [DJIMediaFile]
+    @Binding var selectedItems : [DJIMediaFile]
+    @Binding var scrollOffset: CGFloat
+    
+    @State var oldScrollValue: CGFloat = 0
+    private let columns = [GridItem(.adaptive(minimum: 140),alignment: .center)]
+    
     @ObservedObject private var appData = CRFly.shared.appData
-    let columns = [GridItem(.adaptive(minimum: 140),alignment: .center)]
     
     var body: some View {
-        ForEach(appData.djiAlbumMedia.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
-            Section(header:
-                HStack{
-                    Text(date.description.prefix(10)).font(.custom("date", size: 15)).bold().padding(.top, 20.0).foregroundColor(.gray)
-                    Spacer()
-                }
-            ){
-                LazyVGrid(columns: columns, spacing: 5) {
-                    ForEach(files, id: \.self){ (file) in
-                        if(DroneHelper.fileAcceptFilter(file: file, filter: self.filter)){
-                            self.createPreviewForFile(file: file).id("\(file.fileName)")
+        if((self.appData.djiAlbumMedia.isEmpty && !self.appData.mediaThumbnailFetching) || DroneHelper.filterMapEmpty(checkFiles: self.appData.djiAlbumMediaSaved, filter: self.filter)){
+            Spacer()
+            Image(systemName: "photo.fill").foregroundColor(.gray).font(.custom("Photo icon", fixedSize: 80))
+            Text(self.appData.djiDevConn ? "No Photos or Videos": "No video cache").foregroundColor(.gray).padding([.top],20)
+            Spacer()
+        }
+        //MARK: (Connected) with non-empty album
+        else {
+            if(self.appData.djiAlbumMedia.isEmpty && self.appData.mediaThumbnailFetching){
+                Spacer()
+                ProgressView().scaleEffect(x: 2, y: 2, anchor: .center).progressViewStyle(CircularProgressViewStyle(tint: .primary))
+                Spacer()
+            } else {
+                ScrollView() {
+                    GeometryReader { geometry in
+                        Color.clear.preference(key: ViewOffsetKey.self, value: geometry.frame(in: .global).minY)
+                    }.frame(width: 0, height: 0)
+                    
+                    VStack {
+                        ForEach(self.appData.djiAlbumMedia.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
+                            Section(header:
+                                HStack{
+                                    Text(date.description.prefix(10)).font(.custom("date", size: 15)).bold().padding(.top, 20.0).foregroundColor(.gray)
+                                    Spacer()
+                                }
+                            ){
+                                LazyVGrid(columns: columns, spacing: 5) {
+                                    ForEach(files, id: \.self){ (file) in
+                                        if(DroneHelper.fileAcceptFilter(file: file, filter: self.filter)){
+                                            self.createPreviewForFile(file: file).id("\(file.fileName)")
+                                        }
+                                    }
+                                }
+                            }
                         }
+                    }.padding([.top],100)
+                }.padding([.top],-100).zIndex(1)
+                .onPreferenceChange(ViewOffsetKey.self) { value in
+                    if(self.scrollOffset - (value-self.oldScrollValue) <= 0 ||
+                       self.scrollOffset - (value-self.oldScrollValue) > 102) {
+                            self.oldScrollValue = value
+                            return
                     }
+                    self.scrollOffset -= (value - self.oldScrollValue)
+                    self.oldScrollValue = value
                 }
             }
         }
