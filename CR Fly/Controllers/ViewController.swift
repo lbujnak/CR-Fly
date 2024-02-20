@@ -70,6 +70,10 @@ struct CurrentView: View {
     var body: some View {
         ZStack {
             self.controller.currentView
+            
+            
+            
+            
         }.alert(self.controller.alertErrors.first?.0 ?? "Something unexpected happened...",
             isPresented: self.$controller.showAlertError,
             actions: {

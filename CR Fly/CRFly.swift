@@ -42,10 +42,10 @@ public class CRFly: ObservableObject {
                         case "jpg","jpeg","rawdng", "mov", "mp4":
                             let fileDate = SimpleDateFormatter().date(from: String(creationDate.description.prefix(10)))!
                             
-                            if let _ = self.appData.djiAlbumMediaSaved[fileDate] {
-                                self.appData.djiAlbumMediaSaved[fileDate]!.append(fileURL)
+                            if let _ = self.appData.mediaSavedAlbum[fileDate] {
+                                self.appData.mediaSavedAlbum[fileDate]!.append(fileURL)
                             } else {
-                                self.appData.djiAlbumMediaSaved[fileDate] = [fileURL]
+                                self.appData.mediaSavedAlbum[fileDate] = [fileURL]
                             }
                         default: continue
                     }
@@ -60,7 +60,7 @@ public class CRFly: ObservableObject {
         let fileDateString = String(file.timeCreated.prefix(10))
         let fileDate = SimpleDateFormatter().date(from: fileDateString)!
         
-        if let urls = self.appData.djiAlbumMediaSaved[fileDate] {
+        if let urls = self.appData.mediaSavedAlbum[fileDate] {
             return urls.contains { $0.lastPathComponent == file.fileName }
         }
         return false
@@ -72,7 +72,7 @@ public class CRFly: ObservableObject {
             let realByteCnt : Int64 = downloaded - lastBytesCnt
             let newSpeed = Float(realByteCnt) / 1000000
             
-            self.appData.mediaDownloadState?.downloadSpeed = newSpeed
+            self.appData.mediaDownloadState!.downloadSpeed = newSpeed
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
                 self.updateDroneDownloadSpeed(lastBytesCnt: downloaded)
             }

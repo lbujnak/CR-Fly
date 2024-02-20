@@ -26,7 +26,6 @@ struct MainView: View {
                 Spacer()
                 HStack(spacing: 40) {
                     Button {
-                        CRFly.shared.droneController.pushCommand(command: EnterDroneAlbum())
                         CRFly.shared.viewController.changeView(type: .albumView)
                         return
                     } label: {
@@ -64,6 +63,7 @@ struct MainView: View {
                     }
                 }.padding([.bottom],20)
             }.foregroundColor(.white).padding([.leading,.trailing],20)
+            //TODO: Onappear stopplayback
         }
     }
 }

@@ -14,6 +14,22 @@
 		800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886102B3DCA6A00937A96 /* MediaDownloadState.swift */; };
 		800886132B3DCF6700937A96 /* CRFly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886122B3DCF6700937A96 /* CRFly.swift */; };
 		800886152B3DD23B00937A96 /* MediaUploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886142B3DD23B00937A96 /* MediaUploadState.swift */; };
+		8028281F2B3E58A000E060FF /* AlbumHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028281E2B3E58A000E060FF /* AlbumHelper.swift */; };
+		802828212B3E5A6E00E060FF /* AlbumDronePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828202B3E5A6E00E060FF /* AlbumDronePreview.swift */; };
+		802828232B3E616700E060FF /* FetchDronePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828222B3E616700E060FF /* FetchDronePreview.swift */; };
+		802828272B3E67AD00E060FF /* ExitDronePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828262B3E67AD00E060FF /* ExitDronePreview.swift */; };
+		802828292B3E6F8600E060FF /* RemoveDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */; };
+		8028282B2B3EF9C200E060FF /* VideoPlaybackView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8028282A2B3EF9C200E060FF /* VideoPlaybackView.storyboard */; };
+		8028282D2B3EF9F800E060FF /* VideoPlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028282C2B3EF9F800E060FF /* VideoPlaybackController.swift */; };
+		802828302B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */; };
+		802828342B3EFBA500E060FF /* PrepareDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828332B3EFBA500E060FF /* PrepareDroneVideoPlayback.swift */; };
+		802828362B3F00CD00E060FF /* VideoPreviewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828352B3F00CD00E060FF /* VideoPreviewAdapter.swift */; };
+		802828382B3F00E500E060FF /* DecodeImageCalibrateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828372B3F00E500E060FF /* DecodeImageCalibrateLogic.swift */; };
+		8028283A2B3F059700E060FF /* ResumeDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */; };
+		8028283C2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */; };
+		8028283E2B3F089200E060FF /* VideoTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028283D2B3F089200E060FF /* VideoTime.swift */; };
+		802828402B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */; };
+		802828422B3F0C0100E060FF /* MediaDronePreviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828412B3F0C0100E060FF /* MediaDronePreviewState.swift */; };
 		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
 		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
 		8056F1CB2B3E1F8D001DC8B6 /* AlbumDroneContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */; };
@@ -31,7 +47,6 @@
 		80ED9CA12B3C85940026082C /* DroneCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA02B3C85940026082C /* DroneCommand.swift */; };
 		80ED9CA32B3C85C00026082C /* EnterDroneAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */; };
 		80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */; };
-		80ED9CAC2B3CC00F0026082C /* DroneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CAB2B3CC00E0026082C /* DroneHelper.swift */; };
 		80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C372B3A3DA5000B4383 /* LocationController.swift */; };
 		80F55C3B2B3B4412000B4383 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C3A2B3B4412000B4383 /* AlbumView.swift */; };
 		80F55C472B3C5100000B4383 /* DroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C462B3C5100000B4383 /* DroneController.swift */; };
@@ -47,6 +62,22 @@
 		800886122B3DCF6700937A96 /* CRFly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFly.swift; sourceTree = "<group>"; };
 		800886142B3DD23B00937A96 /* MediaUploadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUploadState.swift; sourceTree = "<group>"; };
 		8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CR-Fly-Info.plist"; sourceTree = SOURCE_ROOT; };
+		8028281E2B3E58A000E060FF /* AlbumHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumHelper.swift; sourceTree = "<group>"; };
+		802828202B3E5A6E00E060FF /* AlbumDronePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDronePreview.swift; sourceTree = "<group>"; };
+		802828222B3E616700E060FF /* FetchDronePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDronePreview.swift; sourceTree = "<group>"; };
+		802828262B3E67AD00E060FF /* ExitDronePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitDronePreview.swift; sourceTree = "<group>"; };
+		802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveDroneMedia.swift; sourceTree = "<group>"; };
+		8028282A2B3EF9C200E060FF /* VideoPlaybackView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VideoPlaybackView.storyboard; sourceTree = "<group>"; };
+		8028282C2B3EF9F800E060FF /* VideoPlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlaybackController.swift; sourceTree = "<group>"; };
+		8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		802828332B3EFBA500E060FF /* PrepareDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		802828352B3F00CD00E060FF /* VideoPreviewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewAdapter.swift; sourceTree = "<group>"; };
+		802828372B3F00E500E060FF /* DecodeImageCalibrateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageCalibrateLogic.swift; sourceTree = "<group>"; };
+		802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		8028283D2B3F089200E060FF /* VideoTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTime.swift; sourceTree = "<group>"; };
+		8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeVideoTimeDronePlayback.swift; sourceTree = "<group>"; };
+		802828412B3F0C0100E060FF /* MediaDronePreviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDronePreviewState.swift; sourceTree = "<group>"; };
 		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		803D79B6294E053500DC0D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,7 +97,6 @@
 		80ED9CA02B3C85940026082C /* DroneCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneCommand.swift; sourceTree = "<group>"; };
 		80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterDroneAlbum.swift; sourceTree = "<group>"; };
 		80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDroneMedia.swift; sourceTree = "<group>"; };
-		80ED9CAB2B3CC00E0026082C /* DroneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneHelper.swift; sourceTree = "<group>"; };
 		80F55C372B3A3DA5000B4383 /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		80F55C3A2B3B4412000B4383 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		80F55C462B3C5100000B4383 /* DroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneController.swift; sourceTree = "<group>"; };
@@ -91,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				805A758B2AAB121C00EB53D2 /* ViewController.swift */,
-				80B7B3082B34A3AF000D5498 /* QRCodeScanner.swift */,
 				80F55C372B3A3DA5000B4383 /* LocationController.swift */,
 				80D6343D2B375F75006F3CE9 /* RCNodeController.swift */,
 				80F55C462B3C5100000B4383 /* DroneController.swift */,
@@ -104,10 +133,66 @@
 			children = (
 				8008860A2B3DC9E300937A96 /* ViewType.swift */,
 				8008860C2B3DCA3B00937A96 /* MediaFilter.swift */,
+				8028283D2B3F089200E060FF /* VideoTime.swift */,
 				800886102B3DCA6A00937A96 /* MediaDownloadState.swift */,
 				800886142B3DD23B00937A96 /* MediaUploadState.swift */,
+				802828412B3F0C0100E060FF /* MediaDronePreviewState.swift */,
 			);
 			path = Structures;
+			sourceTree = "<group>";
+		};
+		8028281C2B3E4D8200E060FF /* Drone */ = {
+			isa = PBXGroup;
+			children = (
+				8028282E2B3EF9FC00E060FF /* VideoPlayback */,
+				8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */,
+				802828202B3E5A6E00E060FF /* AlbumDronePreview.swift */,
+			);
+			path = Drone;
+			sourceTree = "<group>";
+		};
+		8028281D2B3E4D8600E060FF /* Saved */ = {
+			isa = PBXGroup;
+			children = (
+				8056F1CC2B3E1F96001DC8B6 /* AlbumSavedContent.swift */,
+			);
+			path = Saved;
+			sourceTree = "<group>";
+		};
+		8028282E2B3EF9FC00E060FF /* VideoPlayback */ = {
+			isa = PBXGroup;
+			children = (
+				802828372B3F00E500E060FF /* DecodeImageCalibrateLogic.swift */,
+				802828352B3F00CD00E060FF /* VideoPreviewAdapter.swift */,
+				8028282A2B3EF9C200E060FF /* VideoPlaybackView.storyboard */,
+				8028282C2B3EF9F800E060FF /* VideoPlaybackController.swift */,
+				8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */,
+			);
+			path = VideoPlayback;
+			sourceTree = "<group>";
+		};
+		802828312B3EFB6000E060FF /* AlbumCommands */ = {
+			isa = PBXGroup;
+			children = (
+				802828322B3EFB9700E060FF /* VideoPlayback */,
+				80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */,
+				802828222B3E616700E060FF /* FetchDronePreview.swift */,
+				802828262B3E67AD00E060FF /* ExitDronePreview.swift */,
+				800886052B3DC80A00937A96 /* DownloadDroneMedia.swift */,
+				802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */,
+			);
+			path = AlbumCommands;
+			sourceTree = "<group>";
+		};
+		802828322B3EFB9700E060FF /* VideoPlayback */ = {
+			isa = PBXGroup;
+			children = (
+				802828332B3EFBA500E060FF /* PrepareDroneVideoPlayback.swift */,
+				8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */,
+				802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */,
+				8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */,
+			);
+			path = VideoPlayback;
 			sourceTree = "<group>";
 		};
 		803D79A6294E053300DC0D3E = {
@@ -153,6 +238,7 @@
 				805A75982AAB323A00EB53D2 /* ScannerView.swift */,
 				805C1D0D2B3681D8001371C6 /* ManualInputView.swift */,
 				80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */,
+				80B7B3082B34A3AF000D5498 /* QRCodeScanner.swift */,
 			);
 			path = QRScanner;
 			sourceTree = "<group>";
@@ -180,8 +266,7 @@
 			children = (
 				80ED9CA02B3C85940026082C /* DroneCommand.swift */,
 				80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */,
-				80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */,
-				800886052B3DC80A00937A96 /* DownloadDroneMedia.swift */,
+				802828312B3EFB6000E060FF /* AlbumCommands */,
 			);
 			path = DroneCommands;
 			sourceTree = "<group>";
@@ -189,7 +274,7 @@
 		80ED9CAA2B3CBFFF0026082C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				80ED9CAB2B3CC00E0026082C /* DroneHelper.swift */,
+				8028281E2B3E58A000E060FF /* AlbumHelper.swift */,
 				800886072B3DC96D00937A96 /* SimpleDateFormatter.swift */,
 			);
 			path = Helpers;
@@ -198,9 +283,9 @@
 		80F55C3F2B3B56E4000B4383 /* PhotoAlbum */ = {
 			isa = PBXGroup;
 			children = (
+				8028281D2B3E4D8600E060FF /* Saved */,
+				8028281C2B3E4D8200E060FF /* Drone */,
 				80F55C3A2B3B4412000B4383 /* AlbumView.swift */,
-				8056F1CA2B3E1F8D001DC8B6 /* AlbumDroneContent.swift */,
-				8056F1CC2B3E1F96001DC8B6 /* AlbumSavedContent.swift */,
 				8056F1D12B3E393A001DC8B6 /* ViewOffsetKey.swift */,
 			);
 			path = PhotoAlbum;
@@ -284,6 +369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8028282B2B3EF9C200E060FF /* VideoPlaybackView.storyboard in Resources */,
 				803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,29 +423,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				802828422B3F0C0100E060FF /* MediaDronePreviewState.swift in Sources */,
 				80ED9CA32B3C85C00026082C /* EnterDroneAlbum.swift in Sources */,
+				8028281F2B3E58A000E060FF /* AlbumHelper.swift in Sources */,
 				805A75952AAB2FFD00EB53D2 /* ApplicationData.swift in Sources */,
-				80ED9CAC2B3CC00F0026082C /* DroneHelper.swift in Sources */,
 				805C1D0E2B3681D8001371C6 /* ManualInputView.swift in Sources */,
+				802828272B3E67AD00E060FF /* ExitDronePreview.swift in Sources */,
 				80ED9CA12B3C85940026082C /* DroneCommand.swift in Sources */,
+				802828212B3E5A6E00E060FF /* AlbumDronePreview.swift in Sources */,
 				8056F1CD2B3E1F96001DC8B6 /* AlbumSavedContent.swift in Sources */,
+				802828402B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift in Sources */,
 				80F55C472B3C5100000B4383 /* DroneController.swift in Sources */,
 				80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */,
+				802828362B3F00CD00E060FF /* VideoPreviewAdapter.swift in Sources */,
+				802828342B3EFBA500E060FF /* PrepareDroneVideoPlayback.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
 				80F55C3B2B3B4412000B4383 /* AlbumView.swift in Sources */,
 				8056F1CB2B3E1F8D001DC8B6 /* AlbumDroneContent.swift in Sources */,
 				80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */,
+				8028283E2B3F089200E060FF /* VideoTime.swift in Sources */,
+				802828232B3E616700E060FF /* FetchDronePreview.swift in Sources */,
 				8008860D2B3DCA3B00937A96 /* MediaFilter.swift in Sources */,
 				80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */,
 				800886132B3DCF6700937A96 /* CRFly.swift in Sources */,
+				8028283C2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift in Sources */,
 				80B7B3092B34A3AF000D5498 /* QRCodeScanner.swift in Sources */,
+				802828302B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift in Sources */,
+				802828382B3F00E500E060FF /* DecodeImageCalibrateLogic.swift in Sources */,
 				800886062B3DC80A00937A96 /* DownloadDroneMedia.swift in Sources */,
 				800886082B3DC96D00937A96 /* SimpleDateFormatter.swift in Sources */,
 				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
 				80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */,
+				802828292B3E6F8600E060FF /* RemoveDroneMedia.swift in Sources */,
 				8008860B2B3DC9E300937A96 /* ViewType.swift in Sources */,
 				800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */,
+				8028282D2B3EF9F800E060FF /* VideoPlaybackController.swift in Sources */,
 				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
+				8028283A2B3F059700E060FF /* ResumeDroneVideoPlayback.swift in Sources */,
 				80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */,
 				8056F1D22B3E393A001DC8B6 /* ViewOffsetKey.swift in Sources */,
 				805E70602AA5D680008220FC /* RCCommand.swift in Sources */,

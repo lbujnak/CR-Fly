@@ -13,7 +13,7 @@ struct AlbumSavedContent: View {
     @ObservedObject private var appData = CRFly.shared.appData
     
     var body: some View {
-        if(self.appData.djiAlbumMediaSaved.isEmpty || DroneHelper.filterMapEmpty(checkFiles: self.appData.djiAlbumMediaSaved, filter: self.filter)){
+        if(AlbumHelper.filterMapEmpty(checkFiles: self.appData.mediaSavedAlbum, filter: self.filter)){
             Spacer()
         
             Image(systemName: "photo.fill").foregroundColor(.gray).font(.custom("Photo icon", fixedSize: 80))
@@ -26,7 +26,7 @@ struct AlbumSavedContent: View {
                         Color.clear.preference(key: ViewOffsetKey.self, value: geometry.frame(in: .global).minY)
                     }.frame(width: 0, height: 0)
                     
-                    ForEach(self.appData.djiAlbumMediaSaved.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
+                    ForEach(self.appData.mediaSavedAlbum.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
                         Section(header:
                                     HStack{
                             Text(date.description.prefix(10)).font(.custom("date", size: 15)).bold().padding(.top, 20.0).foregroundColor(.gray)
@@ -35,7 +35,7 @@ struct AlbumSavedContent: View {
                         ){
                             LazyVGrid(columns: columns, spacing: 5) {
                                 ForEach(files, id: \.self){ (file) in
-                                    if(DroneHelper.fileAcceptFilter(file: file, filter: self.filter)){
+                                    if(AlbumHelper.fileAcceptFilter(file: file, filter: self.filter)){
                                         self.createPreviewForFile(file: file).id("\(file.lastPathComponent)")
                                     }
                                 }
@@ -100,8 +100,8 @@ struct AlbumSavedContent: View {
                 Spacer()
                     
                 HStack{
-                    if(DroneHelper.isVideo(file: file)) { Image(systemName: "video.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
-                    else if(DroneHelper.isPhoto(file: file)){ Image(systemName: "photo.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
+                    if(AlbumHelper.isVideo(file: file)) { Image(systemName: "video.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
+                    else if(AlbumHelper.isPhoto(file: file)){ Image(systemName: "photo.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
                     else{ Image(systemName: "camera.metering.unknown").foregroundColor(.white) }
                         Spacer()
                 }

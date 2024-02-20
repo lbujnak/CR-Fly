@@ -5,4 +5,5 @@ public enum ViewType {
     case mainView
     case scannerView
     case albumView
+    case albumMediaPreview
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct MediaDownloadState {
+struct MediaDownloadState: Equatable {
     let totalMedia: Int
     let totalBytes: Int64
     var downloadedMedia: Int

@@ -2,22 +2,24 @@ import SwiftUI
 import DJISDK
 
 class DownloadDroneMedia: DroneCommand {
-    private var selectedItems : [DJIMediaFile]
+    private var files : [DJIMediaFile]
     private var appData = CRFly.shared.appData
 
-    init(selectedItems: Array<DJIMediaFile>) {
-        self.selectedItems = selectedItems
+    init(files: Array<DJIMediaFile>) {
+        self.files = files
     }
     
     func execute(completion: @escaping () -> Void) {
         if(self.appData.mediaDownloadState != nil) {
             CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Media", msg: Text("Unexpected Error. Download of full-resolution media is already in progress."))
+            completion()
+            return
         }
         
         var totalBytes: Int64 = 0
         var downloadList: [DJIMediaFile] = []
         
-        for file in self.selectedItems {
+        for file in self.files {
             if(!CRFly.shared.isMediaSaved(file: file)){
                 totalBytes += file.fileSizeInBytes
                 downloadList.append(file)
@@ -35,6 +37,7 @@ class DownloadDroneMedia: DroneCommand {
             
             CRFly.shared.appData.mediaDownloadState = MediaDownloadState(totalMedia: downloadList.count, totalBytes: totalBytes, downloadedMedia: 0, downloadedBytes: 0, downloadSpeed: 0)
         }
+        completion()
     }
     
     func saveMediaToDevice(downloadList: [DJIMediaFile], position: Int){
@@ -60,7 +63,7 @@ class DownloadDroneMedia: DroneCommand {
             return
         }
         
-        downloadList[position].fetchData(withOffset: 0, update: DispatchQueue.main){ (data,done,error) in
+        downloadList[position].fetchData(withOffset: 0, update: DispatchQueue.main) { (data,done,error) in
             if(error != nil){
                 CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Media", msg: Text("\(String(describing: error!)). Stoping download..."))
                 self.appData.mediaDownloadState = nil
@@ -68,6 +71,7 @@ class DownloadDroneMedia: DroneCommand {
             }
             fileHandle.write(data!)
             self.appData.mediaDownloadState?.downloadedBytes += Int64(data!.count)
+   
             if(done) {
                 let newFileUrl = URL(fileURLWithPath: CRFly.shared.libraryURL.relativePath).appendingPathComponent(downloadList[position].fileName)
                 do {
@@ -83,10 +87,10 @@ class DownloadDroneMedia: DroneCommand {
                 let dateString = String(downloadList[position].timeCreated.prefix(10))
                 let fileDate = SimpleDateFormatter().date(from: dateString)!
                 
-                if let _ = self.appData.djiAlbumMediaSaved[fileDate] {
-                    self.appData.djiAlbumMediaSaved[fileDate]!.append(newFileUrl)
+                if let _ = self.appData.mediaSavedAlbum[fileDate] {
+                    self.appData.mediaSavedAlbum[fileDate]!.append(newFileUrl)
                 } else {
-                    self.appData.djiAlbumMediaSaved[fileDate] = [newFileUrl]
+                    self.appData.mediaSavedAlbum[fileDate] = [newFileUrl]
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)){

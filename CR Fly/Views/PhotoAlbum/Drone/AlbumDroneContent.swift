@@ -13,7 +13,7 @@ struct AlbumDroneContent: View {
     @ObservedObject private var appData = CRFly.shared.appData
     
     var body: some View {
-        if((self.appData.djiAlbumMedia.isEmpty && !self.appData.mediaThumbnailFetching) || DroneHelper.filterMapEmpty(checkFiles: self.appData.djiAlbumMediaSaved, filter: self.filter)){
+        if((self.appData.djiMediaAlbum.isEmpty && !self.appData.mediaAlbumLoading)){
             Spacer()
             Image(systemName: "photo.fill").foregroundColor(.gray).font(.custom("Photo icon", fixedSize: 80))
             Text(self.appData.djiDevConn ? "No Photos or Videos": "No video cache").foregroundColor(.gray).padding([.top],20)
@@ -21,7 +21,7 @@ struct AlbumDroneContent: View {
         }
         //MARK: (Connected) with non-empty album
         else {
-            if(self.appData.djiAlbumMedia.isEmpty && self.appData.mediaThumbnailFetching){
+            if(self.appData.djiMediaAlbum.isEmpty && self.appData.mediaAlbumLoading){
                 Spacer()
                 ProgressView().scaleEffect(x: 2, y: 2, anchor: .center).progressViewStyle(CircularProgressViewStyle(tint: .primary))
                 Spacer()
@@ -32,7 +32,7 @@ struct AlbumDroneContent: View {
                     }.frame(width: 0, height: 0)
                     
                     VStack {
-                        ForEach(self.appData.djiAlbumMedia.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
+                        ForEach(self.appData.djiMediaAlbum.sorted(by: { $0.key > $1.key }), id: \.key) { (date, files) in
                             Section(header:
                                 HStack{
                                     Text(date.description.prefix(10)).font(.custom("date", size: 15)).bold().padding(.top, 20.0).foregroundColor(.gray)
@@ -41,7 +41,7 @@ struct AlbumDroneContent: View {
                             ){
                                 LazyVGrid(columns: columns, spacing: 5) {
                                     ForEach(files, id: \.self){ (file) in
-                                        if(DroneHelper.fileAcceptFilter(file: file, filter: self.filter)){
+                                        if(AlbumHelper.fileAcceptFilter(file: file, filter: self.filter)){
                                             self.createPreviewForFile(file: file).id("\(file.fileName)")
                                         }
                                     }
@@ -51,8 +51,12 @@ struct AlbumDroneContent: View {
                     }.padding([.top],100)
                 }.padding([.top],-100).zIndex(1)
                 .onPreferenceChange(ViewOffsetKey.self) { value in
+                    var maxVal: CGFloat = 102
+                    if(self.appData.mediaDownloadState != nil) { maxVal += 24 }
+                    if(self.appData.mediaUploadState != nil) { maxVal += 24 }
+                    
                     if(self.scrollOffset - (value-self.oldScrollValue) <= 0 ||
-                       self.scrollOffset - (value-self.oldScrollValue) > 102) {
+                       self.scrollOffset - (value-self.oldScrollValue) > maxVal) {
                             self.oldScrollValue = value
                             return
                     }
@@ -72,7 +76,9 @@ struct AlbumDroneContent: View {
                         if(!mediaSelected){
                             if(self.selectMode) { self.selectedItems.append(file) }
                             else {
-                                //TODO: PreviewMedia
+                                if(AlbumHelper.isPano(file: file) || AlbumHelper.isVideo(file: file) || AlbumHelper.isPhoto(file: file)) {
+                                    CRFly.shared.viewController.changeView(view: AnyView(AlbumDronePreview(file: file)), type: .albumMediaPreview)
+                                }
                             }
                         } else {
                             self.selectedItems.remove(at: self.selectedItems.firstIndex(of: file)!)
@@ -111,9 +117,9 @@ struct AlbumDroneContent: View {
                     Spacer()
                     
                     HStack{
-                        if(DroneHelper.isVideo(file: file)) { Image(systemName: "video.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
-                        else if(DroneHelper.isPhoto(file: file)){ Image(systemName: "photo.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
-                        else if(DroneHelper.isPano(file: file)){ Image(systemName: "pano.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
+                        if(AlbumHelper.isVideo(file: file)) { Image(systemName: "video.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
+                        else if(AlbumHelper.isPhoto(file: file)){ Image(systemName: "photo.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
+                        else if(AlbumHelper.isPano(file: file)){ Image(systemName: "pano.fill").foregroundColor(.white).padding([.leading, .bottom],4).font(.custom("fileType", size: 15)) }
                         else{ Image(systemName: "camera.metering.unknown").foregroundColor(.white) }
                         Spacer()
                     }

@@ -47,12 +47,12 @@ class DroneController: NSObject {
         self.commandQueue.removeAll()
         CRFly.shared.appData.djiDevConn = false
         CRFly.shared.appData.djiDevice = nil
-        CRFly.shared.appData.djiAlbumMedia = [:]
+        CRFly.shared.appData.djiMediaAlbum = [:]
     }
 }
 
 //MARK: Delegate DJISDKManager functions
-extension DroneController : DJISDKManagerDelegate {
+extension DroneController: DJISDKManagerDelegate {
     
     func didUpdateDatabaseDownloadProgress(_ progress: Progress) {
         print("SDK downloading db file \(progress.completedUnitCount / progress.totalUnitCount)")
@@ -82,6 +82,26 @@ extension DroneController : DJISDKManagerDelegate {
     func componentDisconnected(withKey key: String?, andIndex index: Int) {
         if(CRFly.shared.appData.djiDevConn && (DJISDKManager.product() == nil ||  DJISDKManager.product()!.model == "Only RemoteController")){
             self.droneDisconnected()
+        }
+    }
+    
+}
+
+extension DroneController: DJIMediaManagerDelegate {
+    func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
+        let appData = CRFly.shared.appData
+        //Update time of video preview
+        if(appData.djiMediaPreviewState != nil) {
+            if(!appData.djiMediaPreviewState!.isUserChangingTime && appData.djiMediaPreviewState!.isPlaying){
+                appData.djiMediaPreviewState!.currentTime = state.playingPosition
+                
+                if(state.playbackStatus == .stopped && state.playingPosition == 0) {
+                    appData.djiMediaPreviewState = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
+                        CRFly.shared.droneController.pushCommand(command: PrepareDroneVideoPlayback(file: state.playingMedia))
+                    }
+                }
+            }
         }
     }
 }
