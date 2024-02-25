@@ -1,7 +1,7 @@
 import SwiftUI
 import DJISDK
 
-class PauseDroneVideoPlayback: DroneCommand {
+class PauseDroneVideoPlayback: Command {
     private var appData = CRFly.shared.appData
     
     func execute(completion: @escaping () -> Void) {
@@ -11,13 +11,16 @@ class PauseDroneVideoPlayback: DroneCommand {
             return
         }
         
+        if(self.appData.droneAlbumPreviewController == nil){
+            completion()
+            return
+        }
+        
         self.appData.djiDevice!.camera!.mediaManager!.pause(completion: {(error) in
             if(error != nil) {
                 CRFly.shared.viewController.showSimpleAlert(title: "Error While Pausing Video Preview", msg: Text("Couldn't pause video"))
             } else {
-                if(self.appData.djiMediaPreviewState != nil) {
-                    self.appData.djiMediaPreviewState!.isPlaying = false
-                }
+                self.appData.droneAlbumPreviewController?.isPlayingVideo = false
             }
             completion()
         })

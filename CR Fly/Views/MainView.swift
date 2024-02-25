@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
+    @ObservedObject var appData: ApplicationData
     @ObservedObject private var locationController = LocationController()
-    @ObservedObject private var appData = CRFly.shared.appData
     
     var body: some View {
         ZStack {
@@ -68,8 +68,6 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
+#Preview {
+    MainView(appData: ApplicationData())
 }

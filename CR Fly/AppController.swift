@@ -10,9 +10,9 @@ struct AppController: App {
     init(){
         CRFly.shared.droneController.registerWithSDK()
         
-        self.viewController.addView(type: .mainView, view: AnyView(MainView()))
+        self.viewController.addView(type: .mainView, view: AnyView(MainView(appData: CRFly.shared.appData)))
+        self.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.savedAlbumController)))
         self.viewController.addView(type: .scannerView, view: AnyView(ScannerView()))
-        self.viewController.addView(type: .albumView, view: AnyView(AlbumView()))
         self.viewController.changeView(type: .mainView)
     }
     

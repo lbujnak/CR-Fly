@@ -4,21 +4,23 @@ import DJISDK
 class DroneController: NSObject {
     
     private var isExecutingCommand = false
-    private var commandQueue: [DroneCommand] = []
+    private var commandQueue: [Command] = []
+    
+    @State var foundInvalidPlayback: Bool = false
     
     //MARK: Drone Command Queue
-    func pushCommand(command: DroneCommand) {
-        commandQueue.append(command)
-        if(!isExecutingCommand) {
+    func pushCommand(command: Command) {
+        self.commandQueue.append(command)
+        if(!self.isExecutingCommand) {
             processNextCommand()
         }
     }
     
     private func processNextCommand() {
-        guard !isExecutingCommand, !commandQueue.isEmpty else { return }
+        guard !self.isExecutingCommand, !self.commandQueue.isEmpty else { return }
 
-        isExecutingCommand = true
-        let command = commandQueue.removeFirst()
+        self.isExecutingCommand = true
+        let command = self.commandQueue.removeFirst()
         command.execute {
             self.isExecutingCommand = false
             self.processNextCommand()
@@ -43,11 +45,29 @@ class DroneController: NSObject {
         }
     }
     
-    private func droneDisconnected(){
+    private func droneConnected() {
+        CRFly.shared.appData.djiDevice = DJISDKManager.product()
+        CRFly.shared.appData.djiDevConn = true
+        
+        let viewType = CRFly.shared.viewController.getViewType()
+        if(viewType != .albumMediaPreview){
+            CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.droneAlbumController)))
+            if(viewType == .albumView){
+                CRFly.shared.viewController.changeView(type: .albumView)
+            }
+        }
+    }
+    
+    private func droneDisconnected() {
         self.commandQueue.removeAll()
         CRFly.shared.appData.djiDevConn = false
         CRFly.shared.appData.djiDevice = nil
-        CRFly.shared.appData.djiMediaAlbum = [:]
+        
+        CRFly.shared.droneAlbumController.cleanAlbum()
+        CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.savedAlbumController)))
+        if(CRFly.shared.viewController.getViewType() == .albumView){
+            CRFly.shared.viewController.changeView(type: .albumView)
+        }
     }
 }
 
@@ -68,14 +88,7 @@ extension DroneController: DJISDKManagerDelegate {
     
     func componentConnected(withKey key: String?, andIndex index: Int) {
         if(!CRFly.shared.appData.djiDevConn && DJISDKManager.product() != nil && DJISDKManager.product()!.model != "Only RemoteController"){
-            CRFly.shared.appData.djiDevice = DJISDKManager.product()
-            CRFly.shared.appData.djiDevConn = true
-            
-            if(CRFly.shared.viewController.getViewType() == .albumView) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)){
-                    CRFly.shared.droneController.pushCommand(command: EnterDroneAlbum())
-                }
-            }
+            self.droneConnected()
         }
     }
     
@@ -88,19 +101,29 @@ extension DroneController: DJISDKManagerDelegate {
 }
 
 extension DroneController: DJIMediaManagerDelegate {
+    
     func manager(_ manager: DJIMediaManager, didUpdate state: DJIMediaVideoPlaybackState) {
-        let appData = CRFly.shared.appData
-        //Update time of video preview
-        if(appData.djiMediaPreviewState != nil) {
-            if(!appData.djiMediaPreviewState!.isUserChangingTime && appData.djiMediaPreviewState!.isPlaying){
-                appData.djiMediaPreviewState!.currentTime = state.playingPosition
+        
+        if(!state.playingMedia.valid){
+            self.foundInvalidPlayback = true
+            CRFly.shared.droneController.pushCommand(command: StopDroneVideoPlayback())
+            
+        } else if(self.foundInvalidPlayback){
+            self.foundInvalidPlayback = false
+        }
+        
+        if(CRFly.shared.appData.droneAlbumPreviewController != nil){
+            @ObservedObject var dronePreviewController = CRFly.shared.appData.droneAlbumPreviewController!
+            
+            if(!dronePreviewController.userUsingSlider && dronePreviewController.isPlayingVideo){
                 
-                if(state.playbackStatus == .stopped && state.playingPosition == 0) {
-                    appData.djiMediaPreviewState = nil
+                if(abs(dronePreviewController.videoCurrentTime - Double(state.playingPosition)) > 0.5 && state.playbackStatus == .stopped && state.playingPosition == 0){
+                    dronePreviewController.previewLoading = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
-                        CRFly.shared.droneController.pushCommand(command: PrepareDroneVideoPlayback(file: state.playingMedia))
+                        CRFly.shared.droneController.pushCommand(command: StartDroneVideoPlayback(file: state.playingMedia))
                     }
                 }
+                dronePreviewController.videoCurrentTime = Double(state.playingPosition)
             }
         }
     }

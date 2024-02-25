@@ -1,189 +1,176 @@
 import SwiftUI
-import DJISDK
 
 struct AlbumView: View {
-    @State private var filter: MediaFilter = .all
-    @State private var savedContentMode = false
-    @State private var selectMode = false
-    @State private var selectedDroneItems : [DJIMediaFile] = []
-    @State private var selectedSavedItems : [URL] = []
-    @State private var scrollOffset: CGFloat = 0
-    private var droneController = CRFly.shared.droneController
-    private let columns = [GridItem(.adaptive(minimum: 140),alignment: .center)]
-    @ObservedObject private var appData = CRFly.shared.appData
     
-    init() {
-        UIScrollView.appearance().bounces = false
-    }
+    @ObservedObject var appData: ApplicationData
+    @ObservedObject var controller: AlbumController
+    @ObservedObject var savedAlbumController = CRFly.shared.savedAlbumController
     
     var body: some View {
-        VStack{
-            //MARK: Top bar
-            VStack(spacing: 10){
-                //Back button, Selection info, Selection button
-                HStack(spacing: 30){
-                    if(!self.selectMode){
-                        Button("←"){
-                            CRFly.shared.viewController.changeView(type: .mainView)
-                        }.foregroundColor(.primary).font(.largeTitle)
-                        
-                        Spacer()
-                        Button {
-                            self.savedContentMode = false
-                            self.selectedSavedItems.removeAll()
-                        } label: {
-                            Image(systemName: "app.connected.to.app.below.fill")
-                            Text(self.appData.djiDevice != nil ? DJISDKManager.product()!.model! : "Aircraft Album")
-                        }.foregroundColor(!self.savedContentMode ? .primary : .secondary).disabled(!self.savedContentMode)
-                        
-                        Button {
-                            self.savedContentMode = true
-                            self.selectedDroneItems.removeAll()
-                        } label: {
-                            Text("Saved")
-                        }.foregroundColor(self.savedContentMode ? .primary : .secondary).disabled(self.savedContentMode)
-                        
-                        Spacer()
-                        Image(systemName: "cursorarrow.square").font(Font.system(.title)).onTapGesture {
-                            self.selectMode = true
-                        }
-                    }
-                    else {
-                        Spacer()
-                        HStack{
-                            //Drone Content Mode and Saved Content Mode Info
-                            if(self.savedContentMode){
-                                if(self.selectedSavedItems.count == 0){ Text("Select Items") }
-                                else{
-                                    AlbumHelper.selectedFilesInfo(files: self.selectedSavedItems)
-                                }
-                            } else {
-                                if(self.selectedDroneItems.count == 0){ Text("Select Items") }
-                                else{
-                                    AlbumHelper.selectedFilesInfo(files: self.selectedDroneItems)
-                                }
+        VStack {
+            HideableTopBar(topBar: {
+                //MARK: Top bar
+                VStack(spacing: 10){
+                    //Back button, Selection info, Selection button
+                    HStack(spacing: 30){
+                        if(!self.controller.selectMode){
+                            Button("←"){
+                                self.controller.disappear()
+                                CRFly.shared.viewController.changeView(type: .mainView)
+                            }.foregroundColor(.primary).font(.largeTitle)
+                            
+                            Spacer()
+                            
+                            ForEach([CRFly.shared.droneAlbumController, CRFly.shared.savedAlbumController]){ (controller) in
+                                let showing = self.controller.id == controller.id
+                                Button {
+                                    self.controller.disappear()
+                                    CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: controller)))
+                                    CRFly.shared.viewController.changeView(type: .albumView)
+                                    self.controller.appear()
+                                } label: {
+                                    AnyView(controller.getTitle(appData: self.appData))
+                                }.foregroundColor(showing ? .primary : .secondary).disabled(showing)
                             }
-                        }.padding([.leading],40)
-                        
-                        Spacer()
-                        Image(systemName: "cursorarrow.square.fill").foregroundColor(.blue).font(Font.system(.title)).onTapGesture {
-                            self.selectMode = false
-                            self.selectedDroneItems.removeAll()
-                            self.selectedSavedItems.removeAll()
+                            
+                            Spacer()
+                            Image(systemName: "cursorarrow.square").font(Font.system(.title)).onTapGesture {
+                                self.controller.toggleSelectMode()
+                            }
                         }
+                        else {
+                            Spacer()
+                            
+                            HStack{
+                                AnyView(self.controller.getSelectStatus())
+                            }.padding([.leading],40)
+                            
+                            Spacer()
+                            Image(systemName: "cursorarrow.square.fill").foregroundColor(.blue).font(Font.system(.title)).onTapGesture {
+                                self.controller.toggleSelectMode()
+                            }
+                        }
+                    }.frame(height: 50).background(Color(UIColor.secondarySystemBackground))
+                    
+                    //Dowload and Upload information
+                    AlbumView.createDwnUpInfo(appData: self.appData)
+                    
+                    //Album filter
+                    HStack(alignment: .center){
+                        HStack(alignment: .center, spacing: 100){
+                            Button{ self.controller.toggleFilter(newFilter: MediaFilter.all) }
+                        label: { Text("All").foregroundColor((self.controller.filter == .all ? Color.primary : Color.secondary)) }
+                            
+                            Button{ self.controller.toggleFilter(newFilter: MediaFilter.photos) }
+                        label: { Text("Photos").foregroundColor((self.controller.filter == .photos ? Color.primary : Color.secondary)) }
+                            
+                            Button{ self.controller.toggleFilter(newFilter: MediaFilter.videos) }
+                        label: { Text("Videos").foregroundColor((self.controller.filter == .videos ? Color.primary : Color.secondary)) }
+                        }.padding([.horizontal],100)
+                    }.frame(height: 40)
+                        .background(Color(UIColor.secondarySystemBackground)).cornerRadius(10)
+                }
+            }, content: {
+                if(self.controller.albumEmpty){
+                    Spacer()
+                    if(self.controller.albumLoading){
+                        ProgressView().scaleEffect(x: 2, y: 2, anchor: .center).progressViewStyle(CircularProgressViewStyle(tint: .primary))
+                    } else {
+                        Image(systemName: "photo.fill").foregroundColor(.gray).font(.custom("Photo icon", fixedSize: 80))
+                        Text("No Photos or Videos").foregroundColor(.gray).padding([.top],20)
                     }
-                }.frame(height: 50).background(Color(UIColor.secondarySystemBackground))
-                
-                //Dowload and Upload information
-                AlbumHelper.createDwnUpInfo(appData: self.appData)
-                
-                //Album filter
-                HStack(alignment: .center){
-                    HStack(alignment: .center, spacing: 100){
-                        Button{ self.filter = .all }
-                    label: { Text("All").foregroundColor((self.filter == .all ? Color.primary : Color.secondary)) }
-                        
-                        Button{ self.filter = .photos }
-                    label: { Text("Photos").foregroundColor((self.filter == .photos ? Color.primary : Color.secondary)) }
-                        
-                        Button{ self.filter = .videos }
-                    label: { Text("Videos").foregroundColor((self.filter == .videos ? Color.primary : Color.secondary)) }
-                    }.padding([.horizontal],100)
-                }.frame(height: 40)
-                    .background(Color(UIColor.secondarySystemBackground)).cornerRadius(10)
-            }.zIndex(2).offset(y: -self.scrollOffset)
-            
-            //MARK: Content on album
-            if(self.savedContentMode) {
-                AlbumSavedContent(filter: self.$filter, selectMode: self.$selectMode, selectedItems: self.$selectedSavedItems, scrollOffset: self.$scrollOffset).zIndex(1)
-            } else {
-                AlbumDroneContent(filter: self.$filter, selectMode: self.$selectMode, selectedItems: self.$selectedDroneItems, scrollOffset: self.$scrollOffset).zIndex(1)
-            }
+                    Spacer()
+                } else {
+                    AnyView(self.controller.getAlbumContent(appData: self.appData))
+                }
+            }, scrollable: self.controller.albumEmpty ? false : true, scrollStartAt: self.controller.albumEmpty ? 0 : 100)
             
             //MARK: Bottom bar
-            if(self.selectMode){
+            if(self.controller.selectMode){
                 HStack(spacing: 50){
-                    let clr_tr_disab : Bool = (self.selectedDroneItems.isEmpty && !self.savedContentMode) || (self.selectedSavedItems.isEmpty && self.savedContentMode)
-                    Image(systemName: "trash").foregroundColor(clr_tr_disab ? .secondary : .primary).onTapGesture {
-                        if(!self.savedContentMode){
-                            CRFly.shared.droneController.pushCommand(command: RemoveDroneMedia(files: self.selectedDroneItems))
-                        } else {
-                            /* TODO */
-                        }
-                    }.disabled(clr_tr_disab)
+                    let emptySelect = self.controller.getSelectCount() == 0
+                    let trashDisabled = emptySelect || self.appData.mediaDownloadState != nil || self.appData.mediaUploadState != nil
+                    Image(systemName: "trash").foregroundColor(trashDisabled ? .secondary : .primary).onTapGesture {
+                        self.controller.trashSelected()
+                    }.disabled(trashDisabled)
                     
                     Spacer()
                     Button("Clear"){
-                        self.selectedDroneItems.removeAll()
-                        self.selectedSavedItems.removeAll()
-                    }.foregroundColor(clr_tr_disab ? .secondary : .primary).disabled(clr_tr_disab)
+                        self.controller.unselectAll()
+                    }.foregroundColor(emptySelect ? .secondary : .primary).disabled(emptySelect)
                     
                     Spacer()
                     Button("Select All"){
-                        if(self.savedContentMode) {
-                            for (_,files) in self.appData.mediaSavedAlbum {
-                                for file in files {
-                                    self.selectedSavedItems.append(file)
-                                }
-                            }
-                        } else {
-                            for (_,files) in self.appData.djiMediaAlbum {
-                                for file in files {
-                                    self.selectedDroneItems.append(file)
-                                }
-                            }
-                        }
+                        self.controller.selectAll()
                     }.foregroundColor(.primary)
                     
                     Spacer()
-                    if(self.appData.mediaSavable){
-                        let dwnldDisabled = self.appData.mediaDownloadState != nil || clr_tr_disab
-                        let uploadDisabled = dwnldDisabled || self.appData.mediaUploadState != nil || (self.appData.projectName == nil)
-                        
-                        if(!self.savedContentMode){
-                            Image(systemName: "tray.and.arrow.down").foregroundColor(dwnldDisabled ? .secondary : .primary).onTapGesture {
-                                CRFly.shared.droneController.pushCommand(command: DownloadDroneMedia(files: self.selectedDroneItems))
-                                self.selectMode = false
-                                self.selectedDroneItems.removeAll()
-                            }.disabled(dwnldDisabled)
-                        }
+                    
+                    AnyView(self.controller.getSpecialButtons(appData: self.appData))
+                    
+                    if(self.savedAlbumController.mediaSavable){
+                        let dwnldDisabled = self.savedAlbumController.getSelectCount() == 0
+                        let uploadDisabled = dwnldDisabled || (self.appData.projectName == nil)
                         
                         Image(systemName: "square.and.arrow.up").foregroundColor(uploadDisabled ? .secondary : .primary).onTapGesture {
-                            //libController.prepareFilesToUpload(selected: self.selectedItems)
-                            //self.selectMode = false
-                            //self.selectedItems.removeAll()
+                            self.controller.uploadSelected()
                         }.disabled(uploadDisabled)
                     }
                 }.frame(height: 40).background(Color(UIColor.secondarySystemBackground).ignoresSafeArea()).foregroundColor(.gray)
             }
-        }.onAppear(){
-            CRFly.shared.droneController.pushCommand(command: EnterDroneAlbum())
-        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            self.scrollOffset = 0
-        }.onChange(of: self.filter) {(_,_) in
-            self.scrollOffset = 0
-        }.onChange(of: self.appData.mediaDownloadState) { (new_state, old_state) in
-            if(old_state != nil && new_state == nil) {
-                self.scrollOffset -= 24
+        }.onAppear(perform: self.controller.appear)
+    }
+    
+    public static func generateSelectText(totalBytes: Double, itemCount: Int) -> Text {
+        if(totalBytes <= 1000) {
+            return Text("\(itemCount) file(s) selected (\(String(format: "%.2f", totalBytes)) MB)")
+        } else {
+            return Text("\(itemCount) file(s) selected (\(String(format: "%.2f", totalBytes/1000)) GB)")
+        }
+    }
+    
+    public static func createDwnUpInfo(appData: ApplicationData) -> some View {
+        return VStack{
+            if(appData.mediaDownloadState != nil){
+                VStack(spacing: 0){
+                    ProgressView(value: Double(appData.mediaDownloadState!.downloadedBytes), total: Double(appData.mediaDownloadState!.totalBytes)).progressViewStyle(.linear).background(Color(red: 0.100, green: 0.100, blue: 0.100)).ignoresSafeArea()
+                    
+                    HStack(spacing: 10){
+                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaledToFit().padding([.horizontal],10)
+                        
+                        let perc = Int(Float(appData.mediaDownloadState!.downloadedBytes) / Float(appData.mediaDownloadState!.totalBytes)*100)
+                        Text(String(format: "%d%% Downloading files(%d/%d) %.2fMB/s", perc, appData.mediaDownloadState!.downloadedMedia, appData.mediaDownloadState!.totalMedia, appData.mediaDownloadState!.downloadSpeed)).foregroundColor(.white).font(.caption)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "xmark").onTapGesture {
+                            appData.mediaDownloadState = nil
+                        }.padding([.horizontal],-40).foregroundColor(.white)
+                    }.frame(height: 30).ignoresSafeArea().background(Color(red: 0.100, green: 0.100, blue: 0.100))
+                }.padding([.vertical],-5)
             }
-        }.onChange(of: self.appData.mediaUploadState) { (new_state, old_state) in
-            if(old_state != nil && new_state == nil) {
-                self.scrollOffset -= 24
+            
+            if(appData.mediaUploadState != nil) {
+                /*VStack(spacing: 0){
+                    ProgressView(value: Double(self.rcProjectManagement.stat_uploaded), total: Double(self.rcProjectManagement.stat_total)).progressViewStyle(.linear).background(Color(red: 0.100, green: 0.100, blue: 0.100)).ignoresSafeArea()
+                    
+                    HStack(spacing: 10){
+                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white)).scaledToFit().padding([.horizontal],10)
+                        
+                        Text("Uploading files to CR \(self.rcProjectManagement.stat_uploaded)/\(self.rcProjectManagement.stat_total), Project name: \(self.rcProjectManagement.currentProject.name)").foregroundColor(.white).font(.caption)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "xmark").onTapGesture {
+                            self.rcProjectManagement.mediaUploading = false
+                        }.padding([.horizontal],-40).foregroundColor(.white)
+                    }.frame(height: 30).ignoresSafeArea().background(Color(red: 0.100, green: 0.100, blue: 0.100))
+                }.padding([.vertical],-5)*/
             }
         }
     }
 }
 
-struct ScrollOffsetKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-
-struct AlbumView_Previews: PreviewProvider {
-    static let qrScanner = QRCodeScannerController()
-    static var previews: some View {
-        AlbumView()
-    }
+#Preview {
+    AlbumView(appData: ApplicationData(), controller: DroneAlbumController())
 }

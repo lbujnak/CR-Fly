@@ -1,22 +1,18 @@
 import SwiftUI
 import DJISDK
 
-struct AlbumDronePreview: View {
+struct AlbumVideoPreview: View {
     var file: DJIMediaFile
+    @Binding var currController: AlbumController
     
     @State var showingMediaControls: Bool = true
     @ObservedObject var appData = CRFly.shared.appData
     
     var body: some View {
         ZStack{
-            Color.black.ignoresSafeArea()
+            /*Color.black.ignoresSafeArea()
             HStack{
-                //Image or video to show
-                if(AlbumHelper.isVideo(file: self.file)) {
-                    AlbumDroneVideoPlayback()//.ignoresSafeArea().opacity((self.appData.djiMediaPreviewState != nil) ? 1 : 0)
-                } else if(self.file.preview != nil) {
-                    Image(uiImage: self.file.preview!).resizable().scaledToFit()
-                }
+                AlbumDroneVideoPlayback()//.ignoresSafeArea().opacity((self.appData.djiMediaPreviewState != nil) ? 1 : 0)
             }
             
             VStack{
@@ -129,18 +125,14 @@ struct AlbumDronePreview: View {
                         }.disabled(disab)
                     }
                 }
-            }
+            }*/
         }.onTapGesture { self.showingMediaControls.toggle() }
         .onAppear(perform: self.prepareDrone)
     }
     
     private func prepareDrone() {
         self.appData.djiMediaPreviewState = nil
-        if(AlbumHelper.isVideo(file: self.file)) {
-            CRFly.shared.droneController.pushCommand(command: PrepareDroneVideoPlayback(file: self.file))
-        } else if(AlbumHelper.isPano(file: self.file) || AlbumHelper.isPhoto(file: self.file)) {
-            CRFly.shared.droneController.pushCommand(command: FetchDronePreview(file: self.file))
-        }
+        CRFly.shared.droneController.pushCommand(command: PrepareDroneVideoPlayback(file: self.file))
     }
     
     private var bullThumb: some View {

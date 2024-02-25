@@ -1,4 +1,5 @@
 import Foundation
+import DJISDK
 
 struct MediaDownloadState: Equatable {
     let totalMedia: Int
@@ -6,4 +7,5 @@ struct MediaDownloadState: Equatable {
     var downloadedMedia: Int
     var downloadedBytes: Int64
     var downloadSpeed: Float
+    var downloadList: [DJIMediaFile]
 }

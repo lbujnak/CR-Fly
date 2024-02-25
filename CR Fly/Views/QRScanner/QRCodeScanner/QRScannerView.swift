@@ -42,10 +42,6 @@ struct QRScannerView: View {
     }
 }
 
-struct QRScannerView_Previews: PreviewProvider {
-    static let qrScanner = QRCodeScannerController()
-    static var previews: some View {
-        QRScannerView(qrScanner: qrScanner)
-    }
+#Preview {
+    QRScannerView(qrScanner: QRCodeScannerController())
 }
-

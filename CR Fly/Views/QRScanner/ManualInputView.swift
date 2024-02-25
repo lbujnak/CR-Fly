@@ -72,13 +72,6 @@ struct ManualInputView: View {
     }
 }
 
-struct ManualInputView_Previews: PreviewProvider {
-    static var previews: some View {
-        ManualInputView(
-            manualInput: .constant(true),
-            verifyStatus: .constant("Connecting..."),
-            verifyingQRCode: .constant(false)
-        )
-    }
+#Preview {
+    ManualInputView(manualInput: .constant(true), verifyStatus: .constant("Connecting..."), verifyingQRCode: .constant(false))
 }
-

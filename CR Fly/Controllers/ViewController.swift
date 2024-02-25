@@ -1,6 +1,18 @@
 import SwiftUI
 
+public enum ViewType {
+    case empty
+    case mainView
+    case scannerView
+    case albumView
+    case albumMediaPreview
+}
+
 public class ViewController: NSObject, ObservableObject {
+    
+    //UI CommandQueue
+    private var isExecutingCommand = false
+    private var commandQueue: [Command] = []
     
     //Error handling
     @Published var alertErrors: [(String, Text, [(label: String, action: () -> Void)])] = []
@@ -10,6 +22,25 @@ public class ViewController: NSObject, ObservableObject {
     @Published var currentView: AnyView = AnyView(EmptyView())
     private var currentViewType: ViewType = .empty
     private var viewMap: [ViewType : AnyView] = [:]
+    
+    //MARK: UI Command Queue
+    /*func pushCommand(command: Command) {
+        self.commandQueue.append(command)
+        if(!self.isExecutingCommand) {
+            processNextCommand()
+        }
+    }
+    
+    private func processNextCommand() {
+        guard !self.isExecutingCommand, !self.commandQueue.isEmpty else { return }
+
+        self.isExecutingCommand = true
+        let command = self.commandQueue.removeFirst()
+        command.execute {
+            self.isExecutingCommand = false
+            self.processNextCommand()
+        }
+    }*/
     
     func addView(type: ViewType, view: AnyView) {
         self.viewMap[type] = view
@@ -70,10 +101,6 @@ struct CurrentView: View {
     var body: some View {
         ZStack {
             self.controller.currentView
-            
-            
-            
-            
         }.alert(self.controller.alertErrors.first?.0 ?? "Something unexpected happened...",
             isPresented: self.$controller.showAlertError,
             actions: {
@@ -94,6 +121,7 @@ struct CurrentView: View {
                 }
             }
         ).onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            CRFly.shared.appData.djiDevConn = false
             CRFly.shared.droneController.connectToProduct()
         }
     }

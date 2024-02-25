@@ -3,18 +3,14 @@ import DJISDK
 
 public class ApplicationData : ObservableObject {
     
-    //MARK: General Album Data
-    @Published var mediaSavable: Bool = false
-    @Published var mediaAlbumLoading: Bool = false
-    @Published var mediaSavedAlbum: [Date : [URL]] = [:]
-    @Published var mediaDownloadState: MediaDownloadState? = nil
-    @Published var mediaUploadState: MediaUploadState? = nil
-    
     //MARK: DJI Data
     @Published var djiDevConn = false
     @Published var djiDevice: DJIBaseProduct? = nil
-    @Published var djiMediaAlbum: [Date: [DJIMediaFile]] = [:]
-    @Published var djiMediaPreviewState: MediaDronePreviewState? = nil
+    @Published var droneAlbumPreviewController: DroneAlbumPreviewController? = nil
+    
+    //MARK: General Album Data
+    @Published var mediaDownloadState: MediaDownloadState? = nil
+    @Published var mediaUploadState: MediaUploadState? = nil
     
     //MARK: RC Data
     @Published var rcNodeConn = false

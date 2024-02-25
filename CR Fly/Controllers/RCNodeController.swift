@@ -15,7 +15,7 @@ class RCNodeController {
     let retries = 3
     
     private var connEstablished: Bool = false
-    private var commandQueue: [RCCommand] = []
+    private var commandQueue: [Command] = []
     
     init(){
         

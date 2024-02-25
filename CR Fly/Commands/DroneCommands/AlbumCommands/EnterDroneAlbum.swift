@@ -1,22 +1,22 @@
 import SwiftUI
 import DJISDK
 
-class EnterDroneAlbum: DroneCommand {
+class EnterDroneAlbum: Command {
+    private var albumController: DroneAlbumController
     private var appData = CRFly.shared.appData
     
+    init(albumController: DroneAlbumController){
+        self.albumController = albumController
+    }
+    
     func execute(completion: @escaping () -> Void) {
-        if(!self.appData.djiDevConn){
-            return
-        }
-        
-        if(self.appData.djiDevice == nil){
-            CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text("Application Data has incorrect drone instance"))
+        if(!self.appData.djiDevConn || self.appData.mediaDownloadState != nil){
             completion()
             return
         }
         
-        if(self.appData.djiDevice!.camera == nil){
-            CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text("Unable to detect drone camera"))
+        if(self.appData.djiDevice == nil || self.appData.djiDevice!.camera == nil){
+            CRFly.shared.viewController.showSimpleAlert(title: "Error While Downloading Thumbnails", msg: Text("Lost connection to drone or cant detect camera"))
             completion()
             return
         }
@@ -28,8 +28,7 @@ class EnterDroneAlbum: DroneCommand {
                 if (error != nil) {
                     CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text(error!.localizedDescription))
                 } else {
-                    print("***playback entered***")
-                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia())
+                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia(albumController: self.albumController))
                 }
                 completion()
             })
@@ -38,8 +37,7 @@ class EnterDroneAlbum: DroneCommand {
                 if(error != nil) {
                     CRFly.shared.viewController.showSimpleAlert(title: "Error While Opening Photo Album", msg: Text(error!.localizedDescription))
                 } else {
-                    print("***playback entered***")
-                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia())
+                    CRFly.shared.droneController.pushCommand(command: FetchDroneMedia(albumController: self.albumController))
                 }
                 completion()
             })

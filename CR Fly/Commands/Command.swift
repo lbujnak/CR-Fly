@@ -1,5 +1,5 @@
 import Foundation
 
-protocol DroneCommand {
+protocol Command {
     func execute(completion: @escaping () -> Void)
 }
