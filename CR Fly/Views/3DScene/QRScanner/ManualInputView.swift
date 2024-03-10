@@ -65,9 +65,7 @@ struct ManualInputView: View {
                     }
                     Spacer()
                 }.padding(15).frame(width: geometry.size.width, height: geometry.size.height).multilineTextAlignment(.center)
-            }.onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
+            }.scrollDismissesKeyboard(.immediately)
         }
     }
 }

@@ -1,31 +1,9 @@
 import SwiftUI
 import DJISDK
 
-class DroneController: NSObject {
-    
-    private var isExecutingCommand = false
-    private var commandQueue: [Command] = []
+class DroneController: CommandQueueController {
     
     @State var foundInvalidPlayback: Bool = false
-    
-    //MARK: Drone Command Queue
-    func pushCommand(command: Command) {
-        self.commandQueue.append(command)
-        if(!self.isExecutingCommand) {
-            processNextCommand()
-        }
-    }
-    
-    private func processNextCommand() {
-        guard !self.isExecutingCommand, !self.commandQueue.isEmpty else { return }
-
-        self.isExecutingCommand = true
-        let command = self.commandQueue.removeFirst()
-        command.execute {
-            self.isExecutingCommand = false
-            self.processNextCommand()
-        }
-    }
     
     //MARK: RegisterSDK and start connection
     func registerWithSDK() {
@@ -53,20 +31,20 @@ class DroneController: NSObject {
         if(viewType != .albumMediaPreview){
             CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.droneAlbumController)))
             if(viewType == .albumView){
-                CRFly.shared.viewController.changeView(type: .albumView)
+                CRFly.shared.viewController.displayPreviousView()
             }
         }
     }
     
     private func droneDisconnected() {
-        self.commandQueue.removeAll()
+        self.clearCommandQueue()
         CRFly.shared.appData.djiDevConn = false
         CRFly.shared.appData.djiDevice = nil
         
         CRFly.shared.droneAlbumController.cleanAlbum()
         CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.savedAlbumController)))
         if(CRFly.shared.viewController.getViewType() == .albumView){
-            CRFly.shared.viewController.changeView(type: .albumView)
+            CRFly.shared.viewController.displayPreviousView()
         }
     }
 }

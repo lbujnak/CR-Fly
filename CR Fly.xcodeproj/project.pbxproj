@@ -42,7 +42,10 @@
 		80B7B3092B34A3AF000D5498 /* QRCodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B3082B34A3AF000D5498 /* QRCodeScannerController.swift */; };
 		80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */; };
 		80B844CB2B86CCD9004E5A0E /* VideoThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B844CA2B86CCD9004E5A0E /* VideoThumbnailView.swift */; };
-		80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6343D2B375F75006F3CE9 /* RCNodeController.swift */; };
+		80D3B05C2B9DD007007942FF /* MeshRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05B2B9DD007007942FF /* MeshRendererView.swift */; };
+		80D3B05E2B9DD034007942FF /* MeshWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */; };
+		80D3B0602B9DDDF0007942FF /* CommandQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */; };
+		80D6343E2B375F75006F3CE9 /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6343D2B375F75006F3CE9 /* SceneController.swift */; };
 		80ED9CA12B3C85940026082C /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA02B3C85940026082C /* Command.swift */; };
 		80ED9CA32B3C85C00026082C /* EnterDroneAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */; };
 		80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */; };
@@ -90,7 +93,10 @@
 		80B7B3082B34A3AF000D5498 /* QRCodeScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerController.swift; sourceTree = "<group>"; };
 		80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		80B844CA2B86CCD9004E5A0E /* VideoThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailView.swift; sourceTree = "<group>"; };
-		80D6343D2B375F75006F3CE9 /* RCNodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeController.swift; sourceTree = "<group>"; };
+		80D3B05B2B9DD007007942FF /* MeshRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRendererView.swift; sourceTree = "<group>"; };
+		80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshWorkspaceView.swift; sourceTree = "<group>"; };
+		80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandQueueController.swift; sourceTree = "<group>"; };
+		80D6343D2B375F75006F3CE9 /* SceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
 		80ED9CA02B3C85940026082C /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterDroneAlbum.swift; sourceTree = "<group>"; };
 		80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDroneMedia.swift; sourceTree = "<group>"; };
@@ -118,8 +124,9 @@
 			children = (
 				805A758B2AAB121C00EB53D2 /* ViewController.swift */,
 				80F55C372B3A3DA5000B4383 /* LocationController.swift */,
-				80D6343D2B375F75006F3CE9 /* RCNodeController.swift */,
+				80D6343D2B375F75006F3CE9 /* SceneController.swift */,
 				80F55C462B3C5100000B4383 /* DroneController.swift */,
+				80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -285,12 +292,22 @@
 		80AFDF392AA9E0D900D26F88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				805A75A72AAC5A6F00EB53D2 /* QRScanner */,
 				80AABE442B842A5A00D0A0EB /* General */,
 				80AABE522B85250000D0A0EB /* PhotoAlbum */,
+				80D3B05A2B9DCF99007942FF /* 3DScene */,
 				80AFDF562AA9E6FB00D26F88 /* MainView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		80D3B05A2B9DCF99007942FF /* 3DScene */ = {
+			isa = PBXGroup;
+			children = (
+				805A75A72AAC5A6F00EB53D2 /* QRScanner */,
+				80D3B05B2B9DD007007942FF /* MeshRendererView.swift */,
+				80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */,
+			);
+			path = 3DScene;
 			sourceTree = "<group>";
 		};
 		80ED9C9F2B3C85710026082C /* DroneCommands */ = {
@@ -450,7 +467,7 @@
 				80ED9CA12B3C85940026082C /* Command.swift in Sources */,
 				802828402B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift in Sources */,
 				80F55C472B3C5100000B4383 /* DroneController.swift in Sources */,
-				80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */,
+				80D6343E2B375F75006F3CE9 /* SceneController.swift in Sources */,
 				802828362B3F00CD00E060FF /* VideoPreviewAdapter.swift in Sources */,
 				802828342B3EFBA500E060FF /* StartDroneVideoPlayback.swift in Sources */,
 				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
@@ -460,6 +477,7 @@
 				80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */,
 				800886132B3DCF6700937A96 /* CRFly.swift in Sources */,
 				80AABE462B842AA500D0A0EB /* HideableTopBar.swift in Sources */,
+				80D3B0602B9DDDF0007942FF /* CommandQueueController.swift in Sources */,
 				8028283C2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift in Sources */,
 				80AABE552B85251700D0A0EB /* AlbumView.swift in Sources */,
 				80B7B3092B34A3AF000D5498 /* QRCodeScannerController.swift in Sources */,
@@ -470,12 +488,14 @@
 				800886062B3DC80A00937A96 /* DownloadDroneMedia.swift in Sources */,
 				8071DC9D2B87993400617600 /* SavedAlbumPreviewController.swift in Sources */,
 				800886082B3DC96D00937A96 /* SimpleDateFormatter.swift in Sources */,
+				80D3B05C2B9DD007007942FF /* MeshRendererView.swift in Sources */,
 				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
 				80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */,
 				80B844CB2B86CCD9004E5A0E /* VideoThumbnailView.swift in Sources */,
 				802828292B3E6F8600E060FF /* RemoveDroneMedia.swift in Sources */,
 				800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */,
 				8028282D2B3EF9F800E060FF /* VideoPlaybackController.swift in Sources */,
+				80D3B05E2B9DD034007942FF /* MeshWorkspaceView.swift in Sources */,
 				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
 				8028283A2B3F059700E060FF /* ResumeDroneVideoPlayback.swift in Sources */,
 				80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */,

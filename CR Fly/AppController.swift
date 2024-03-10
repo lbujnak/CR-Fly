@@ -1,23 +1,22 @@
 import SwiftUI
 import DJISDK
 
+/**
+ `AppController` serves as the main entry point and orchestrator for the SwiftUI application. It leverages the singleton instance of `CRFly` to initialize and manage core components of the application, including drone control, view management, and application data.
+
+ The `AppController` struct conforms to the `App` protocol, defining the application's configuration and its scene (or scenes), which determine the content and lifecycle events of the app.
+*/
 @main
 struct AppController: App {
     @ObservedObject var viewController = CRFly.shared.viewController
     
-    //TODO: load saved media
-    
     init(){
         CRFly.shared.droneController.registerWithSDK()
-        
-        self.viewController.addView(type: .mainView, view: AnyView(MainView(appData: CRFly.shared.appData)))
-        self.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: CRFly.shared.savedAlbumController)))
-        self.viewController.addView(type: .scannerView, view: AnyView(ScannerView()))
-        self.viewController.changeView(type: .mainView)
+        CRFly.shared.initViews()
     }
     
     var body: some Scene {
-        WindowGroup{
+        WindowGroup {
             viewController.getView()
         }
     }

@@ -81,6 +81,4 @@ extension DecodeImageCalibrateLogic: DJIImageCalibrateDelegate {
             return dataSource
         }
     }
-    
-    
 }

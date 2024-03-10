@@ -26,7 +26,7 @@ struct MainView: View {
                 Spacer()
                 HStack(spacing: 40) {
                     Button {
-                        CRFly.shared.viewController.changeView(type: .albumView)
+                        CRFly.shared.viewController.displayView(type: .albumView, addToHistory: true)
                         return
                     } label: {
                         Image(systemName: "photo")
@@ -35,7 +35,7 @@ struct MainView: View {
                     
                     Button {
                         //TODO: RealityCapture scene
-                        CRFly.shared.viewController.changeView(type: .scannerView)
+                        CRFly.shared.viewController.displayView(type: .sceneView, addToHistory: true)
                         return
                     } label: {
                         Image("realitycapture-logo").resizable()

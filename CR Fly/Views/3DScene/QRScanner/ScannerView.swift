@@ -16,7 +16,7 @@ struct ScannerView: View {
                 // MARK: Header bar + info
                 HStack{
                     Button("←"){
-                        CRFly.shared.viewController.changeView(type: .mainView)
+                        CRFly.shared.viewController.displayPreviousView()
                     }.font(.largeTitle).foregroundColor(.primary)
                     
                     Spacer()

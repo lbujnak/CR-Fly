@@ -46,7 +46,7 @@ public class DroneAlbumPreviewController: AlbumPreviewController {
             }
         }.onReceive(self.appData.$djiDevConn) { newValue in
             if (!newValue) {
-                CRFly.shared.viewController.changeView(type: .albumView)
+                CRFly.shared.viewController.displayPreviousView()
             }
         }
     }

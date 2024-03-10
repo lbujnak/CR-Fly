@@ -249,7 +249,7 @@ public class SavedAlbumController: AlbumController {
         if(!self.selectedItems.contains(file)){
             if(self.selectMode) { self.selectedItems.append(file) }
             else {
-                CRFly.shared.viewController.changeView(view: AnyView(AlbumPreviewView(appData: appData, previewController: SavedAlbumPreviewController(albumController: self, file: file))), type: .albumMediaPreview)
+                CRFly.shared.viewController.displayView(view: AnyView(AlbumPreviewView(appData: appData, previewController: SavedAlbumPreviewController(albumController: self, file: file))), type: .albumMediaPreview, addToHistory: true)
             }
         } else {
             self.selectedItems.remove(at: self.selectedItems.firstIndex(of: file)!)

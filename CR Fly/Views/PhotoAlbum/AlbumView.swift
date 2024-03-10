@@ -16,7 +16,7 @@ struct AlbumView: View {
                         if(!self.controller.selectMode){
                             Button("←"){
                                 self.controller.disappear()
-                                CRFly.shared.viewController.changeView(type: .mainView)
+                                CRFly.shared.viewController.displayPreviousView()
                             }.foregroundColor(.primary).font(.largeTitle)
                             
                             Spacer()
@@ -26,7 +26,7 @@ struct AlbumView: View {
                                 Button {
                                     self.controller.disappear()
                                     CRFly.shared.viewController.addView(type: .albumView, view: AnyView(AlbumView(appData: CRFly.shared.appData, controller: controller)))
-                                    CRFly.shared.viewController.changeView(type: .albumView)
+                                    CRFly.shared.viewController.displayView(type: .albumView, addToHistory: false)
                                     self.controller.appear()
                                 } label: {
                                     AnyView(controller.getTitle(appData: self.appData))
@@ -110,7 +110,7 @@ struct AlbumView: View {
                     
                     if(self.savedAlbumController.mediaSavable){
                         let dwnldDisabled = self.savedAlbumController.getSelectCount() == 0
-                        let uploadDisabled = dwnldDisabled || (self.appData.projectName == nil)
+                        let uploadDisabled = dwnldDisabled || (self.appData.rcProjectName == nil)
                         
                         Image(systemName: "square.and.arrow.up").foregroundColor(uploadDisabled ? .secondary : .primary).onTapGesture {
                             self.controller.uploadSelected()

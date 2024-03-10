@@ -20,7 +20,7 @@ struct AlbumPreviewView: View {
                     VStack(spacing: 10) {
                         HStack(alignment: .top, spacing: 30){
                             Button("←"){
-                                CRFly.shared.viewController.changeView(type: .albumView)
+                                CRFly.shared.viewController.displayPreviousView()
                                 self.previewController.disappear()
                             }.foregroundColor(.primary).font(.largeTitle)
                             
@@ -63,7 +63,7 @@ struct AlbumPreviewView: View {
                         //Remove previewing file
                         let trashDisabled = self.appData.mediaDownloadState != nil || self.appData.mediaUploadState != nil
                         Image(systemName: "trash").font(.title2).foregroundColor(trashDisabled ? .secondary : .primary).onTapGesture {
-                            CRFly.shared.viewController.changeView(type: .albumView)
+                            CRFly.shared.viewController.displayPreviousView()
                             self.previewController.trashFile()
                         }.disabled(trashDisabled)
                         

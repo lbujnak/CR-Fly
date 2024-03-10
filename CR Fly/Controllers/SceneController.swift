@@ -9,17 +9,13 @@ import Foundation
  Ak sa strati connect, 3 pokusy? timing 15sekund?
 */
 
-class RCNodeController {
+class SceneController: CommandQueueController {
     
     //Connection retries
     let retries = 3
     
     private var connEstablished: Bool = false
     private var commandQueue: [Command] = []
-    
-    init(){
-        
-    }
     
     
     
