@@ -1,0 +1,1355 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		800886062B3DC80A00937A96 /* DownloadDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886052B3DC80A00937A96 /* DownloadDroneMedia.swift */; };
+		800886082B3DC96D00937A96 /* SimpleDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886072B3DC96D00937A96 /* SimpleDateFormatter.swift */; };
+		800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886102B3DCA6A00937A96 /* MediaDownloadState.swift */; };
+		800886132B3DCF6700937A96 /* CRFly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886122B3DCF6700937A96 /* CRFly.swift */; };
+		800886152B3DD23B00937A96 /* MediaUploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800886142B3DD23B00937A96 /* MediaUploadState.swift */; };
+		8023CEE12BFC144300790A07 /* AlbumSavedPreviewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8023CEE02BFC144200790A07 /* AlbumSavedPreviewControllerTest.swift */; };
+		8023CEE92BFC1E1200790A07 /* MockAlbumSavedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8023CEE82BFC1E1200790A07 /* MockAlbumSavedController.swift */; };
+		8023CF052BFCA15400790A07 /* DocURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8023CF042BFCA15400790A07 /* DocURL.swift */; };
+		8023CF082BFCAEAC00790A07 /* DocURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8023CF072BFCAEAC00790A07 /* DocURLTests.swift */; };
+		802828292B3E6F8600E060FF /* RemoveDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */; };
+		8028282D2B3EF9F800E060FF /* FPVLayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028282C2B3EF9F800E060FF /* FPVLayoutController.swift */; };
+		802828302B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */; };
+		802828342B3EFBA500E060FF /* StartDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828332B3EFBA500E060FF /* StartDroneVideoPlayback.swift */; };
+		8028283A2B3F059700E060FF /* ResumeDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */; };
+		8028283C2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */; };
+		802828402B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */; };
+		802F50DD2BFB4ADF00526C9C /* AlbumSavedControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F50DC2BFB4ADF00526C9C /* AlbumSavedControllerTest.swift */; };
+		802F50DF2BFB4B4500526C9C /* MockSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F50DE2BFB4B4500526C9C /* MockSceneController.swift */; };
+		802F50E32BFB852100526C9C /* SceneControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F50E22BFB852100526C9C /* SceneControllerTest.swift */; };
+		802F50E52BFB945E00526C9C /* DroneControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F50E42BFB945E00526C9C /* DroneControllerTest.swift */; };
+		802F50E72BFB947D00526C9C /* MockDroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F50E62BFB947D00526C9C /* MockDroneController.swift */; };
+		8033711A2BDFC148007F6B9F /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803371192BDFC148007F6B9F /* Command.swift */; };
+		8033711C2BDFC649007F6B9F /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033711B2BDFC649007F6B9F /* AlbumController.swift */; };
+		803371282BE06B29007F6B9F /* CommandQueueControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803371272BE06B29007F6B9F /* CommandQueueControllerTest.swift */; };
+		8033712B2BE06B6F007F6B9F /* MockCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033712A2BE06B6F007F6B9F /* MockCommand.swift */; };
+		8033712D2BE06B99007F6B9F /* MockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8033712C2BE06B99007F6B9F /* MockViewController.swift */; };
+		803D79B3294E053300DC0D3E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D79B2294E053300DC0D3E /* AppController.swift */; };
+		803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 803D79B6294E053500DC0D3E /* Assets.xcassets */; };
+		8049443B2BE177EB008A2F17 /* MediaTransferState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049443A2BE177EB008A2F17 /* MediaTransferState.swift */; };
+		805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A758B2AAB121C00EB53D2 /* ViewController.swift */; };
+		805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A75982AAB323A00EB53D2 /* ScannerView.swift */; };
+		8062FA022BE523AF0007CDF2 /* SceneProjectAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA012BE523AF0007CDF2 /* SceneProjectAction.swift */; };
+		8062FA042BE52A4A0007CDF2 /* MediaTransferAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA032BE52A4A0007CDF2 /* MediaTransferAction.swift */; };
+		8062FA092BE90CDB0007CDF2 /* SceneProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA082BE90CDB0007CDF2 /* SceneProjectInfo.swift */; };
+		8062FA0D2BEC4B4F0007CDF2 /* AppearableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA0C2BEC4B4F0007CDF2 /* AppearableView.swift */; };
+		8062FA142BECD9D70007CDF2 /* DefaultFPVLayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA132BECD9D70007CDF2 /* DefaultFPVLayoutController.swift */; };
+		8062FA162BECD9EE0007CDF2 /* DefaultFPVView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8062FA152BECD9ED0007CDF2 /* DefaultFPVView.storyboard */; };
+		8062FA1C2BECDA560007CDF2 /* DroneFPVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA1B2BECDA560007CDF2 /* DroneFPVView.swift */; };
+		8062FA1E2BED18950007CDF2 /* ExitDroneAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA1D2BED18950007CDF2 /* ExitDroneAlbum.swift */; };
+		8062FA252BED3D590007CDF2 /* FPVView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8062FA242BED3D590007CDF2 /* FPVView.storyboard */; };
+		8062FA272BEE37DD0007CDF2 /* SimplifyAndExportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062FA262BEE37DD0007CDF2 /* SimplifyAndExportModel.swift */; };
+		8065E65E2BFF493900B07BD0 /* FetchDroneThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E65D2BFF493900B07BD0 /* FetchDroneThumbnail.swift */; };
+		8065E6622BFF6F9800B07BD0 /* MockCommand2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E6612BFF6F9800B07BD0 /* MockCommand2.swift */; };
+		8065E6652BFF8E3400B07BD0 /* HTTPConnectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E6642BFF8E3400B07BD0 /* HTTPConnectionTest.swift */; };
+		8065E6672BFF904A00B07BD0 /* TCPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E6662BFF904A00B07BD0 /* TCPServer.swift */; };
+		8065E66A2BFF99D200B07BD0 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E6692BFF99D200B07BD0 /* MockObserver.swift */; };
+		806A6BBF2B8A79EE006CB7DC /* StopDroneVideoPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806A6BBE2B8A79EE006CB7DC /* StopDroneVideoPlayback.swift */; };
+		806CA83D2BB3212300758D7B /* GetNodeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA83C2BB3212300758D7B /* GetNodeStatus.swift */; };
+		806CA83F2BB3213F00758D7B /* GetProjectStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA83E2BB3213F00758D7B /* GetProjectStatus.swift */; };
+		806CA8412BB3307300758D7B /* GetNodeProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8402BB3307300758D7B /* GetNodeProjects.swift */; };
+		806CA8432BB3678C00758D7B /* GetProjectOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8422BB3678C00758D7B /* GetProjectOpen.swift */; };
+		806CA86F2BB479B400758D7B /* HTTPConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA86E2BB479B400758D7B /* HTTPConnection.swift */; };
+		806CA8712BB479C900758D7B /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8702BB479C900758D7B /* HTTPRequest.swift */; };
+		806CA8742BB47ABF00758D7B /* HTTPConnectionStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8732BB47ABF00758D7B /* HTTPConnectionStateObserver.swift */; };
+		806CA8762BB4A0D400758D7B /* HTTPResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8752BB4A0D400758D7B /* HTTPResponseParser.swift */; };
+		806CA8782BB4B23700758D7B /* GetProjectClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8772BB4B23700758D7B /* GetProjectClose.swift */; };
+		806CA87A2BB4F71E00758D7B /* GetProjectSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8792BB4F71E00758D7B /* GetProjectSave.swift */; };
+		806CA87C2BB4F82300758D7B /* GetProjectDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA87B2BB4F82300758D7B /* GetProjectDelete.swift */; };
+		806CA87E2BB4FFAB00758D7B /* GetProjectCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA87D2BB4FFAB00758D7B /* GetProjectCreate.swift */; };
+		806CA8842BB5748900758D7B /* ProjectCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8832BB5748900758D7B /* ProjectCommand.swift */; };
+		806CA8862BB6D66200758D7B /* RCNodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8852BB6D66200758D7B /* RCNodeCommand.swift */; };
+		806CA8992BB86D4C00758D7B /* CreateTemplateFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8982BB86D4C00758D7B /* CreateTemplateFiles.swift */; };
+		806CA8A12BB9870E00758D7B /* ProjectCLICommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8A02BB9870E00758D7B /* ProjectCLICommand.swift */; };
+		806CA8A32BB9941C00758D7B /* GetProjectTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8A22BB9941C00758D7B /* GetProjectTasks.swift */; };
+		806CA8A82BB9D9A700758D7B /* DownloadTemplateExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8A72BB9D9A700758D7B /* DownloadTemplateExport.swift */; };
+		806CA8AC2BBA165200758D7B /* StartMediaUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8AB2BBA165200758D7B /* StartMediaUpload.swift */; };
+		806CA8AE2BBA284A00758D7B /* UploadMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8AD2BBA284A00758D7B /* UploadMedia.swift */; };
+		806CA8B02BBACFC500758D7B /* GetProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8AF2BBACFC500758D7B /* GetProjectList.swift */; };
+		806CA8B22BBC0CAC00758D7B /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8B12BBC0CAC00758D7B /* SceneController.swift */; };
+		806CA8B42BBC0CB600758D7B /* DroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8B32BBC0CB600758D7B /* DroneController.swift */; };
+		806CA8C32BCFD44E00758D7B /* CalculateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8C22BCFD44E00758D7B /* CalculateModel.swift */; };
+		806CA8C52BCFD48400758D7B /* ExportSelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8C42BCFD48400758D7B /* ExportSelectedModel.swift */; };
+		806CA8C72BCFD4A100758D7B /* DownloadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8C62BCFD4A100758D7B /* DownloadModel.swift */; };
+		806CA8CA2BD054F900758D7B /* AlbumPreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8C92BD054F900758D7B /* AlbumPreviewData.swift */; };
+		806CA8CC2BD055D900758D7B /* AlbumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8CB2BD055D900758D7B /* AlbumData.swift */; };
+		806CA8CE2BD056BD00758D7B /* AlbumSavedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8CD2BD056BD00758D7B /* AlbumSavedData.swift */; };
+		806CA8D02BD058CC00758D7B /* SceneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8CF2BD058CC00758D7B /* SceneData.swift */; };
+		806CA8D22BD0592700758D7B /* DroneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8D12BD0592700758D7B /* DroneData.swift */; };
+		806CA8D42BD0598C00758D7B /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8D32BD0598C00758D7B /* SharedData.swift */; };
+		806CA8D82BD05FF400758D7B /* SceneModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8D72BD05FF400758D7B /* SceneModelData.swift */; };
+		806CA8DF2BD0645600758D7B /* AlbumDroneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8DE2BD0645600758D7B /* AlbumDroneData.swift */; };
+		806CA8E22BD127FD00758D7B /* DJIDroneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA8E12BD127FD00758D7B /* DJIDroneData.swift */; };
+		806EE08A2C00197D001E3043 /* GetProjectClearTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806EE0892C00197D001E3043 /* GetProjectClearTasks.swift */; };
+		806EE0902C0115CF001E3043 /* HTTPResponseParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806EE08F2C0115CF001E3043 /* HTTPResponseParserTest.swift */; };
+		8071DC992B87991E00617600 /* AlbumPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071DC982B87991E00617600 /* AlbumPreviewController.swift */; };
+		8071DC9B2B87992A00617600 /* AlbumDronePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071DC9A2B87992A00617600 /* AlbumDronePreviewController.swift */; };
+		8071DC9D2B87993400617600 /* AlbumSavedPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071DC9C2B87993400617600 /* AlbumSavedPreviewController.swift */; };
+		8071DC9F2B8799A300617600 /* AlbumPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071DC9E2B8799A300617600 /* AlbumPreviewView.swift */; };
+		807AFFB62BDF8D3C00C0F98D /* ViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807AFFB52BDF8D3C00C0F98D /* ViewControllerTest.swift */; };
+		80AABE462B842AA500D0A0EB /* HideableTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AABE452B842AA500D0A0EB /* HideableTopBarView.swift */; };
+		80AABE552B85251700D0A0EB /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AABE542B85251700D0A0EB /* AlbumView.swift */; };
+		80AABE592B85258200D0A0EB /* AlbumDroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AABE582B85258200D0A0EB /* AlbumDroneController.swift */; };
+		80AABE5B2B85260300D0A0EB /* AlbumSavedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AABE5A2B85260300D0A0EB /* AlbumSavedController.swift */; };
+		80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AFDF562AA9E6FB00D26F88 /* MainView.swift */; };
+		80B177F82BF42F4800AD2672 /* ImageThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B177F72BF42F4800AD2672 /* ImageThumbnailView.swift */; };
+		80B177FC2BF51AD400AD2672 /* FetchDronePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B177FB2BF51AD400AD2672 /* FetchDronePreview.swift */; };
+		80B7B3092B34A3AF000D5498 /* QRCodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B3082B34A3AF000D5498 /* QRCodeScannerController.swift */; };
+		80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */; };
+		80B83C962BD3EE6C0083919A /* EvaluateProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B83C952BD3EE6C0083919A /* EvaluateProjectInfo.swift */; };
+		80B83C982BD3EF5C0083919A /* EvaluatePointCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B83C972BD3EF5C0083919A /* EvaluatePointCloud.swift */; };
+		80B83C9A2BD3EF690083919A /* EvaluateAlignmentCameras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B83C992BD3EF690083919A /* EvaluateAlignmentCameras.swift */; };
+		80B844CB2B86CCD9004E5A0E /* VideoThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B844CA2B86CCD9004E5A0E /* VideoThumbnailView.swift */; };
+		80C332D52BF7D5C900D99B7E /* MockTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C332D42BF7D5C900D99B7E /* MockTextView.swift */; };
+		80C8184A2BE1397000A1EFB0 /* QRCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C818492BE1397000A1EFB0 /* QRCameraPreview.swift */; };
+		80D3B05C2B9DD007007942FF /* MeshRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05B2B9DD007007942FF /* MeshRendererView.swift */; };
+		80D3B05E2B9DD034007942FF /* MeshWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */; };
+		80D3B0602B9DDDF0007942FF /* CommandQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */; };
+		80D3B06D2B9FC6FE007942FF /* AppWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B06C2B9FC6FE007942FF /* AppWrapperView.swift */; };
+		80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6343D2B375F75006F3CE9 /* RCNodeController.swift */; };
+		80D89A7D2BA771A500CFA988 /* StartDroneMediaDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D89A7C2BA771A500CFA988 /* StartDroneMediaDownload.swift */; };
+		80D89A7F2BA85E1A00CFA988 /* StopDroneMediaDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D89A7E2BA85E1A00CFA988 /* StopDroneMediaDownload.swift */; };
+		80ED9CA32B3C85C00026082C /* EnterDroneAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */; };
+		80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */; };
+		80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C372B3A3DA5000B4383 /* LocationController.swift */; };
+		80F55C472B3C5100000B4383 /* DJIDroneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F55C462B3C5100000B4383 /* DJIDroneController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		807AFFAF2BDF0F3900C0F98D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 803D79A7294E053300DC0D3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 803D79AE294E053300DC0D3E;
+			remoteInfo = "CR Fly";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		800886052B3DC80A00937A96 /* DownloadDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadDroneMedia.swift; sourceTree = "<group>"; };
+		800886072B3DC96D00937A96 /* SimpleDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDateFormatter.swift; sourceTree = "<group>"; };
+		800886102B3DCA6A00937A96 /* MediaDownloadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDownloadState.swift; sourceTree = "<group>"; };
+		800886122B3DCF6700937A96 /* CRFly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFly.swift; sourceTree = "<group>"; };
+		800886142B3DD23B00937A96 /* MediaUploadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUploadState.swift; sourceTree = "<group>"; };
+		8023CEE02BFC144200790A07 /* AlbumSavedPreviewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedPreviewControllerTest.swift; sourceTree = "<group>"; };
+		8023CEE82BFC1E1200790A07 /* MockAlbumSavedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumSavedController.swift; sourceTree = "<group>"; };
+		8023CF042BFCA15400790A07 /* DocURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocURL.swift; sourceTree = "<group>"; };
+		8023CF072BFCAEAC00790A07 /* DocURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocURLTests.swift; sourceTree = "<group>"; };
+		8023CF092BFD060B00790A07 /* DJIWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DJIWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8023CF0B2BFD061200790A07 /* ViewInspector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewInspector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8023CF0D2BFD061E00790A07 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CR-Fly-Info.plist"; sourceTree = SOURCE_ROOT; };
+		802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveDroneMedia.swift; sourceTree = "<group>"; };
+		8028282C2B3EF9F800E060FF /* FPVLayoutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPVLayoutController.swift; sourceTree = "<group>"; };
+		8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		802828332B3EFBA500E060FF /* StartDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeVideoTimeDronePlayback.swift; sourceTree = "<group>"; };
+		802F50DC2BFB4ADF00526C9C /* AlbumSavedControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedControllerTest.swift; sourceTree = "<group>"; };
+		802F50DE2BFB4B4500526C9C /* MockSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSceneController.swift; sourceTree = "<group>"; };
+		802F50E22BFB852100526C9C /* SceneControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneControllerTest.swift; sourceTree = "<group>"; };
+		802F50E42BFB945E00526C9C /* DroneControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneControllerTest.swift; sourceTree = "<group>"; };
+		802F50E62BFB947D00526C9C /* MockDroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDroneController.swift; sourceTree = "<group>"; };
+		802F50F02BFBA64C00526C9C /* ViewInspector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewInspector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		802F50F42BFBA68100526C9C /* ViewInspector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewInspector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		803371192BDFC148007F6B9F /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		8033711B2BDFC649007F6B9F /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		803371272BE06B29007F6B9F /* CommandQueueControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandQueueControllerTest.swift; sourceTree = "<group>"; };
+		8033712A2BE06B6F007F6B9F /* MockCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCommand.swift; sourceTree = "<group>"; };
+		8033712C2BE06B99007F6B9F /* MockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockViewController.swift; sourceTree = "<group>"; };
+		803D79AF294E053300DC0D3E /* CR Fly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Fly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		803D79B2294E053300DC0D3E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		803D79B6294E053500DC0D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8049443A2BE177EB008A2F17 /* MediaTransferState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTransferState.swift; sourceTree = "<group>"; };
+		805A758B2AAB121C00EB53D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		805A75982AAB323A00EB53D2 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		805AC6FC2A1510B9008061FE /* CR Fly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CR Fly.entitlements"; sourceTree = "<group>"; };
+		8062FA012BE523AF0007CDF2 /* SceneProjectAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneProjectAction.swift; sourceTree = "<group>"; };
+		8062FA032BE52A4A0007CDF2 /* MediaTransferAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTransferAction.swift; sourceTree = "<group>"; };
+		8062FA082BE90CDB0007CDF2 /* SceneProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneProjectInfo.swift; sourceTree = "<group>"; };
+		8062FA0C2BEC4B4F0007CDF2 /* AppearableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearableView.swift; sourceTree = "<group>"; };
+		8062FA132BECD9D70007CDF2 /* DefaultFPVLayoutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFPVLayoutController.swift; sourceTree = "<group>"; };
+		8062FA152BECD9ED0007CDF2 /* DefaultFPVView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DefaultFPVView.storyboard; sourceTree = "<group>"; };
+		8062FA1B2BECDA560007CDF2 /* DroneFPVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneFPVView.swift; sourceTree = "<group>"; };
+		8062FA1D2BED18950007CDF2 /* ExitDroneAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitDroneAlbum.swift; sourceTree = "<group>"; };
+		8062FA242BED3D590007CDF2 /* FPVView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FPVView.storyboard; sourceTree = "<group>"; };
+		8062FA262BEE37DD0007CDF2 /* SimplifyAndExportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplifyAndExportModel.swift; sourceTree = "<group>"; };
+		8065E65D2BFF493900B07BD0 /* FetchDroneThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDroneThumbnail.swift; sourceTree = "<group>"; };
+		8065E6612BFF6F9800B07BD0 /* MockCommand2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCommand2.swift; sourceTree = "<group>"; };
+		8065E6642BFF8E3400B07BD0 /* HTTPConnectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConnectionTest.swift; sourceTree = "<group>"; };
+		8065E6662BFF904A00B07BD0 /* TCPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPServer.swift; sourceTree = "<group>"; };
+		8065E6692BFF99D200B07BD0 /* MockObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockObserver.swift; sourceTree = "<group>"; };
+		806A6BBE2B8A79EE006CB7DC /* StopDroneVideoPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDroneVideoPlayback.swift; sourceTree = "<group>"; };
+		806CA83C2BB3212300758D7B /* GetNodeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeStatus.swift; sourceTree = "<group>"; };
+		806CA83E2BB3213F00758D7B /* GetProjectStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectStatus.swift; sourceTree = "<group>"; };
+		806CA8402BB3307300758D7B /* GetNodeProjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNodeProjects.swift; sourceTree = "<group>"; };
+		806CA8422BB3678C00758D7B /* GetProjectOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectOpen.swift; sourceTree = "<group>"; };
+		806CA86E2BB479B400758D7B /* HTTPConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConnection.swift; sourceTree = "<group>"; };
+		806CA8702BB479C900758D7B /* HTTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
+		806CA8732BB47ABF00758D7B /* HTTPConnectionStateObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConnectionStateObserver.swift; sourceTree = "<group>"; };
+		806CA8752BB4A0D400758D7B /* HTTPResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseParser.swift; sourceTree = "<group>"; };
+		806CA8772BB4B23700758D7B /* GetProjectClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectClose.swift; sourceTree = "<group>"; };
+		806CA8792BB4F71E00758D7B /* GetProjectSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectSave.swift; sourceTree = "<group>"; };
+		806CA87B2BB4F82300758D7B /* GetProjectDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectDelete.swift; sourceTree = "<group>"; };
+		806CA87D2BB4FFAB00758D7B /* GetProjectCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectCreate.swift; sourceTree = "<group>"; };
+		806CA8832BB5748900758D7B /* ProjectCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCommand.swift; sourceTree = "<group>"; };
+		806CA8852BB6D66200758D7B /* RCNodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeCommand.swift; sourceTree = "<group>"; };
+		806CA8982BB86D4C00758D7B /* CreateTemplateFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTemplateFiles.swift; sourceTree = "<group>"; };
+		806CA8A02BB9870E00758D7B /* ProjectCLICommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCLICommand.swift; sourceTree = "<group>"; };
+		806CA8A22BB9941C00758D7B /* GetProjectTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectTasks.swift; sourceTree = "<group>"; };
+		806CA8A72BB9D9A700758D7B /* DownloadTemplateExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTemplateExport.swift; sourceTree = "<group>"; };
+		806CA8AB2BBA165200758D7B /* StartMediaUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMediaUpload.swift; sourceTree = "<group>"; };
+		806CA8AD2BBA284A00758D7B /* UploadMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMedia.swift; sourceTree = "<group>"; };
+		806CA8AF2BBACFC500758D7B /* GetProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectList.swift; sourceTree = "<group>"; };
+		806CA8B12BBC0CAC00758D7B /* SceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
+		806CA8B32BBC0CB600758D7B /* DroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneController.swift; sourceTree = "<group>"; };
+		806CA8C22BCFD44E00758D7B /* CalculateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateModel.swift; sourceTree = "<group>"; };
+		806CA8C42BCFD48400758D7B /* ExportSelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSelectedModel.swift; sourceTree = "<group>"; };
+		806CA8C62BCFD4A100758D7B /* DownloadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadModel.swift; sourceTree = "<group>"; };
+		806CA8C92BD054F900758D7B /* AlbumPreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPreviewData.swift; sourceTree = "<group>"; };
+		806CA8CB2BD055D900758D7B /* AlbumData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumData.swift; sourceTree = "<group>"; };
+		806CA8CD2BD056BD00758D7B /* AlbumSavedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedData.swift; sourceTree = "<group>"; };
+		806CA8CF2BD058CC00758D7B /* SceneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneData.swift; sourceTree = "<group>"; };
+		806CA8D12BD0592700758D7B /* DroneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneData.swift; sourceTree = "<group>"; };
+		806CA8D32BD0598C00758D7B /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		806CA8D72BD05FF400758D7B /* SceneModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneModelData.swift; sourceTree = "<group>"; };
+		806CA8DE2BD0645600758D7B /* AlbumDroneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDroneData.swift; sourceTree = "<group>"; };
+		806CA8E12BD127FD00758D7B /* DJIDroneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIDroneData.swift; sourceTree = "<group>"; };
+		806EE0892C00197D001E3043 /* GetProjectClearTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProjectClearTasks.swift; sourceTree = "<group>"; };
+		806EE08F2C0115CF001E3043 /* HTTPResponseParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseParserTest.swift; sourceTree = "<group>"; };
+		8071DC982B87991E00617600 /* AlbumPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPreviewController.swift; sourceTree = "<group>"; };
+		8071DC9A2B87992A00617600 /* AlbumDronePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDronePreviewController.swift; sourceTree = "<group>"; };
+		8071DC9C2B87993400617600 /* AlbumSavedPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedPreviewController.swift; sourceTree = "<group>"; };
+		8071DC9E2B8799A300617600 /* AlbumPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPreviewView.swift; sourceTree = "<group>"; };
+		807AFFAB2BDF0F3900C0F98D /* CR Fly_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CR Fly_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		807AFFB52BDF8D3C00C0F98D /* ViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTest.swift; sourceTree = "<group>"; };
+		80AABE452B842AA500D0A0EB /* HideableTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideableTopBarView.swift; sourceTree = "<group>"; };
+		80AABE542B85251700D0A0EB /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
+		80AABE582B85258200D0A0EB /* AlbumDroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDroneController.swift; sourceTree = "<group>"; };
+		80AABE5A2B85260300D0A0EB /* AlbumSavedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSavedController.swift; sourceTree = "<group>"; };
+		80AFDF562AA9E6FB00D26F88 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		80B177F72BF42F4800AD2672 /* ImageThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageThumbnailView.swift; sourceTree = "<group>"; };
+		80B177FB2BF51AD400AD2672 /* FetchDronePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDronePreview.swift; sourceTree = "<group>"; };
+		80B7B3082B34A3AF000D5498 /* QRCodeScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerController.swift; sourceTree = "<group>"; };
+		80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		80B83C952BD3EE6C0083919A /* EvaluateProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluateProjectInfo.swift; sourceTree = "<group>"; };
+		80B83C972BD3EF5C0083919A /* EvaluatePointCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluatePointCloud.swift; sourceTree = "<group>"; };
+		80B83C992BD3EF690083919A /* EvaluateAlignmentCameras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluateAlignmentCameras.swift; sourceTree = "<group>"; };
+		80B844CA2B86CCD9004E5A0E /* VideoThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailView.swift; sourceTree = "<group>"; };
+		80C332D42BF7D5C900D99B7E /* MockTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextView.swift; sourceTree = "<group>"; };
+		80C332DB2BF7D97C00D99B7E /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		80C818492BE1397000A1EFB0 /* QRCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCameraPreview.swift; sourceTree = "<group>"; };
+		80D3B05B2B9DD007007942FF /* MeshRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRendererView.swift; sourceTree = "<group>"; };
+		80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshWorkspaceView.swift; sourceTree = "<group>"; };
+		80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandQueueController.swift; sourceTree = "<group>"; };
+		80D3B06C2B9FC6FE007942FF /* AppWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWrapperView.swift; sourceTree = "<group>"; };
+		80D6343D2B375F75006F3CE9 /* RCNodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCNodeController.swift; sourceTree = "<group>"; };
+		80D89A7C2BA771A500CFA988 /* StartDroneMediaDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDroneMediaDownload.swift; sourceTree = "<group>"; };
+		80D89A7E2BA85E1A00CFA988 /* StopDroneMediaDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDroneMediaDownload.swift; sourceTree = "<group>"; };
+		80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterDroneAlbum.swift; sourceTree = "<group>"; };
+		80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDroneMedia.swift; sourceTree = "<group>"; };
+		80F55C372B3A3DA5000B4383 /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
+		80F55C462B3C5100000B4383 /* DJIDroneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJIDroneController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		803D79AC294E053300DC0D3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		807AFFA82BDF0F3900C0F98D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8023CEDE2BFC107700790A07 /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				802F50DC2BFB4ADF00526C9C /* AlbumSavedControllerTest.swift */,
+				8023CEE02BFC144200790A07 /* AlbumSavedPreviewControllerTest.swift */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
+		8023CEDF2BFC108700790A07 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				803371272BE06B29007F6B9F /* CommandQueueControllerTest.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		8023CF062BFCAE9B00790A07 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8023CF072BFCAEAC00790A07 /* DocURLTests.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		8028282E2B3EF9FC00E060FF /* DroneVideoPlayback */ = {
+			isa = PBXGroup;
+			children = (
+				8062FA242BED3D590007CDF2 /* FPVView.storyboard */,
+				8028282C2B3EF9F800E060FF /* FPVLayoutController.swift */,
+				8028282F2B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift */,
+			);
+			path = DroneVideoPlayback;
+			sourceTree = "<group>";
+		};
+		802828322B3EFB9700E060FF /* VideoPlayback */ = {
+			isa = PBXGroup;
+			children = (
+				802828332B3EFBA500E060FF /* StartDroneVideoPlayback.swift */,
+				806A6BBE2B8A79EE006CB7DC /* StopDroneVideoPlayback.swift */,
+				8028283B2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift */,
+				802828392B3F059700E060FF /* ResumeDroneVideoPlayback.swift */,
+				8028283F2B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift */,
+			);
+			path = VideoPlayback;
+			sourceTree = "<group>";
+		};
+		803371292BE06B65007F6B9F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				80C332D42BF7D5C900D99B7E /* MockTextView.swift */,
+				8033712A2BE06B6F007F6B9F /* MockCommand.swift */,
+				8065E6612BFF6F9800B07BD0 /* MockCommand2.swift */,
+				8033712C2BE06B99007F6B9F /* MockViewController.swift */,
+				802F50DE2BFB4B4500526C9C /* MockSceneController.swift */,
+				802F50E62BFB947D00526C9C /* MockDroneController.swift */,
+				8023CEE82BFC1E1200790A07 /* MockAlbumSavedController.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		803D79A6294E053300DC0D3E = {
+			isa = PBXGroup;
+			children = (
+				803D79B1294E053300DC0D3E /* CR Fly */,
+				80C332DA2BF7D91000D99B7E /* CR Fly_Tests */,
+				803D79B0294E053300DC0D3E /* Products */,
+				836FA188223B8FA54F9D6D05 /* Pods */,
+				D4C21582E967F4C1A4D7376E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		803D79B0294E053300DC0D3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				803D79AF294E053300DC0D3E /* CR Fly.app */,
+				807AFFAB2BDF0F3900C0F98D /* CR Fly_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		803D79B1294E053300DC0D3E /* CR Fly */ = {
+			isa = PBXGroup;
+			children = (
+				805AC6FC2A1510B9008061FE /* CR Fly.entitlements */,
+				8027C1DC29584A7C00E0B6AC /* CR-Fly-Info.plist */,
+				803D79B6294E053500DC0D3E /* Assets.xcassets */,
+				806CA88C2BB8512B00758D7B /* App */,
+				806CA8C82BD0549C00758D7B /* Data */,
+				806CA88D2BB8522100758D7B /* Views */,
+				806CA8902BB852D200758D7B /* Controllers */,
+				806CA8942BB8596300758D7B /* DroneComponents */,
+				806CA8952BB8597000758D7B /* SceneComponents */,
+				806CA8922BB8533100758D7B /* Networking */,
+				80ED9CAA2B3CBFFF0026082C /* Utilities */,
+			);
+			path = "CR Fly";
+			sourceTree = "<group>";
+		};
+		804944382BE1772D008A2F17 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				800886102B3DCA6A00937A96 /* MediaDownloadState.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		8049443C2BE17CA6008A2F17 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8049443A2BE177EB008A2F17 /* MediaTransferState.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8062FA002BE523A20007CDF2 /* Enumeration */ = {
+			isa = PBXGroup;
+			children = (
+				8062FA032BE52A4A0007CDF2 /* MediaTransferAction.swift */,
+				8062FA012BE523AF0007CDF2 /* SceneProjectAction.swift */,
+			);
+			path = Enumeration;
+			sourceTree = "<group>";
+		};
+		8062FA072BE90CC90007CDF2 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				8062FA082BE90CDB0007CDF2 /* SceneProjectInfo.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		8062FA122BECD9B70007CDF2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8062FA212BED36290007CDF2 /* DroneFPV */,
+				8028282E2B3EF9FC00E060FF /* DroneVideoPlayback */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8062FA212BED36290007CDF2 /* DroneFPV */ = {
+			isa = PBXGroup;
+			children = (
+				8062FA152BECD9ED0007CDF2 /* DefaultFPVView.storyboard */,
+				8062FA132BECD9D70007CDF2 /* DefaultFPVLayoutController.swift */,
+				8062FA1B2BECDA560007CDF2 /* DroneFPVView.swift */,
+			);
+			path = DroneFPV;
+			sourceTree = "<group>";
+		};
+		8065E6632BFF8E2600B07BD0 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				8065E6682BFF99C100B07BD0 /* Mocks */,
+				8065E6642BFF8E3400B07BD0 /* HTTPConnectionTest.swift */,
+				806EE08F2C0115CF001E3043 /* HTTPResponseParserTest.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		8065E6682BFF99C100B07BD0 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				8065E6662BFF904A00B07BD0 /* TCPServer.swift */,
+				8065E6692BFF99D200B07BD0 /* MockObserver.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		806CA8352BB1F51800758D7B /* SceneCommands */ = {
+			isa = PBXGroup;
+			children = (
+				806CA87F2BB5745F00758D7B /* NodeCommands */,
+				806CA8802BB5746800758D7B /* ProjectCommands */,
+				806CA8852BB6D66200758D7B /* RCNodeCommand.swift */,
+			);
+			path = SceneCommands;
+			sourceTree = "<group>";
+		};
+		806CA87F2BB5745F00758D7B /* NodeCommands */ = {
+			isa = PBXGroup;
+			children = (
+				806CA83C2BB3212300758D7B /* GetNodeStatus.swift */,
+				806CA8402BB3307300758D7B /* GetNodeProjects.swift */,
+			);
+			path = NodeCommands;
+			sourceTree = "<group>";
+		};
+		806CA8802BB5746800758D7B /* ProjectCommands */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8A92BB9DCA800758D7B /* Synchronization */,
+				806CA88A2BB849FD00758D7B /* Management */,
+				806CA8AA2BBA161600758D7B /* MediaUpload */,
+				806CA8972BB868E300758D7B /* TemplateFile */,
+				806CA8BB2BCF327D00758D7B /* Exporting */,
+				806CA8832BB5748900758D7B /* ProjectCommand.swift */,
+				806CA8A02BB9870E00758D7B /* ProjectCLICommand.swift */,
+			);
+			path = ProjectCommands;
+			sourceTree = "<group>";
+		};
+		806CA88A2BB849FD00758D7B /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8422BB3678C00758D7B /* GetProjectOpen.swift */,
+				806CA87D2BB4FFAB00758D7B /* GetProjectCreate.swift */,
+				806CA87B2BB4F82300758D7B /* GetProjectDelete.swift */,
+				806CA8792BB4F71E00758D7B /* GetProjectSave.swift */,
+				806CA8772BB4B23700758D7B /* GetProjectClose.swift */,
+			);
+			path = Management;
+			sourceTree = "<group>";
+		};
+		806CA88C2BB8512B00758D7B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				803D79B2294E053300DC0D3E /* AppController.swift */,
+				800886122B3DCF6700937A96 /* CRFly.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		806CA88D2BB8522100758D7B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				806CA88F2BB8528200758D7B /* Common */,
+				806CA88E2BB8524000758D7B /* PhotoAlbum */,
+				80D3B05A2B9DCF99007942FF /* Scene */,
+				8062FA0C2BEC4B4F0007CDF2 /* AppearableView.swift */,
+				80D3B06C2B9FC6FE007942FF /* AppWrapperView.swift */,
+				80AFDF562AA9E6FB00D26F88 /* MainView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		806CA88E2BB8524000758D7B /* PhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				80AABE542B85251700D0A0EB /* AlbumView.swift */,
+				8071DC9E2B8799A300617600 /* AlbumPreviewView.swift */,
+			);
+			path = PhotoAlbum;
+			sourceTree = "<group>";
+		};
+		806CA88F2BB8528200758D7B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				80AABE452B842AA500D0A0EB /* HideableTopBarView.swift */,
+				80C818492BE1397000A1EFB0 /* QRCameraPreview.swift */,
+				80B7B30A2B35D5BC000D5498 /* QRScannerView.swift */,
+				80B844CA2B86CCD9004E5A0E /* VideoThumbnailView.swift */,
+				80B177F72BF42F4800AD2672 /* ImageThumbnailView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		806CA8902BB852D200758D7B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				80AABE532B85250800D0A0EB /* Album */,
+				806CA8912BB852F300758D7B /* Common */,
+				805A758B2AAB121C00EB53D2 /* ViewController.swift */,
+				80F55C372B3A3DA5000B4383 /* LocationController.swift */,
+				806CA8B12BBC0CAC00758D7B /* SceneController.swift */,
+				806CA8B32BBC0CB600758D7B /* DroneController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		806CA8912BB852F300758D7B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				803371192BDFC148007F6B9F /* Command.swift */,
+				80D3B05F2B9DDDF0007942FF /* CommandQueueController.swift */,
+				80B7B3082B34A3AF000D5498 /* QRCodeScannerController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		806CA8922BB8533100758D7B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8702BB479C900758D7B /* HTTPRequest.swift */,
+				806CA86E2BB479B400758D7B /* HTTPConnection.swift */,
+				806CA8732BB47ABF00758D7B /* HTTPConnectionStateObserver.swift */,
+				806CA8752BB4A0D400758D7B /* HTTPResponseParser.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		806CA8942BB8596300758D7B /* DroneComponents */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8DD2BD0644200758D7B /* DroneData */,
+				8062FA122BECD9B70007CDF2 /* Views */,
+				80ED9C9F2B3C85710026082C /* DroneCommands */,
+				80AABE582B85258200D0A0EB /* AlbumDroneController.swift */,
+				8071DC9A2B87992A00617600 /* AlbumDronePreviewController.swift */,
+				80F55C462B3C5100000B4383 /* DJIDroneController.swift */,
+			);
+			path = DroneComponents;
+			sourceTree = "<group>";
+		};
+		806CA8952BB8597000758D7B /* SceneComponents */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8E02BD10DDA00758D7B /* SceneData */,
+				806CA8B52BBC2EC000758D7B /* Views */,
+				806CA8352BB1F51800758D7B /* SceneCommands */,
+				80D6343D2B375F75006F3CE9 /* RCNodeController.swift */,
+			);
+			path = SceneComponents;
+			sourceTree = "<group>";
+		};
+		806CA8972BB868E300758D7B /* TemplateFile */ = {
+			isa = PBXGroup;
+			children = (
+				80B83C942BD3EE130083919A /* EvaluateTemplate */,
+				806CA8982BB86D4C00758D7B /* CreateTemplateFiles.swift */,
+				806CA8A72BB9D9A700758D7B /* DownloadTemplateExport.swift */,
+			);
+			path = TemplateFile;
+			sourceTree = "<group>";
+		};
+		806CA8A92BB9DCA800758D7B /* Synchronization */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8A22BB9941C00758D7B /* GetProjectTasks.swift */,
+				806EE0892C00197D001E3043 /* GetProjectClearTasks.swift */,
+				806CA8AF2BBACFC500758D7B /* GetProjectList.swift */,
+				806CA83E2BB3213F00758D7B /* GetProjectStatus.swift */,
+			);
+			path = Synchronization;
+			sourceTree = "<group>";
+		};
+		806CA8AA2BBA161600758D7B /* MediaUpload */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8AB2BBA165200758D7B /* StartMediaUpload.swift */,
+				806CA8AD2BBA284A00758D7B /* UploadMedia.swift */,
+			);
+			path = MediaUpload;
+			sourceTree = "<group>";
+		};
+		806CA8B52BBC2EC000758D7B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				805A75982AAB323A00EB53D2 /* ScannerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		806CA8BB2BCF327D00758D7B /* Exporting */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8C22BCFD44E00758D7B /* CalculateModel.swift */,
+				8062FA262BEE37DD0007CDF2 /* SimplifyAndExportModel.swift */,
+				806CA8C42BCFD48400758D7B /* ExportSelectedModel.swift */,
+				806CA8C62BCFD4A100758D7B /* DownloadModel.swift */,
+			);
+			path = Exporting;
+			sourceTree = "<group>";
+		};
+		806CA8C82BD0549C00758D7B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8049443C2BE17CA6008A2F17 /* Protocols */,
+				8062FA072BE90CC90007CDF2 /* Structures */,
+				8062FA002BE523A20007CDF2 /* Enumeration */,
+				806CA8CB2BD055D900758D7B /* AlbumData.swift */,
+				806CA8CD2BD056BD00758D7B /* AlbumSavedData.swift */,
+				806CA8C92BD054F900758D7B /* AlbumPreviewData.swift */,
+				806CA8D12BD0592700758D7B /* DroneData.swift */,
+				806CA8CF2BD058CC00758D7B /* SceneData.swift */,
+				806CA8D72BD05FF400758D7B /* SceneModelData.swift */,
+				806CA8D32BD0598C00758D7B /* SharedData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		806CA8DD2BD0644200758D7B /* DroneData */ = {
+			isa = PBXGroup;
+			children = (
+				804944382BE1772D008A2F17 /* Structures */,
+				806CA8DE2BD0645600758D7B /* AlbumDroneData.swift */,
+				806CA8E12BD127FD00758D7B /* DJIDroneData.swift */,
+			);
+			path = DroneData;
+			sourceTree = "<group>";
+		};
+		806CA8E02BD10DDA00758D7B /* SceneData */ = {
+			isa = PBXGroup;
+			children = (
+				806CA8E52BD15F9300758D7B /* Structures */,
+			);
+			path = SceneData;
+			sourceTree = "<group>";
+		};
+		806CA8E52BD15F9300758D7B /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				800886142B3DD23B00937A96 /* MediaUploadState.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		806EE08C2C00EB61001E3043 /* MediaDownload */ = {
+			isa = PBXGroup;
+			children = (
+				80D89A7C2BA771A500CFA988 /* StartDroneMediaDownload.swift */,
+				80D89A7E2BA85E1A00CFA988 /* StopDroneMediaDownload.swift */,
+				800886052B3DC80A00937A96 /* DownloadDroneMedia.swift */,
+				802828282B3E6F8600E060FF /* RemoveDroneMedia.swift */,
+			);
+			path = MediaDownload;
+			sourceTree = "<group>";
+		};
+		806EE08E2C00EB8F001E3043 /* Synchronization */ = {
+			isa = PBXGroup;
+			children = (
+				80ED9CA42B3CB7480026082C /* FetchDroneMedia.swift */,
+				8065E65D2BFF493900B07BD0 /* FetchDroneThumbnail.swift */,
+				80B177FB2BF51AD400AD2672 /* FetchDronePreview.swift */,
+			);
+			path = Synchronization;
+			sourceTree = "<group>";
+		};
+		8071DC972B8798EF00617600 /* AlbumPreview */ = {
+			isa = PBXGroup;
+			children = (
+				8071DC982B87991E00617600 /* AlbumPreviewController.swift */,
+				8071DC9C2B87993400617600 /* AlbumSavedPreviewController.swift */,
+			);
+			path = AlbumPreview;
+			sourceTree = "<group>";
+		};
+		8071DCA02B89075400617600 /* AlbumCommands */ = {
+			isa = PBXGroup;
+			children = (
+				8071DCA12B89078D00617600 /* AlbumPreviewCommands */,
+				806EE08E2C00EB8F001E3043 /* Synchronization */,
+				806EE08C2C00EB61001E3043 /* MediaDownload */,
+				80ED9CA22B3C85C00026082C /* EnterDroneAlbum.swift */,
+				8062FA1D2BED18950007CDF2 /* ExitDroneAlbum.swift */,
+			);
+			path = AlbumCommands;
+			sourceTree = "<group>";
+		};
+		8071DCA12B89078D00617600 /* AlbumPreviewCommands */ = {
+			isa = PBXGroup;
+			children = (
+				802828322B3EFB9700E060FF /* VideoPlayback */,
+			);
+			path = AlbumPreviewCommands;
+			sourceTree = "<group>";
+		};
+		807AFFB42BDF8D0E00C0F98D /* Core Tests */ = {
+			isa = PBXGroup;
+			children = (
+				807AFFB82BDF8DA900C0F98D /* Controllers */,
+				8065E6632BFF8E2600B07BD0 /* Networking */,
+				8023CF062BFCAE9B00790A07 /* Utilities */,
+			);
+			path = "Core Tests";
+			sourceTree = "<group>";
+		};
+		807AFFB82BDF8DA900C0F98D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				803371292BE06B65007F6B9F /* Mocks */,
+				8023CEDE2BFC107700790A07 /* Album */,
+				8023CEDF2BFC108700790A07 /* Common */,
+				807AFFB52BDF8D3C00C0F98D /* ViewControllerTest.swift */,
+				802F50E22BFB852100526C9C /* SceneControllerTest.swift */,
+				802F50E42BFB945E00526C9C /* DroneControllerTest.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		80AABE532B85250800D0A0EB /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				8071DC972B8798EF00617600 /* AlbumPreview */,
+				8033711B2BDFC649007F6B9F /* AlbumController.swift */,
+				80AABE5A2B85260300D0A0EB /* AlbumSavedController.swift */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
+		80B83C942BD3EE130083919A /* EvaluateTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				80B83C952BD3EE6C0083919A /* EvaluateProjectInfo.swift */,
+				80B83C972BD3EF5C0083919A /* EvaluatePointCloud.swift */,
+				80B83C992BD3EF690083919A /* EvaluateAlignmentCameras.swift */,
+			);
+			path = EvaluateTemplate;
+			sourceTree = "<group>";
+		};
+		80C332DA2BF7D91000D99B7E /* CR Fly_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				80C332DB2BF7D97C00D99B7E /* TestPlan.xctestplan */,
+				807AFFB42BDF8D0E00C0F98D /* Core Tests */,
+			);
+			path = "CR Fly_Tests";
+			sourceTree = "<group>";
+		};
+		80D3B05A2B9DCF99007942FF /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				80D3B05B2B9DD007007942FF /* MeshRendererView.swift */,
+				80D3B05D2B9DD034007942FF /* MeshWorkspaceView.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		80ED9C9F2B3C85710026082C /* DroneCommands */ = {
+			isa = PBXGroup;
+			children = (
+				8071DCA02B89075400617600 /* AlbumCommands */,
+			);
+			path = DroneCommands;
+			sourceTree = "<group>";
+		};
+		80ED9CAA2B3CBFFF0026082C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8023CF042BFCA15400790A07 /* DocURL.swift */,
+				800886072B3DC96D00937A96 /* SimpleDateFormatter.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		836FA188223B8FA54F9D6D05 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D4C21582E967F4C1A4D7376E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8023CF0D2BFD061E00790A07 /* SSZipArchive.framework */,
+				8023CF0B2BFD061200790A07 /* ViewInspector.framework */,
+				8023CF092BFD060B00790A07 /* DJIWidget.framework */,
+				802F50F42BFBA68100526C9C /* ViewInspector.framework */,
+				802F50F02BFBA64C00526C9C /* ViewInspector.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		803D79AE294E053300DC0D3E /* CR Fly */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 803D79BD294E053500DC0D3E /* Build configuration list for PBXNativeTarget "CR Fly" */;
+			buildPhases = (
+				803D79AB294E053300DC0D3E /* Sources */,
+				803D79AC294E053300DC0D3E /* Frameworks */,
+				803D79AD294E053300DC0D3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CR Fly";
+			productName = "CR Fly";
+			productReference = 803D79AF294E053300DC0D3E /* CR Fly.app */;
+			productType = "com.apple.product-type.application";
+		};
+		807AFFAA2BDF0F3900C0F98D /* CR Fly_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 807AFFB12BDF0F3900C0F98D /* Build configuration list for PBXNativeTarget "CR Fly_Tests" */;
+			buildPhases = (
+				807AFFA72BDF0F3900C0F98D /* Sources */,
+				807AFFA82BDF0F3900C0F98D /* Frameworks */,
+				807AFFA92BDF0F3900C0F98D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				807AFFB02BDF0F3900C0F98D /* PBXTargetDependency */,
+			);
+			name = "CR Fly_Tests";
+			productName = "CR Fly_Tests";
+			productReference = 807AFFAB2BDF0F3900C0F98D /* CR Fly_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		803D79A7294E053300DC0D3E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					803D79AE294E053300DC0D3E = {
+						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1420;
+					};
+					807AFFAA2BDF0F3900C0F98D = {
+						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1530;
+						TestTargetID = 803D79AE294E053300DC0D3E;
+					};
+				};
+			};
+			buildConfigurationList = 803D79AA294E053300DC0D3E /* Build configuration list for PBXProject "CR Fly" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 803D79A6294E053300DC0D3E;
+			productRefGroup = 803D79B0294E053300DC0D3E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				803D79AE294E053300DC0D3E /* CR Fly */,
+				807AFFAA2BDF0F3900C0F98D /* CR Fly_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		803D79AD294E053300DC0D3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8062FA162BECD9EE0007CDF2 /* DefaultFPVView.storyboard in Resources */,
+				8062FA252BED3D590007CDF2 /* FPVView.storyboard in Resources */,
+				803D79B7294E053500DC0D3E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		807AFFA92BDF0F3900C0F98D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		803D79AB294E053300DC0D3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8062FA092BE90CDB0007CDF2 /* SceneProjectInfo.swift in Sources */,
+				80ED9CA32B3C85C00026082C /* EnterDroneAlbum.swift in Sources */,
+				80AABE5B2B85260300D0A0EB /* AlbumSavedController.swift in Sources */,
+				806CA87A2BB4F71E00758D7B /* GetProjectSave.swift in Sources */,
+				8071DC9F2B8799A300617600 /* AlbumPreviewView.swift in Sources */,
+				806A6BBF2B8A79EE006CB7DC /* StopDroneVideoPlayback.swift in Sources */,
+				806CA8782BB4B23700758D7B /* GetProjectClose.swift in Sources */,
+				802828402B3F093300E060FF /* ChangeVideoTimeDronePlayback.swift in Sources */,
+				80C8184A2BE1397000A1EFB0 /* QRCameraPreview.swift in Sources */,
+				80F55C472B3C5100000B4383 /* DJIDroneController.swift in Sources */,
+				806CA8CE2BD056BD00758D7B /* AlbumSavedData.swift in Sources */,
+				80D6343E2B375F75006F3CE9 /* RCNodeController.swift in Sources */,
+				806CA8862BB6D66200758D7B /* RCNodeCommand.swift in Sources */,
+				806CA8CA2BD054F900758D7B /* AlbumPreviewData.swift in Sources */,
+				806CA8762BB4A0D400758D7B /* HTTPResponseParser.swift in Sources */,
+				8062FA1E2BED18950007CDF2 /* ExitDroneAlbum.swift in Sources */,
+				80B83C982BD3EF5C0083919A /* EvaluatePointCloud.swift in Sources */,
+				802828342B3EFBA500E060FF /* StartDroneVideoPlayback.swift in Sources */,
+				806CA8C52BCFD48400758D7B /* ExportSelectedModel.swift in Sources */,
+				806EE08A2C00197D001E3043 /* GetProjectClearTasks.swift in Sources */,
+				803D79B3294E053300DC0D3E /* AppController.swift in Sources */,
+				806CA8D82BD05FF400758D7B /* SceneModelData.swift in Sources */,
+				806CA8AE2BBA284A00758D7B /* UploadMedia.swift in Sources */,
+				806CA8AC2BBA165200758D7B /* StartMediaUpload.swift in Sources */,
+				8071DC9B2B87992A00617600 /* AlbumDronePreviewController.swift in Sources */,
+				806CA8432BB3678C00758D7B /* GetProjectOpen.swift in Sources */,
+				80AFDF572AA9E6FB00D26F88 /* MainView.swift in Sources */,
+				806CA8D22BD0592700758D7B /* DroneData.swift in Sources */,
+				80D89A7F2BA85E1A00CFA988 /* StopDroneMediaDownload.swift in Sources */,
+				8062FA022BE523AF0007CDF2 /* SceneProjectAction.swift in Sources */,
+				806CA8412BB3307300758D7B /* GetNodeProjects.swift in Sources */,
+				806CA8CC2BD055D900758D7B /* AlbumData.swift in Sources */,
+				80B7B30B2B35D5BD000D5498 /* QRScannerView.swift in Sources */,
+				806CA86F2BB479B400758D7B /* HTTPConnection.swift in Sources */,
+				800886132B3DCF6700937A96 /* CRFly.swift in Sources */,
+				80AABE462B842AA500D0A0EB /* HideableTopBarView.swift in Sources */,
+				8049443B2BE177EB008A2F17 /* MediaTransferState.swift in Sources */,
+				80D3B0602B9DDDF0007942FF /* CommandQueueController.swift in Sources */,
+				806CA83F2BB3213F00758D7B /* GetProjectStatus.swift in Sources */,
+				8062FA042BE52A4A0007CDF2 /* MediaTransferAction.swift in Sources */,
+				80B83C962BD3EE6C0083919A /* EvaluateProjectInfo.swift in Sources */,
+				8028283C2B3F06CC00E060FF /* PauseDroneVideoPlayback.swift in Sources */,
+				80AABE552B85251700D0A0EB /* AlbumView.swift in Sources */,
+				8062FA0D2BEC4B4F0007CDF2 /* AppearableView.swift in Sources */,
+				80B7B3092B34A3AF000D5498 /* QRCodeScannerController.swift in Sources */,
+				8062FA142BECD9D70007CDF2 /* DefaultFPVLayoutController.swift in Sources */,
+				806CA8C32BCFD44E00758D7B /* CalculateModel.swift in Sources */,
+				806CA8DF2BD0645600758D7B /* AlbumDroneData.swift in Sources */,
+				806CA8D02BD058CC00758D7B /* SceneData.swift in Sources */,
+				806CA8E22BD127FD00758D7B /* DJIDroneData.swift in Sources */,
+				806CA8B02BBACFC500758D7B /* GetProjectList.swift in Sources */,
+				806CA8B22BBC0CAC00758D7B /* SceneController.swift in Sources */,
+				806CA8B42BBC0CB600758D7B /* DroneController.swift in Sources */,
+				8033711C2BDFC649007F6B9F /* AlbumController.swift in Sources */,
+				806CA8C72BCFD4A100758D7B /* DownloadModel.swift in Sources */,
+				8071DC992B87991E00617600 /* AlbumPreviewController.swift in Sources */,
+				806CA87C2BB4F82300758D7B /* GetProjectDelete.swift in Sources */,
+				802828302B3EFA2A00E060FF /* AlbumDroneVideoPlayback.swift in Sources */,
+				80AABE592B85258200D0A0EB /* AlbumDroneController.swift in Sources */,
+				8023CF052BFCA15400790A07 /* DocURL.swift in Sources */,
+				800886062B3DC80A00937A96 /* DownloadDroneMedia.swift in Sources */,
+				8071DC9D2B87993400617600 /* AlbumSavedPreviewController.swift in Sources */,
+				806CA8712BB479C900758D7B /* HTTPRequest.swift in Sources */,
+				80D3B06D2B9FC6FE007942FF /* AppWrapperView.swift in Sources */,
+				806CA8A32BB9941C00758D7B /* GetProjectTasks.swift in Sources */,
+				800886082B3DC96D00937A96 /* SimpleDateFormatter.swift in Sources */,
+				8065E65E2BFF493900B07BD0 /* FetchDroneThumbnail.swift in Sources */,
+				80D3B05C2B9DD007007942FF /* MeshRendererView.swift in Sources */,
+				8062FA1C2BECDA560007CDF2 /* DroneFPVView.swift in Sources */,
+				80B83C9A2BD3EF690083919A /* EvaluateAlignmentCameras.swift in Sources */,
+				805A75992AAB323A00EB53D2 /* ScannerView.swift in Sources */,
+				80ED9CA52B3CB7480026082C /* FetchDroneMedia.swift in Sources */,
+				8062FA272BEE37DD0007CDF2 /* SimplifyAndExportModel.swift in Sources */,
+				80B844CB2B86CCD9004E5A0E /* VideoThumbnailView.swift in Sources */,
+				806CA8992BB86D4C00758D7B /* CreateTemplateFiles.swift in Sources */,
+				806CA8D42BD0598C00758D7B /* SharedData.swift in Sources */,
+				80B177FC2BF51AD400AD2672 /* FetchDronePreview.swift in Sources */,
+				802828292B3E6F8600E060FF /* RemoveDroneMedia.swift in Sources */,
+				800886112B3DCA6A00937A96 /* MediaDownloadState.swift in Sources */,
+				806CA8A12BB9870E00758D7B /* ProjectCLICommand.swift in Sources */,
+				806CA8A82BB9D9A700758D7B /* DownloadTemplateExport.swift in Sources */,
+				8028282D2B3EF9F800E060FF /* FPVLayoutController.swift in Sources */,
+				80D3B05E2B9DD034007942FF /* MeshWorkspaceView.swift in Sources */,
+				80D89A7D2BA771A500CFA988 /* StartDroneMediaDownload.swift in Sources */,
+				805A758C2AAB121C00EB53D2 /* ViewController.swift in Sources */,
+				8033711A2BDFC148007F6B9F /* Command.swift in Sources */,
+				80B177F82BF42F4800AD2672 /* ImageThumbnailView.swift in Sources */,
+				806CA83D2BB3212300758D7B /* GetNodeStatus.swift in Sources */,
+				8028283A2B3F059700E060FF /* ResumeDroneVideoPlayback.swift in Sources */,
+				80F55C382B3A3DA5000B4383 /* LocationController.swift in Sources */,
+				806CA8842BB5748900758D7B /* ProjectCommand.swift in Sources */,
+				806CA87E2BB4FFAB00758D7B /* GetProjectCreate.swift in Sources */,
+				800886152B3DD23B00937A96 /* MediaUploadState.swift in Sources */,
+				806CA8742BB47ABF00758D7B /* HTTPConnectionStateObserver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		807AFFA72BDF0F3900C0F98D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8033712D2BE06B99007F6B9F /* MockViewController.swift in Sources */,
+				807AFFB62BDF8D3C00C0F98D /* ViewControllerTest.swift in Sources */,
+				8065E6652BFF8E3400B07BD0 /* HTTPConnectionTest.swift in Sources */,
+				806EE0902C0115CF001E3043 /* HTTPResponseParserTest.swift in Sources */,
+				8033712B2BE06B6F007F6B9F /* MockCommand.swift in Sources */,
+				8065E66A2BFF99D200B07BD0 /* MockObserver.swift in Sources */,
+				8023CF082BFCAEAC00790A07 /* DocURLTests.swift in Sources */,
+				802F50DD2BFB4ADF00526C9C /* AlbumSavedControllerTest.swift in Sources */,
+				8065E6672BFF904A00B07BD0 /* TCPServer.swift in Sources */,
+				802F50E32BFB852100526C9C /* SceneControllerTest.swift in Sources */,
+				80C332D52BF7D5C900D99B7E /* MockTextView.swift in Sources */,
+				8065E6622BFF6F9800B07BD0 /* MockCommand2.swift in Sources */,
+				803371282BE06B29007F6B9F /* CommandQueueControllerTest.swift in Sources */,
+				802F50E72BFB947D00526C9C /* MockDroneController.swift in Sources */,
+				802F50E52BFB945E00526C9C /* DroneControllerTest.swift in Sources */,
+				8023CEE12BFC144300790A07 /* AlbumSavedPreviewControllerTest.swift in Sources */,
+				802F50DF2BFB4B4500526C9C /* MockSceneController.swift in Sources */,
+				8023CEE92BFC1E1200790A07 /* MockAlbumSavedController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		807AFFB02BDF0F3900C0F98D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 803D79AE294E053300DC0D3E /* CR Fly */;
+			targetProxy = 807AFFAF2BDF0F3900C0F98D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		803D79BB294E053500DC0D3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		803D79BC294E053500DC0D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		803D79BE294E053500DC0D3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "CR Fly/CR Fly.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 383777U9D5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CR-Fly-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Second screen QR reader.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access you position on map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To access and add images to saved album.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bujnak.CR-Fly";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		803D79BF294E053500DC0D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "CR Fly/CR Fly.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 383777U9D5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CR-Fly-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Some DJISDK things.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Second screen QR reader.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "To access you position on map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To access possition on map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "To allow saving photos to phone.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To access and add images to saved album.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bujnak.CR-Fly";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		807AFFB22BDF0F3900C0F98D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 383777U9D5;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bujnak.CR-Fly-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CR Fly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CR Fly";
+			};
+			name = Debug;
+		};
+		807AFFB32BDF0F3900C0F98D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 383777U9D5;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bujnak.CR-Fly-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CR Fly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CR Fly";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		803D79AA294E053300DC0D3E /* Build configuration list for PBXProject "CR Fly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				803D79BB294E053500DC0D3E /* Debug */,
+				803D79BC294E053500DC0D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		803D79BD294E053500DC0D3E /* Build configuration list for PBXNativeTarget "CR Fly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				803D79BE294E053500DC0D3E /* Debug */,
+				803D79BF294E053500DC0D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		807AFFB12BDF0F3900C0F98D /* Build configuration list for PBXNativeTarget "CR Fly_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				807AFFB22BDF0F3900C0F98D /* Debug */,
+				807AFFB32BDF0F3900C0F98D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 803D79A7294E053300DC0D3E /* Project object */;
+}

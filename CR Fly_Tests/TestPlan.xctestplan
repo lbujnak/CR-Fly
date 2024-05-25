@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9F961637-0C54-4A2E-AB22-7F2D9A405BA9",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CR Fly.xcodeproj",
+        "identifier" : "807AFFAA2BDF0F3900C0F98D",
+        "name" : "CR Fly_Tests"
+      }
+    }
+  ],
+  "version" : 1
+}
